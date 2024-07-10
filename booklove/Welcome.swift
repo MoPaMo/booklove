@@ -66,7 +66,7 @@ struct Welcome: View {
                 SignInWithAppleButton()
                     .frame(width: 280, height: 45)
                 
-                Text("By signing in, you agree to be bound by our Terms of Service and accept our Privacy Policy.")
+                Text("By signing in, you agree to be bound by our Terms of Service and accept our Privacy Policy. \nClick here to review them.")
                     .font(.system(size: 16, design: .monospaced))
                     .foregroundColor(.black)
                     .multilineTextAlignment(.center)
