@@ -14,6 +14,8 @@
 		CD5D507A2C3F03C900C1A2B4 /* bookloveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D50792C3F03C900C1A2B4 /* bookloveTests.swift */; };
 		CD5D50842C3F03C900C1A2B4 /* bookloveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D50832C3F03C900C1A2B4 /* bookloveUITests.swift */; };
 		CD5D50862C3F03C900C1A2B4 /* bookloveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D50852C3F03C900C1A2B4 /* bookloveUITestsLaunchTests.swift */; };
+		CD5D50952C3F24EB00C1A2B4 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD5D50942C3F24EB00C1A2B4 /* Launch Screen.storyboard */; };
+		CD5D50972C3F25B000C1A2B4 /* Welcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D50962C3F25B000C1A2B4 /* Welcome.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		CD5D507F2C3F03C900C1A2B4 /* bookloveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bookloveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5D50832C3F03C900C1A2B4 /* bookloveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookloveUITests.swift; sourceTree = "<group>"; };
 		CD5D50852C3F03C900C1A2B4 /* bookloveUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookloveUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CD5D50942C3F24EB00C1A2B4 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		CD5D50962C3F25B000C1A2B4 /* Welcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Welcome.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +102,8 @@
 				CD5D506A2C3F03C400C1A2B4 /* ContentView.swift */,
 				CD5D506C2C3F03C800C1A2B4 /* Assets.xcassets */,
 				CD5D506E2C3F03C800C1A2B4 /* Preview Content */,
+				CD5D50942C3F24EB00C1A2B4 /* Launch Screen.storyboard */,
+				CD5D50962C3F25B000C1A2B4 /* Welcome.swift */,
 			);
 			path = booklove;
 			sourceTree = "<group>";
@@ -231,6 +237,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD5D50952C3F24EB00C1A2B4 /* Launch Screen.storyboard in Resources */,
 				CD5D50702C3F03C800C1A2B4 /* Preview Assets.xcassets in Resources */,
 				CD5D506D2C3F03C800C1A2B4 /* Assets.xcassets in Resources */,
 			);
@@ -259,6 +266,7 @@
 			files = (
 				CD5D506B2C3F03C400C1A2B4 /* ContentView.swift in Sources */,
 				CD5D50692C3F03C400C1A2B4 /* bookloveApp.swift in Sources */,
+				CD5D50972C3F25B000C1A2B4 /* Welcome.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
