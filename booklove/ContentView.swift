@@ -40,7 +40,11 @@ struct ContentView: View {
             .blur(radius: 6).position(x:425, y: 700)
             
             Text("book\nlove.")
-                    .font(.system(size: 64, weight: .bold, design: .serif))
+                .font(.system(size: 64, weight: .bold, design: .serif))
+                .lineSpacing(-10)
+                .fontWeight(.bold)
+                .fontDesign(.serif)
+                .dynamicTypeSize(.xLarge)
                     .foregroundColor(.black)
                     .multilineTextAlignment(.center)
                     .frame(width: 158, height: 158, alignment: .topLeading)
