@@ -2,6 +2,8 @@ import SwiftUI
 import AuthenticationServices
 
 struct Welcome: View {
+    @State private var showActionSheet = false
+    
     var body: some View {
         ZStack {
             // Background Color
@@ -39,8 +41,6 @@ struct Welcome: View {
                 .blur(radius: 6)
             
             VStack {
-                
-                
                 Text("booklove.")
                     .font(.system(size: 64, weight: .bold, design: .serif))
                     .foregroundColor(.black)
@@ -57,23 +57,46 @@ struct Welcome: View {
                 
                 Spacer()
                 Spacer()
+                
                 Text("Let's get started.")
                     .font(.system(size: 32, design: .serif))
                     .foregroundColor(.black)
                     .padding(.top, 20)
+                
                 SignInWithAppleButton()
                     .frame(width: 280, height: 45)
-                    
+                
                 Text("By signing in, you agree to be bound by our Terms of Service and accept our Privacy Policy.")
-                    .font(.system(size: 16, design: .serif))
+                    .font(.system(size: 16, design: .monospaced))
                     .foregroundColor(.black)
                     .multilineTextAlignment(.center)
                     .padding(.top, 10)
                     .padding(.horizontal)
                     .padding(.bottom, -30)
+                    .onTapGesture {
+                        self.showActionSheet = true
+                    }
+                    .actionSheet(isPresented: $showActionSheet) {
+                        ActionSheet(
+                            title: Text("Important Information"),
+                            message: Text("Please review our Terms of Service and Privacy Policy."),
+                            buttons: [
+                                .default(Text("Terms of Service")) {
+                                    if let url = URL(string: "https://example.com/tos") {
+                                        UIApplication.shared.open(url)
+                                    }
+                                },
+                                .default(Text("Privacy Policy")) {
+                                    if let url = URL(string: "https://example.com/privacy") {
+                                        UIApplication.shared.open(url)
+                                    }
+                                },
+                                .cancel()
+                            ]
+                        )
+                    }
+                
                 Spacer()
-                
-                
             }
         }
         .frame(width: 393, height: 852)
