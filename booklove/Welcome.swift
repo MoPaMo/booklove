@@ -45,7 +45,7 @@ struct Welcome: View {
                     .font(.system(size: 64, weight: .bold, design: .serif))
                     .foregroundColor(.black)
                     .multilineTextAlignment(.center)
-                    .padding(.top, 100)
+                    .padding(.top, 20)
                 
                 Spacer()
                 Spacer()
@@ -99,7 +99,7 @@ struct Welcome: View {
                 Spacer()
             }
         }
-        .frame(width: 393, height: 852)
+        
     }
 }
 
