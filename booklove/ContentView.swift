@@ -42,6 +42,7 @@ struct ContentView: View {
             Text("book\nlove.")
                     .font(.system(size: 64, weight: .bold, design: .serif))
                     .foregroundColor(.black)
+                    .multilineTextAlignment(.center)
                     .frame(width: 158, height: 158, alignment: .topLeading)
         }
         .frame(width: 393, height: 852)
