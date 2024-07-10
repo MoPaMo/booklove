@@ -24,9 +24,20 @@ struct ContentView: View {
                         .clipped()
                 )
                 .cornerRadius(65)
-                .shadow(color: .white.opacity(0.25), radius: 3, x: 0, y: 4)
+                .shadow(color: .white.opacity(0.25), radius: 3, x: -10, y: 4)
                 .blur(radius: 6)
-                .rotationEffect(Angle(degrees: -58.16)).position(x: 0, y: 213.92)
+                .rotationEffect(Angle(degrees: -58.16)).position(x: -41, y: 213.92)
+            
+            Rectangle()
+            .foregroundColor(.clear)
+            .frame(width: 375.42, height: 341.27)
+            .background(
+            Image("blur_hex")
+            )
+            .cornerRadius(65)
+            .offset(x: 0.75, y: -56.23)
+            .rotationEffect(.degrees(-6.25))
+            .blur(radius: 6).position(x:425, y: 700)
             
             Text("book\nlove.")
                     .font(.system(size: 64, weight: .bold, design: .serif))
