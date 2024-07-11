@@ -79,27 +79,34 @@ struct BookLoveView: View {
                 }
                 .padding(.horizontal, 33)
                 
-                Spacer()
+                Rectangle()
+                .foregroundColor(.clear)
+                .frame(width: 287, height: 0.5)
+                .overlay(Rectangle()
+                .stroke(.black, lineWidth: 0.50))
                 
                 HStack {
                     Image(systemName: "heart")
-                        .resizable()
-                        .frame(width: 34, height: 34)
-                    Spacer()
+                        .font(.system(size: 32))
+                    
                     Image(systemName: "bookmark")
-                        .resizable()
-                        .frame(width: 31, height: 38)
-                    Spacer()
+                        .font(.system(size: 32))
+                    
                     Image(systemName: "square.and.arrow.up")
-                        .resizable()
-                        .frame(width: 34, height: 38)
+                        .font(.system(size: 32))
+                    Spacer()
+                    Spacer()
+                    Spacer()
+                    Spacer()
+                    
                     Spacer()
                     Image(systemName: "flag")
-                        .resizable()
-                        .frame(width: 24, height: 24)
+                        .font(.system(size: 32))
                 }
+                
+
                 .padding(.horizontal, 40)
-                .padding(.bottom, 20)
+                
                 
                 Spacer()
             }
