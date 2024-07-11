@@ -16,6 +16,7 @@
 		CD5D50862C3F03C900C1A2B4 /* bookloveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D50852C3F03C900C1A2B4 /* bookloveUITestsLaunchTests.swift */; };
 		CD5D50952C3F24EB00C1A2B4 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD5D50942C3F24EB00C1A2B4 /* Launch Screen.storyboard */; };
 		CD5D50972C3F25B000C1A2B4 /* Welcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D50962C3F25B000C1A2B4 /* Welcome.swift */; };
+		CDB501212C3F9162002DC85C /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501202C3F9162002DC85C /* Feed.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		CD5D50852C3F03C900C1A2B4 /* bookloveUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookloveUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CD5D50942C3F24EB00C1A2B4 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		CD5D50962C3F25B000C1A2B4 /* Welcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Welcome.swift; sourceTree = "<group>"; };
+		CDB501202C3F9162002DC85C /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				CD5D506E2C3F03C800C1A2B4 /* Preview Content */,
 				CD5D50942C3F24EB00C1A2B4 /* Launch Screen.storyboard */,
 				CD5D50962C3F25B000C1A2B4 /* Welcome.swift */,
+				CDB501202C3F9162002DC85C /* Feed.swift */,
 			);
 			path = booklove;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 			files = (
 				CD5D506B2C3F03C400C1A2B4 /* ContentView.swift in Sources */,
 				CD5D50692C3F03C400C1A2B4 /* bookloveApp.swift in Sources */,
+				CDB501212C3F9162002DC85C /* Feed.swift in Sources */,
 				CD5D50972C3F25B000C1A2B4 /* Welcome.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
