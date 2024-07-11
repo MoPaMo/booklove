@@ -9,10 +9,33 @@ import SwiftUI
 
 struct GeneralView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView {
+            Feed()
+                .tabItem {
+                    Image(systemName: "sparkles")
+                    Text("Feed")
+                }
+
+            Quotes()
+                .tabItem {
+                    Image(systemName: "quote.bubble.fill")
+                    Text("Quotes")
+                }
+            List()
+                .tabItem {
+                    Image(systemName: "books.vertical")
+                    Text("List")
+                }
+            ProfileView()
+                .tabItem {
+                    Image(systemName: "person.crop.circle")
+                    Text("Profile")
+                }
+        }
     }
 }
 
 #Preview {
     GeneralView()
 }
+

@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct BookLoveView: View {
+struct Feed: View {
     var body: some View {
         ZStack {
             // Background Color
@@ -115,10 +115,11 @@ struct BookLoveView: View {
                 
                 Spacer()
             }
+            
         }
     }
 }
 
 #Preview {
-    BookLoveView()
+    Feed()
 }
