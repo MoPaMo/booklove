@@ -41,7 +41,7 @@ struct ContentView: View {
             
             Text("book\nlove.")
                 .font(.system(size: 64, weight: .bold, design: .serif))
-                .lineSpacing(-10)
+                .lineSpacing(-50)
                 .fontWeight(.bold)
                 .fontDesign(.serif)
                 .dynamicTypeSize(.xLarge)

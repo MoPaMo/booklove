@@ -72,23 +72,23 @@ struct BookLoveView: View {
                         .foregroundColor(.cyan).padding(.bottom, -10)
                     
                     Text("Jane Austen, 1813")
-                        .font(.system(size: 18, weight: .regular, design: .monospaced))
-                        .foregroundColor(.black)
+                        .font(.system(size: 18, weight: .light, design: .monospaced))
+                        .foregroundColor(.black).kerning(-2)
                     
                     Text("""
                     Mr Bennet, owner of the Longbourn estate in Hertfordshire, has five daughters, but his property is entailed and can only be passed to a male heir. His wife also lacks an inheritance, so his family faces becoming poor upon his death. Thus, it is imperative that at least one of the daughters marry well to support the others, which is a primary motivation driving the plot.
                     """)
-                        .font(.system(size: 17, weight: .regular, design: .serif))
+                    .font(.system(size: 16.5, weight: .regular, design: .serif))
                         .foregroundColor(.black)
-                        .padding(.top, 10)
+                        .padding(.top, 1)
                 }
                 .padding(.horizontal, 33)
                 
                 Rectangle()
                 .foregroundColor(.clear)
-                .frame(width: 287, height: 0.5)
+                .frame(width: 300, height: 0.5)
                 .overlay(Rectangle()
-                .stroke(.black, lineWidth: 0.50))
+                    .stroke(.black, lineWidth: 0.50)).padding(.vertical, 2.0)
                 
                 HStack {
                     Image(systemName: "heart")
