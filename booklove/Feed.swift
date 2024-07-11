@@ -50,48 +50,51 @@ struct BookLoveView: View {
                             .resizable()
                             .frame(width: 50, height: 50)
                             .clipShape(Circle())
-                        Text("Jane Appleseed")
-                            .font(.system(size: 20, weight: .regular, design: .serif))
-                            .foregroundColor(.blue)
+                        VStack{ Text("Jane Appleseed")
+                            .font(.system(size: 24, weight: .bold, design: .serif))
+                            .foregroundColor(.mint)
+                        Text("is reading:")
+                                .font(.system(size: 16, weight: .light, design: .rounded))
+                                .multilineTextAlignment(.leading)
+                                .frame(alignment: .leading)
+                        .foregroundColor(.black)}
                     }
                     
-                    Text("is reading:")
-                        .font(.system(size: 16, weight: .regular, design: .monospaced))
-                        .foregroundColor(.black)
+                    
                     
                     Text("Pride and Prejudice")
-                        .font(.system(size: 24, weight: .bold, design: .serif))
-                        .foregroundColor(.blue)
+                        .font(.system(size: 24, weight: .heavy, design: .serif))
+                        .foregroundColor(.cyan).padding(.bottom, -10)
                     
                     Text("Jane Austen, 1813")
-                        .font(.system(size: 18, weight: .regular, design: .serif))
+                        .font(.system(size: 18, weight: .regular, design: .monospaced))
                         .foregroundColor(.black)
                     
                     Text("""
                     Mr Bennet, owner of the Longbourn estate in Hertfordshire, has five daughters, but his property is entailed and can only be passed to a male heir. His wife also lacks an inheritance, so his family faces becoming poor upon his death. Thus, it is imperative that at least one of the daughters marry well to support the others, which is a primary motivation driving the plot.
                     """)
-                        .font(.system(size: 14, weight: .regular, design: .serif))
+                        .font(.system(size: 17, weight: .regular, design: .serif))
                         .foregroundColor(.black)
                         .padding(.top, 10)
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 33)
                 
                 Spacer()
                 
                 HStack {
                     Image(systemName: "heart")
                         .resizable()
-                        .frame(width: 24, height: 24)
+                        .frame(width: 34, height: 34)
                     Spacer()
                     Image(systemName: "bookmark")
                         .resizable()
-                        .frame(width: 24, height: 24)
+                        .frame(width: 31, height: 38)
                     Spacer()
                     Image(systemName: "square.and.arrow.up")
                         .resizable()
-                        .frame(width: 24, height: 24)
+                        .frame(width: 34, height: 38)
                     Spacer()
-                    Image(systemName: "text.bubble")
+                    Image(systemName: "flag")
                         .resizable()
                         .frame(width: 24, height: 24)
                 }
