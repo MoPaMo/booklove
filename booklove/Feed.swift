@@ -50,15 +50,20 @@ struct BookLoveView: View {
                             .resizable()
                             .frame(width: 50, height: 50)
                             .clipShape(Circle())
-                        VStack{ Text("Jane Appleseed")
-                            .font(.system(size: 24, weight: .bold, design: .serif))
-                            .foregroundColor(.mint)
-                        Text("is reading:")
+                        
+                        VStack(alignment: .leading) {
+                            Text("Jane Appleseed")
+                                .font(.system(size: 24, weight: .bold, design: .serif))
+                                .foregroundColor(.mint)
+                            
+                            Text("is reading:")
                                 .font(.system(size: 16, weight: .light, design: .rounded))
-                                .multilineTextAlignment(.leading)
-                                .frame(alignment: .leading)
-                        .foregroundColor(.black)}
-                    }
+                                .foregroundColor(.black)
+                        }
+                        .padding(.leading, 10.0)
+                    
+                }
+
                     
                     
                     
