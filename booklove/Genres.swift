@@ -8,6 +8,13 @@
 import SwiftUI
 
 struct Genres: View {
+    let bookGenres = [
+        "Non-Fiction", "Romance", "Mystery", "Thriller",
+        "Young Adults", "Fantasy", "Classics", "Sci-Fi",
+        "Adventure", "Comedy", "Horror", "Historical",
+        "Self-Help", "Biography", "LGBT+", "Philosophy"
+    ]
+
     var body: some View {
         ZStack {
             BackgroundBlurElement()
@@ -21,13 +28,14 @@ struct Genres: View {
                     .multilineTextAlignment(.center)
                     .padding(.top, 10)
                 Spacer()
-                LazyVGrid(columns: [
+                
+                        LazyVGrid(columns: [
                         GridItem(.flexible()),
                         GridItem(.flexible())
-                    ], spacing: 16) {
-                        ForEach(0..<16) { index in
+                    ]) {
+                        ForEach(bookGenres, id:\.self){ genre in
                             
-                            Text("Item \(index)")
+                            Text(genre)
                                 .font(.system(size:20, design:.serif)).padding(.horizontal, 16)
                                 .padding(.vertical, 8)
                                 .background(Capsule().fill(Color.black))
@@ -37,10 +45,9 @@ struct Genres: View {
                 Spacer()
                 Text("pick some genres")
                     .font(.system(size: 28, weight: .medium, design: .rounded))
-                    .padding(.bottom, 40)
                 
             }
-        }
+        }.padding()
     }
 }
 #Preview {
