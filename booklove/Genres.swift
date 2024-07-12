@@ -11,11 +11,25 @@ struct Genres: View {
     var body: some View {
         ZStack {
             BackgroundBlurElement()
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            VStack {
+                Text("booklove.")
+                    .font(.system(size: 64, weight: .bold, design: .serif))
+                    .foregroundColor(.black)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 20)
+                Text("Let's get to know your reading tastes!") .font(.system(size: 32, weight: .light, design: .rounded))
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 10)
+                Spacer()
+
+                Text("pick some genres")
+                    .font(.system(size: 28, weight: .medium, design: .rounded))
+                    .padding(.bottom, 40)
+                
+            }
         }
     }
 }
-
 #Preview {
     Genres()
 }
