@@ -47,11 +47,11 @@ struct AccountView: View {
         ZStack{
             BackgroundBlurElement()
             VStack(alignment: .leading, spacing: 20) {
-                NavigationLink(destination: SettingsView()) {
+                
                     Text("Account")
                         .font(.system(.title3, design: .serif))
                         .foregroundColor(.black)
-                }
+                
                 Text("Set New Name")
                     .font(.system(.title3, design: .serif))
                 Text("Download My Data")
@@ -63,7 +63,6 @@ struct AccountView: View {
                 Spacer()
             }
             .padding()
-            .navigationBarTitle("Account", displayMode: .inline)
         }
     }
 }
