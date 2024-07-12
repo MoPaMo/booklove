@@ -13,31 +13,7 @@ struct ContentView: View {
         
         ZStack {
             
-            Rectangle()
-                .foregroundColor(.clear)
-                .frame(width: 307.14682, height: 292.85287)
-                .background(
-                    Image("blur_base")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 307.1468200683594, height: 292.8528747558594)
-                        .clipped()
-                )
-                .cornerRadius(65)
-                .shadow(color: .white.opacity(0.25), radius: 3, x: -10, y: 4)
-                .blur(radius: 6)
-                .rotationEffect(Angle(degrees: -58.16)).position(x: -41, y: 213.92)
-            
-            Rectangle()
-            .foregroundColor(.clear)
-            .frame(width: 375.42, height: 341.27)
-            .background(
-            Image("blur_hex")
-            )
-            .cornerRadius(65)
-            .offset(x: 0.75, y: -56.23)
-            .rotationEffect(.degrees(-6.25))
-            .blur(radius: 6).position(x:425, y: 700)
+            BackgroundBlurElement()
             
             Text("book\nlove.")
                 .font(.system(size: 64, weight: .bold, design: .serif))
