@@ -39,9 +39,7 @@ struct SettingsView: View {
                         .foregroundColor(.red)
                     
                     Spacer()
-                }
-                .padding([.top, .bottom, .trailing])
-                .padding(.leading, 30)
+                }.padding(.all)
             }
         }
     }
