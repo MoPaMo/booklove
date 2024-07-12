@@ -21,6 +21,7 @@
 		CDB501252C3FAAC9002DC85C /* Quotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501242C3FAAC9002DC85C /* Quotes.swift */; };
 		CDB501272C3FAAE9002DC85C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501262C3FAAE9002DC85C /* ProfileView.swift */; };
 		CDB501292C3FAC9E002DC85C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501282C3FAC9E002DC85C /* List.swift */; };
+		CDE4B8462C413B4D004C3282 /* BackgroundBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE4B8452C413B4D004C3282 /* BackgroundBlur.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		CDB501242C3FAAC9002DC85C /* Quotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quotes.swift; sourceTree = "<group>"; };
 		CDB501262C3FAAE9002DC85C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		CDB501282C3FAC9E002DC85C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		CDE4B8452C413B4D004C3282 /* BackgroundBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundBlur.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 				CD5D50942C3F24EB00C1A2B4 /* Launch Screen.storyboard */,
 				CD5D50962C3F25B000C1A2B4 /* Welcome.swift */,
 				CDB501202C3F9162002DC85C /* Feed.swift */,
+				CDE4B8452C413B4D004C3282 /* BackgroundBlur.swift */,
 				CDB501222C3FAA0D002DC85C /* GeneralView.swift */,
 				CDB501262C3FAAE9002DC85C /* ProfileView.swift */,
 				CDB501242C3FAAC9002DC85C /* Quotes.swift */,
@@ -280,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD5D506B2C3F03C400C1A2B4 /* ContentView.swift in Sources */,
+				CDE4B8462C413B4D004C3282 /* BackgroundBlur.swift in Sources */,
 				CDB501292C3FAC9E002DC85C /* List.swift in Sources */,
 				CD5D50692C3F03C400C1A2B4 /* bookloveApp.swift in Sources */,
 				CDB501252C3FAAC9002DC85C /* Quotes.swift in Sources */,
