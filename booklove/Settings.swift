@@ -14,28 +14,37 @@ struct SettingsView: View {
                 BackgroundBlurElement()
                 
                 VStack(spacing: 20) {
+                    Text("Settings.")
+                        .font(.system(size: 32, weight: .regular, design: .serif))
+                    
+                        .foregroundColor(.black)
+                    Spacer()
                     NavigationLink(destination: AccountView()) {
                         Text("Account")
-                            .font(.system(.title2, design: .serif))
+                            .font(.system(size: 32, weight: .regular, design: .serif))
                             .foregroundColor(.black)
                     }
                     Text("Book Vendor")
-                        .font(.system(.title2, design: .serif))
+                        .font(.system(size: 32, weight: .regular, design: .serif))
                     Link("Feedback", destination: URL(string: "mailto:feedback@example.com")!)
-                        .font(.system(.title2, design: .serif)).foregroundColor(.black)
+                        .font(.system(size: 32, weight: .regular, design: .serif))
+                        .foregroundColor(.black)
                     Button(action: {
                         let activityVC = UIActivityViewController(activityItems: ["Check out this awesome app!"], applicationActivities: nil)
                         UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
                     }) {
                         Text("Tell A Friend")
-                            .font(.system(.title2, design: .serif)).foregroundColor(.black)
+                            .font(.system(size: 32, weight: .regular, design: .serif))
+                            .foregroundColor(.black)
                     }
                     Link("Terms Of Service", destination: URL(string: "https://example.com/tos")!)
-                        .font(.system(.title2, design: .serif)).foregroundColor(.black)
+                        .font(.system(size: 32, weight: .regular, design: .serif))
+                        .foregroundColor(.black)
                     Link("Privacy Policy", destination: URL(string: "https://example.com/privacy")!)
-                        .font(.system(.title2, design: .serif)).foregroundColor(.black)
+                        .font(.system(size: 32, weight: .regular, design: .serif))
+                        .foregroundColor(.black)
                     Text("Sign Out")
-                        .font(.system(.title2, design: .serif))
+                        .font(.system(size: 32, weight: .regular, design: .serif))
                         .foregroundColor(.red)
                     
                     Spacer()
@@ -49,18 +58,18 @@ struct AccountView: View {
     var body: some View {
         ZStack {
             BackgroundBlurElement()
-            VStack(spacing: 20) {
+            VStack(spacing: 50) {
                 
                 Text("Account")
-                    .font(.system(.title2, design: .serif))
+                    .font(.system(size: 32, weight: .regular, design: .serif))
                     .foregroundColor(.black)
                 
                 Text("Set New Name")
-                    .font(.system(.title2, design: .serif))
+                    .font(.system(size: 32, weight: .regular, design: .serif))
                 Text("Download My Data")
-                    .font(.system(.title2, design: .serif))
+                    .font(.system(size: 32, weight: .regular, design: .serif))
                 Text("Delete Account")
-                    .font(.system(.title2, design: .serif))
+                    .font(.system(size: 32, weight: .regular, design: .serif))
                     .foregroundColor(.red)
                 
                 Spacer()
