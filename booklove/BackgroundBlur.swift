@@ -10,6 +10,8 @@ import SwiftUI
 struct BackgroundBlurElement: View {
     var body: some View {
         ZStack {
+            Color(red: 1, green: 0.98, blue: 0.98)
+                .edgesIgnoringSafeArea(.all)
             Rectangle()
                 .foregroundColor(.clear)
                 .frame(width: 307.14682, height: 292.85287)

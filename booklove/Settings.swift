@@ -25,7 +25,7 @@ struct SettingsView: View {
                             .foregroundColor(.black)
                     }
                     Text("Book Vendor")
-                        .font(.system(size: 32, weight: .regular, design: .serif))
+                        .font(.system(size: 32, weight: .regular, design: .serif)).foregroundStyle(.black)
                     Link("Feedback", destination: URL(string: "mailto:feedback@example.com")!)
                         .font(.system(size: 32, weight: .regular, design: .serif))
                         .foregroundColor(.black)
