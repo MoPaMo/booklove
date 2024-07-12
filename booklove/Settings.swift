@@ -6,8 +6,46 @@
 //
 
 import SwiftUI
+import UIKit
+
+struct ShareSheet: UIViewControllerRepresentable {
+    var activityItems: [Any]
+    var applicationActivities: [UIActivity]? = nil
+    
+    @Environment(\.presentationMode) var presentationMode
+
+    class Coordinator: NSObject, UIPopoverPresentationControllerDelegate {
+        var parent: ShareSheet
+
+        init(parent: ShareSheet) {
+            self.parent = parent
+        }
+
+        func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+            parent.presentationMode.wrappedValue.dismiss()
+        }
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(parent: self)
+    }
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
+        controller.popoverPresentationController?.delegate = context.coordinator
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+
+    static func dismantleUIViewController(_ uiViewController: UIActivityViewController, coordinator: Coordinator) {
+        uiViewController.dismiss(animated: true)
+    }
+}
 
 struct SettingsView: View {
+    @State private var isShowingShareSheet = false
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -16,7 +54,6 @@ struct SettingsView: View {
                 VStack(spacing: 20) {
                     Text("Settings.")
                         .font(.system(size: 32, weight: .regular, design: .serif))
-                    
                         .foregroundColor(.black)
                     Spacer()
                     NavigationLink(destination: AccountView()) {
@@ -25,17 +62,22 @@ struct SettingsView: View {
                             .foregroundColor(.black)
                     }
                     Text("Book Vendor")
-                        .font(.system(size: 32, weight: .regular, design: .serif)).foregroundStyle(.black)
+                        .font(.system(size: 32, weight: .regular, design: .serif))
+                        .foregroundStyle(.black)
                     Link("Feedback", destination: URL(string: "mailto:feedback@example.com")!)
                         .font(.system(size: 32, weight: .regular, design: .serif))
                         .foregroundColor(.black)
                     Button(action: {
-                        let activityVC = UIActivityViewController(activityItems: ["Check out this awesome app!"], applicationActivities: nil)
-                        UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+                        isShowingShareSheet = true
                     }) {
                         Text("Tell A Friend")
                             .font(.system(size: 32, weight: .regular, design: .serif))
                             .foregroundColor(.black)
+                    }
+                    .sheet(isPresented: $isShowingShareSheet) {
+                        ShareSheet(activityItems: ["Check out this awesome app!"])
+                            .presentationDetents([.medium, .large])
+                            .presentationDragIndicator(.hidden)
                     }
                     Link("Terms Of Service", destination: URL(string: "https://example.com/tos")!)
                         .font(.system(size: 32, weight: .regular, design: .serif))
@@ -48,7 +90,8 @@ struct SettingsView: View {
                         .foregroundColor(.red)
                     
                     Spacer()
-                }.padding(.all)
+                }
+                .padding(.all)
             }
         }
     }
