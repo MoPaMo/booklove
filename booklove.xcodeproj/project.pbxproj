@@ -17,6 +17,7 @@
 		CD5D50952C3F24EB00C1A2B4 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD5D50942C3F24EB00C1A2B4 /* Launch Screen.storyboard */; };
 		CD5D50972C3F25B000C1A2B4 /* Welcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D50962C3F25B000C1A2B4 /* Welcome.swift */; };
 		CD648BEC2C41710800A3F7E6 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD648BEB2C41710800A3F7E6 /* Genres.swift */; };
+		CD648BF02C41A17600A3F7E6 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD648BEF2C41A17600A3F7E6 /* Book.swift */; };
 		CDB501212C3F9162002DC85C /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501202C3F9162002DC85C /* Feed.swift */; };
 		CDB501232C3FAA0D002DC85C /* GeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501222C3FAA0D002DC85C /* GeneralView.swift */; };
 		CDB501252C3FAAC9002DC85C /* Quotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501242C3FAAC9002DC85C /* Quotes.swift */; };
@@ -57,6 +58,7 @@
 		CD5D50942C3F24EB00C1A2B4 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		CD5D50962C3F25B000C1A2B4 /* Welcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Welcome.swift; sourceTree = "<group>"; };
 		CD648BEB2C41710800A3F7E6 /* Genres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
+		CD648BEF2C41A17600A3F7E6 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		CDB501202C3F9162002DC85C /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		CDB501222C3FAA0D002DC85C /* GeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralView.swift; sourceTree = "<group>"; };
 		CDB501242C3FAAC9002DC85C /* Quotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quotes.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				CDE4B8452C413B4D004C3282 /* BackgroundBlur.swift */,
 				CDB501262C3FAAE9002DC85C /* ProfileView.swift */,
 				CDB501242C3FAAC9002DC85C /* Quotes.swift */,
+				CD648BEF2C41A17600A3F7E6 /* Book.swift */,
 				CDB501282C3FAC9E002DC85C /* List.swift */,
 				CDE4B8472C413F52004C3282 /* Settings.swift */,
 			);
@@ -296,6 +299,7 @@
 				CDE4B8482C413F52004C3282 /* Settings.swift in Sources */,
 				CDB501252C3FAAC9002DC85C /* Quotes.swift in Sources */,
 				CDB501212C3F9162002DC85C /* Feed.swift in Sources */,
+				CD648BF02C41A17600A3F7E6 /* Book.swift in Sources */,
 				CDB501232C3FAA0D002DC85C /* GeneralView.swift in Sources */,
 				CDB501272C3FAAE9002DC85C /* ProfileView.swift in Sources */,
 				CD5D50972C3F25B000C1A2B4 /* Welcome.swift in Sources */,
