@@ -10,10 +10,10 @@ import SwiftUI
 struct SettingsView: View {
     var body: some View {
         NavigationView {
-            ZStack{
+            ZStack {
                 BackgroundBlurElement()
                 
-                VStack(alignment: .leading, spacing: 20) {
+                VStack( spacing: 20) {
                     NavigationLink(destination: AccountView()) {
                         Text("Account")
                             .font(.system(.title3, design: .serif))
@@ -35,12 +35,13 @@ struct SettingsView: View {
                     
                     Spacer()
                 }
-                .padding()
-                
+                .padding([.top, .bottom, .trailing]) // Only set padding for top, bottom, and trailing
+                .padding(.leading, 30) // Set leading padding specifically here
             }
         }
     }
 }
+
 
 struct AccountView: View {
     var body: some View {
@@ -48,9 +49,9 @@ struct AccountView: View {
             BackgroundBlurElement()
             VStack(alignment: .leading, spacing: 20) {
                 
-                    Text("Account")
-                        .font(.system(.title3, design: .serif))
-                        .foregroundColor(.black)
+                Text("Account")
+                    .font(.system(.title3, design: .serif))
+                    .foregroundColor(.black)
                 
                 Text("Set New Name")
                     .font(.system(.title3, design: .serif))
@@ -62,7 +63,8 @@ struct AccountView: View {
                 
                 Spacer()
             }
-            .padding()
+            .padding(.leading, 18) // Setzt den linken Rand auf 30 Pixel
+            .padding([.top, .bottom, .trailing]) // Setzt die anderen Ränder auf den Standardwert
         }
     }
 }
