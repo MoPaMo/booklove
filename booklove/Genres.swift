@@ -28,6 +28,10 @@ struct Genres: View {
                         ForEach(0..<16) { index in
                             
                             Text("Item \(index)")
+                                .font(.system(size:20, design:.serif)).padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .background(Capsule().fill(Color.black))
+                                .foregroundColor(.white)
                         }
                     }
                 Spacer()
