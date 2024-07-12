@@ -21,7 +21,16 @@ struct Genres: View {
                     .multilineTextAlignment(.center)
                     .padding(.top, 10)
                 Spacer()
-
+                LazyVGrid(columns: [
+                        GridItem(.flexible()),
+                        GridItem(.flexible())
+                    ], spacing: 16) {
+                        ForEach(0..<16) { index in
+                            
+                            Text("Item \(index)")
+                        }
+                    }
+                Spacer()
                 Text("pick some genres")
                     .font(.system(size: 28, weight: .medium, design: .rounded))
                     .padding(.bottom, 40)
