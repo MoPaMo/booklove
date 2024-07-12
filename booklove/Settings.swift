@@ -21,14 +21,18 @@ struct SettingsView: View {
                     }
                     Text("Book Vendor")
                         .font(.system(.title2, design: .serif))
-                    Text("Feedback")
+                    Link("Feedback", destination: URL(string: "mailto:feedback@example.com")!)
                         .font(.system(.title2, design: .serif))
-                    Text("Tell A Friend")
+                    Button(action: {
+                        let activityVC = UIActivityViewController(activityItems: ["Check out this awesome app!"], applicationActivities: nil)
+                        UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+                    }) {
+                        Text("Tell A Friend")
                             .font(.system(.title2, design: .serif))
-                    
-                    Text("Terms Of Service")
+                    }
+                    Link("Terms Of Service", destination: URL(string: "https://example.com/tos")!)
                         .font(.system(.title2, design: .serif))
-                    Text("Privacy Policy")
+                    Link("Privacy Policy", destination: URL(string: "https://example.com/privacy")!)
                         .font(.system(.title2, design: .serif))
                     Text("Sign Out")
                         .font(.system(.title2, design: .serif))
