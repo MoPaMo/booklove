@@ -4,37 +4,7 @@ struct Quotes: View {
     var body: some View {
         ZStack {
             // Background Color
-            Color(red: 1, green: 0.98, blue: 0.98)
-                .edgesIgnoringSafeArea(.all)
-            
-            Rectangle()
-                .foregroundColor(.clear)
-                .frame(width: 307.14682, height: 292.85287)
-                .background(
-                    Image("blur_base")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 307.14682, height: 292.85287)
-                        .clipped()
-                )
-                .cornerRadius(65)
-                .shadow(color: .white.opacity(0.25), radius: 3, x: -10, y: 4)
-                .blur(radius: 6)
-                .rotationEffect(Angle(degrees: -58.16))
-                .offset(x: -130, y: -300)
-            
-            Rectangle()
-                .foregroundColor(.clear)
-                .frame(width: 375.42, height: 341.27)
-                .background(
-                    Image("blur_hex")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                )
-                .cornerRadius(65)
-                .offset(x: 130, y: 300)
-                .rotationEffect(.degrees(-6.25))
-                .blur(radius: 6)
+            BackgroundBlurElement()
             
             VStack(spacing: 20) {
                 
@@ -48,12 +18,21 @@ struct Quotes: View {
                 // Main Content
                 HStack( spacing: 20) {
                     VStack{ //card
-                        Rectangle()
-                          .foregroundColor(.clear)
-                          .frame(width: 311, height: 512)
-                          .background(.white.opacity(0.1))
-                          .cornerRadius(37)
-                          .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 4)
+                        ZStack {
+                            // Shape with shadow
+                            RoundedRectangle(cornerRadius: 37)
+                                .fill(Color.white.opacity(0.1))
+                                .frame(width: 311, height: 512)
+                                .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
+                                .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 4)
+
+                            // Transparent card
+                            RoundedRectangle(cornerRadius: 37)
+                                .fill(Color.clear)
+                                .frame(width: 311, height: 512)
+                                .mask(RoundedRectangle(cornerRadius: 37))
+                        }
+
                         // Quote
                         Text("      You must allow me to tell you how ardently I love and admire you.")
                             .font(.system(size: 40, weight: .regular, design: .serif))
