@@ -22,6 +22,7 @@
 		CDB501272C3FAAE9002DC85C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501262C3FAAE9002DC85C /* ProfileView.swift */; };
 		CDB501292C3FAC9E002DC85C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501282C3FAC9E002DC85C /* List.swift */; };
 		CDE4B8462C413B4D004C3282 /* BackgroundBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE4B8452C413B4D004C3282 /* BackgroundBlur.swift */; };
+		CDE4B8482C413F52004C3282 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE4B8472C413F52004C3282 /* Settings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		CDB501262C3FAAE9002DC85C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		CDB501282C3FAC9E002DC85C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		CDE4B8452C413B4D004C3282 /* BackgroundBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundBlur.swift; sourceTree = "<group>"; };
+		CDE4B8472C413F52004C3282 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 				CDB501262C3FAAE9002DC85C /* ProfileView.swift */,
 				CDB501242C3FAAC9002DC85C /* Quotes.swift */,
 				CDB501282C3FAC9E002DC85C /* List.swift */,
+				CDE4B8472C413F52004C3282 /* Settings.swift */,
 			);
 			path = booklove;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 				CDE4B8462C413B4D004C3282 /* BackgroundBlur.swift in Sources */,
 				CDB501292C3FAC9E002DC85C /* List.swift in Sources */,
 				CD5D50692C3F03C400C1A2B4 /* bookloveApp.swift in Sources */,
+				CDE4B8482C413F52004C3282 /* Settings.swift in Sources */,
 				CDB501252C3FAAC9002DC85C /* Quotes.swift in Sources */,
 				CDB501212C3F9162002DC85C /* Feed.swift in Sources */,
 				CDB501232C3FAA0D002DC85C /* GeneralView.swift in Sources */,
