@@ -45,9 +45,14 @@ struct Genres: View {
                             .background(
                                 Capsule()
                                     .fill(selectedGenres.contains(genre) ? Color.white : Color.black)
+                                    .animation(.easeInOut(duration: 0.25), value: selectedGenres)
+                            )
+                            .overlay(
+                                Capsule()
                                     .stroke(Color.black, lineWidth: 1)
                             )
                             .foregroundColor(selectedGenres.contains(genre) ? .black : .white)
+                            .animation(.easeInOut(duration: 0.25), value: selectedGenres)
                             .onTapGesture {
                                 toggleGenre(genre)
                             }
