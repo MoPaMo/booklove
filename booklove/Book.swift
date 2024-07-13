@@ -63,7 +63,41 @@ struct Book: View {
                 .frame(width: 287, height: 0.5)
                 .overlay(Rectangle()
                 .stroke(.black, lineWidth: 0.50))
+                
+                HStack(spacing: 0) {  // No spacing between elements
+                            Text("Read by")
+                                .font(.system(size: 30))
+                                .foregroundColor(.black)
+                            
+                            ZStack {
+                                Image("memoji_placeholder")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 44, height: 44)
+                                    .clipShape(Circle())
+                                    .offset(x: 0)
+
+                                Image("memoji_placeholder")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 44, height: 44)
+                                    .clipShape(Circle())
+                                    .offset(x: 20)
+
+                                Image("memoji_placeholder")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 44, height: 44)
+                                    .clipShape(Circle())
+                                    .offset(x: 40)
+                            }
+                            .frame(width: 110)
+                        }
             }.padding(.all)
+            
+                    
+                    
+                
             
         }
     }
