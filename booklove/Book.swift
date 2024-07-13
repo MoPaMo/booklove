@@ -18,7 +18,13 @@ struct Book: View {
                 Text("Jane Austen, 1813")
                     .font(.system(size: 20, weight: .light, design: .monospaced))
                     .foregroundColor(.black)
+                Rectangle()
+                .foregroundColor(.clear)
+                .frame(width: 287, height: 0.5)
+                .overlay(Rectangle()
+                .stroke(.black, lineWidth: 0.50))
                 Text("Mr Bennet, owner of the Longbourn estate in Hertfordshire, has five daughters, but his property is entailed and can only be passed to a male heir. His wife also lacks an inheritance, so his family faces... more").font(.system(size: 16, weight: .light, design: .serif)).foregroundColor(.black)
+               
                 HStack(){ZStack() {
                     Rectangle()
                         .foregroundColor(.clear)
@@ -52,7 +58,11 @@ struct Book: View {
                     }
                     .frame(width: 161, height: 53)
                 }
-                
+                Rectangle()
+                .foregroundColor(.clear)
+                .frame(width: 287, height: 0.5)
+                .overlay(Rectangle()
+                .stroke(.black, lineWidth: 0.50))
             }.padding(.all)
             
         }
