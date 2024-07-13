@@ -73,23 +73,31 @@ struct Book: View {
                                 Image("memoji_placeholder")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 44, height: 44)
+                                    .frame(width: 44, height: 44).background(Color(red: 0.8, green: 0.8, blue: 0.8))
                                     .clipShape(Circle())
-                                    .offset(x: 0)
+                                    .offset(x: 0).shadow(
+                                        color: Color(red: 0, green: 0, blue: 0, opacity: 0.25), radius: 4, y: 4
+                                        )
 
                                 Image("memoji_placeholder")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 44, height: 44)
+                                    .frame(width: 44, height: 44).background(Color(red: 0.8, green: 0.8, blue: 0.8))
                                     .clipShape(Circle())
-                                    .offset(x: 20)
+                                    
+                                    .offset(x: 25).shadow(
+                                        color: Color(red: 0, green: 0, blue: 0, opacity: 0.25), radius: 4, y: 4
+                                        )
 
                                 Image("memoji_placeholder")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 44, height: 44)
+                                    .frame(width: 44, height: 44).background(Color(red: 0.8, green: 0.8, blue: 0.8))
                                     .clipShape(Circle())
-                                    .offset(x: 40)
+                                    .offset(x: 50).shadow(
+                                        color: Color(red: 0, green: 0, blue: 0, opacity: 0.25), radius: 4, y: 4
+                                        )
+
                             }
                             .frame(width: 110)
                         }
