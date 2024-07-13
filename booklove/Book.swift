@@ -12,12 +12,17 @@ struct Book: View {
         ZStack {
             BackgroundBlurElement()
             VStack{
-                Text("Pride and Prejudice")
-                    .font(.system(size: 40, weight: .bold, design: .serif))
-                    .foregroundColor(Color(red: 0.20, green: 0.68, blue: 0.90))
-                Text("Jane Austen, 1813")
-                    .font(.system(size: 20, weight: .light, design: .monospaced))
-                    .foregroundColor(.black)
+                HStack(alignment: .top, spacing: 16) {
+                    VStack(alignment: .leading) {
+                        Text("Pride and Prejudice")
+                            .font(.system(size: 40, weight: .bold, design: .serif))
+                            .foregroundColor(Color(red: 0.20, green: 0.68, blue: 0.90))
+                        Text("Jane Austen, 1813")
+                            .font(.system(size: 20, weight: .light, design: .monospaced))
+                            .foregroundColor(.black)
+                    }
+                    Spacer()
+                }
                 Rectangle()
                 .foregroundColor(.clear)
                 .frame(width: 287, height: 0.5)
@@ -98,9 +103,9 @@ struct Book: View {
                                         color: Color(red: 0, green: 0, blue: 0, opacity: 0.25), radius: 4, y: 4
                                         )
 
-                            }
-                            .frame(width: 110)
-                        }
+                            }.padding(.horizontal)
+                    Spacer()
+                }.padding(.leading, 31.0)
             }.padding(.all)
             
                     
