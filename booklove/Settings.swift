@@ -49,7 +49,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                BackgroundBlurElement()
+                BackgroundBlurElement().edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 20) {
                     Text("Settings.")
@@ -102,7 +102,7 @@ struct SettingsView: View {
 struct AccountView: View {
     var body: some View {
         ZStack {
-            BackgroundBlurElement()
+            BackgroundBlurElement().edgesIgnoringSafeArea(.all)
             VStack(spacing: 50) {
                 
                 Text("Account")
@@ -128,7 +128,7 @@ struct AccountView: View {
 struct VendorView: View{
     var body: some View{
         ZStack{
-            BackgroundBlurElement()
+            BackgroundBlurElement().edgesIgnoringSafeArea(.all)
             VStack(spacing: 50) {
                 
                 Text("Vendor")
@@ -172,16 +172,16 @@ struct VendorView: View{
                     }
                     
                 }.padding(.bottom)
-            }
+            }.padding(.leading, 18)
+                .padding([.top, .bottom, .trailing])
                 
                 
             }
-            .padding(.leading, 18)
-            .padding([.top, .bottom, .trailing])
+            
         }
     }
 
 
 #Preview {
-    SettingsView()
+    VendorView()
 }
