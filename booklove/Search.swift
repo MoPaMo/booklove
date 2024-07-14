@@ -48,8 +48,13 @@ struct SearchView: View {
                 
                     ForEach(searchResults, id: \.self) { result in
                         Text(result)
-                            .font(.system(size: 16, design:.serif))
-                            .padding()
+                            .font(.system(size: 24, weight: .heavy, design: .serif))
+                            .foregroundColor(.cyan).padding(.bottom, -10)
+                        
+                        Text("Jane Austen, 1813")
+                            .font(.system(size: 18, weight: .light, design: .monospaced))
+                            .foregroundColor(.black).kerning(-2)
+                        
                     }
                 .listStyle(PlainListStyle())
 
