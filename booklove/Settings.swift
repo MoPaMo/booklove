@@ -183,5 +183,5 @@ struct VendorView: View{
 
 
 #Preview {
-    VendorView()
+    SettingsView()
 }
