@@ -17,6 +17,7 @@ struct BookItem: Identifiable {
 }
 
 struct List: View {
+    @State private var isSheetPresented = false;
     let books: [BookItem] = [
         BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: 1813),
         BookItem(title: "Sense and Sensibility", author: "Jane Austen", year: 1811),
@@ -82,7 +83,23 @@ struct List: View {
                 }
             }
             .padding(.horizontal, 20)
-        }.safeAreaInset(edge: .top) {
+            VStack {
+                           HStack {
+                               Spacer()
+                               Image(systemName: "magnifyingglass.circle.fill")
+                                   .foregroundColor(.black)
+                                   .font(.system(size: 32))
+                                   .padding().onTapGesture {
+                                        isSheetPresented = true
+                                   }
+                           }
+                           Spacer()
+                       }
+        }.sheet(isPresented: $isSheetPresented) {
+            SearchView()
+        }
+        
+        .safeAreaInset(edge: .top) {
             ZStack {
                 Rectangle()
                     .fill(.clear)

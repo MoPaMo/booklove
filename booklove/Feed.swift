@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct Feed: View {
+    @State private var isSheetPresented = false;
     var body: some View {
         ZStack {
             // Background Color
@@ -21,7 +22,7 @@ struct Feed: View {
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
                             Image(systemName: "person.circle.fill")
-                                .resizable()
+                                .resizable().foregroundColor(.black)
                                 .frame(width: 50, height: 50)
                                 .clipShape(Circle())
                             
@@ -66,13 +67,13 @@ struct Feed: View {
                     
                     HStack {
                         Image(systemName: "heart")
-                            .font(.system(size: 32))
+                            .font(.system(size: 32)).foregroundColor(.black)
                         
-                        Image(systemName: "bookmark")
+                        Image(systemName: "bookmark").foregroundColor(.black)
                             .font(.system(size: 32))
                         
                         Image(systemName: "square.and.arrow.up")
-                            .font(.system(size: 32))
+                            .font(.system(size: 32)).foregroundColor(.black)
                         Spacer()
                         Spacer()
                         Spacer()
@@ -90,6 +91,20 @@ struct Feed: View {
                     Spacer()
                 }
             }
+            VStack {
+                           HStack {
+                               Spacer()
+                               Image(systemName: "magnifyingglass.circle.fill")
+                                   .foregroundColor(.black)
+                                   .font(.title)
+                                   .padding().onTapGesture {
+                                       isSheetPresented = true
+                                   }
+                           }
+                           Spacer()
+                       }
+        }.sheet(isPresented: $isSheetPresented) {
+            SearchView()
         }
     }
 }

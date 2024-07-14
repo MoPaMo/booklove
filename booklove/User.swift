@@ -2,6 +2,7 @@ import SwiftUI
 
 struct UserProfileView: View {
     @State var followed = false;
+    @State private var isSheetPresented = false;
     let books: [BookItem] = [
         BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: 1813),
         BookItem(title: "Sense and Sensibility", author: "Jane Austen", year: 1811),
@@ -145,13 +146,15 @@ struct UserProfileView: View {
             VStack {
                            HStack {
                                Spacer()
-                               Image(systemName: "gearshape.fill")
+                               Image(systemName: "gearshape.circle.fill")
                                    .foregroundColor(.black)
-                                   .font(.title)
+                                   .font(.system(size: 32))
                                    .padding()
                            }
                            Spacer()
-                       }
+            }.onTapGesture {
+                isSheetPresented = true
+            }
         }.safeAreaInset(edge: .top) {
             ZStack {
                 Rectangle()
@@ -160,6 +163,8 @@ struct UserProfileView: View {
                     .blur(radius: 10)
                     .frame(height: 0)
             }
+        }.sheet(isPresented: $isSheetPresented) {
+            SettingsView()
         }
     }
 }
