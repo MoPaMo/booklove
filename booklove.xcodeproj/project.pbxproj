@@ -19,6 +19,7 @@
 		CD648BEC2C41710800A3F7E6 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD648BEB2C41710800A3F7E6 /* Genres.swift */; };
 		CD648BF02C41A17600A3F7E6 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD648BEF2C41A17600A3F7E6 /* Book.swift */; };
 		CD648BF22C43F40400A3F7E6 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD648BF12C43F40300A3F7E6 /* Search.swift */; };
+		CD648BF42C440DCD00A3F7E6 /* Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD648BF32C440DCD00A3F7E6 /* Setup.swift */; };
 		CDB501212C3F9162002DC85C /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501202C3F9162002DC85C /* Feed.swift */; };
 		CDB501232C3FAA0D002DC85C /* GeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501222C3FAA0D002DC85C /* GeneralView.swift */; };
 		CDB501252C3FAAC9002DC85C /* Quotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501242C3FAAC9002DC85C /* Quotes.swift */; };
@@ -61,6 +62,7 @@
 		CD648BEB2C41710800A3F7E6 /* Genres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
 		CD648BEF2C41A17600A3F7E6 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		CD648BF12C43F40300A3F7E6 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
+		CD648BF32C440DCD00A3F7E6 /* Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setup.swift; sourceTree = "<group>"; };
 		CDB501202C3F9162002DC85C /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		CDB501222C3FAA0D002DC85C /* GeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralView.swift; sourceTree = "<group>"; };
 		CDB501242C3FAAC9002DC85C /* Quotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quotes.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				CDB501262C3FAAE9002DC85C /* ProfileView.swift */,
 				CDB501242C3FAAC9002DC85C /* Quotes.swift */,
 				CD648BEF2C41A17600A3F7E6 /* Book.swift */,
+				CD648BF32C440DCD00A3F7E6 /* Setup.swift */,
 				CDB501282C3FAC9E002DC85C /* List.swift */,
 				CDE4B8472C413F52004C3282 /* Settings.swift */,
 			);
@@ -299,6 +302,7 @@
 				CDE4B8462C413B4D004C3282 /* BackgroundBlur.swift in Sources */,
 				CDB501292C3FAC9E002DC85C /* List.swift in Sources */,
 				CD5D50692C3F03C400C1A2B4 /* bookloveApp.swift in Sources */,
+				CD648BF42C440DCD00A3F7E6 /* Setup.swift in Sources */,
 				CD648BEC2C41710800A3F7E6 /* Genres.swift in Sources */,
 				CDE4B8482C413F52004C3282 /* Settings.swift in Sources */,
 				CDB501252C3FAAC9002DC85C /* Quotes.swift in Sources */,
