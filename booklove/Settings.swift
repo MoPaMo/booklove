@@ -139,24 +139,42 @@ struct VendorView: View{
                     GridItem(.flexible()),
                     GridItem(.flexible())
                 ], spacing: 10) {
-                            ForEach(["Amazon", "eBay", "bookshop.org", "Thrift Books"], id: \.self) { title in
-                                ZStack {
-                                    Rectangle()
-                                        .foregroundColor(.clear)
-                                        .frame(width: 161, height: 161) // Making the frame quadratic
-                                        .background(Color.white)
-                                        .cornerRadius(34)
-                                        .shadow(color: Color.black.opacity(0.2), radius: 6, y: 2)
-                                    Text(title)
-                                        .font(.system(size: 24, design:.serif))
-                                        .foregroundColor(.black)
-                                }
-                            }
+                    ForEach(["Amazon", "eBay", "bookshop.org", "Thrift Books"], id: \.self) { title in
+                        ZStack {
+                            Rectangle()
+                                .foregroundColor(.clear)
+                                .frame(width: 161, height: 161) // Making the frame quadratic
+                                .background(Color.white)
+                                .cornerRadius(34)
+                                .shadow(color: Color.black.opacity(0.2), radius: 6, y: 2)
+                            Text(title)
+                                .font(.system(size: 24, design:.serif))
+                                .foregroundColor(.black)
                         }
-                        .padding()
                     }
-                
+                }
+                .padding()
                 Spacer()
+                VStack (spacing:10){
+                    Image(systemName: "exclamationmark.triangle")
+                        .font(.system(size:15, design:.serif))
+                    Text("We do not earn money from book sales.")
+                        .font(.system(size:15, design:.serif))
+                    Button(action: {
+                        let email = "vendor@booklove.top"
+                        if let url = URL(string: "mailto:\(email)") {
+                            UIApplication.shared.open(url)
+                        }
+                    }) {
+                        Text("Suggest A Vendor")
+                            .font(.system(size:20, design:.serif))
+                            .underline().foregroundStyle(.black)
+                    }
+                    
+                }.padding(.bottom)
+            }
+                
+                
             }
             .padding(.leading, 18)
             .padding([.top, .bottom, .trailing])
@@ -165,5 +183,5 @@ struct VendorView: View{
 
 
 #Preview {
-    SettingsView()
+    VendorView()
 }
