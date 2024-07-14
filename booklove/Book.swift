@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct Book: View {
+    @State private var isSheetPresented = false
+    let fullText = """
+        Mr Bennet, owner of the Longbourn estate in Hertfordshire, has five daughters, but his property is entailed and can only be passed to a male heir. His wife also lacks an inheritance, so his family faces becoming poor upon his death. Thus, it is imperative that at least one of the daughters marry well to support the others, which is a primary motivation driving the plot.
+        """
+    
     var body: some View {
         ZStack {
             BackgroundBlurElement()
@@ -30,12 +35,18 @@ struct Book: View {
                 .frame(width: 287, height: 0.5)
                 .overlay(Rectangle()
                 .stroke(.black, lineWidth: 0.50))
-                HStack{
-                    Text("Mr Bennet, owner of the Longbourn estate in Hertfordshire, has five daughters, but his property is entailed and can only be passed to a male heir. His wife also lacks an inheritance, so his family faces... ").font(.system(size: 16, weight: .light, design: .serif)).foregroundColor(.black)
-                    +
-                    Text("more").font(.system(size: 16, weight: .bold, design: .serif)).foregroundColor(.blue)
-                }
-               
+                HStack {
+                                Text("Mr Bennet, owner of the Longbourn estate in Hertfordshire, has five daughters, but his property is entailed and can only be passed to a male heir. His wife also lacks an inheritance, so his family faces...")
+                                    .font(.system(size: 16, weight: .light, design: .serif))
+                                    .foregroundColor(.black)
+                                +
+                                Text("more")
+                                    .font(.system(size: 16, weight: .bold, design: .serif))
+                                    .foregroundColor(.blue)
+                            }
+                            .onTapGesture {
+                                isSheetPresented = true
+                            }
                 HStack(){ZStack() {
                     Rectangle()
                         .foregroundColor(.clear)
@@ -67,7 +78,7 @@ struct Book: View {
                             .foregroundColor(.black)
                             .offset(x: 0, y: 0.50)
                     }
-                    .frame(width: 161, height: 53)
+                    .frame(height: 53)
                 }.padding(.top)
                 Rectangle()
                 .foregroundColor(.clear)
@@ -112,7 +123,24 @@ struct Book: View {
                             }.padding(.horizontal)
                     Spacer()
                 }.padding(.leading)
-            }.padding(.all)
+            }.padding(.all).sheet(isPresented: $isSheetPresented) {
+                VStack {
+                    Text(fullText)
+                        .font(.system(size: 16, weight: .light, design: .serif))
+                        .foregroundColor(.black)
+                        .padding()
+                    Spacer()
+                    Button(action: {
+                        isSheetPresented = false
+                    }) {
+                        Text("Close")
+                            .font(.system(size: 16, weight: .bold, design: .serif))
+                            .foregroundColor(.blue)
+                    }
+                    .padding()
+                }
+            }
+        
             
                     
                     
