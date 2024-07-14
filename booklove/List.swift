@@ -50,7 +50,7 @@ struct List: View {
                     HStack {
                         ForEach(["Adventure", "Horror", "Comedy", "History"], id: \.self) { genre in
                             Text(genre)
-                                .font(.system(size: 18, weight: .bold, design: .rounded))
+                                .font(.system(size: 18, weight: .bold, design: .serif))
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 10)
                                 .background(Color.black)
