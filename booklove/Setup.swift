@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Setup: View {
+    @ObservedObject var appState: AppState
     @State private var name = ""
     @State private var favoriteBook = ""
     @State private var showContinueButton = false
@@ -75,8 +76,7 @@ struct Setup: View {
                 
                 if showContinueButton {
                     Button(action: {
-                        // Handle continue action
-                        print("Continue button tapped")
+                        appState.currentScreen = .genres
                     }) {
                         Text("Continue")
                             .font(.system(size: 20, weight: .semibold, design:.serif))
@@ -103,6 +103,6 @@ struct Setup: View {
     }
 }
 
-#Preview {
-    Setup()
-}
+//#Preview {
+  //  Setup()
+//}

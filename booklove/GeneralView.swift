@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct GeneralView: View {
+    
     var body: some View {
         TabView {
             Feed()
@@ -36,6 +37,6 @@ struct GeneralView: View {
 }
 
 #Preview {
-    GeneralView()
+  GeneralView()
 }
 

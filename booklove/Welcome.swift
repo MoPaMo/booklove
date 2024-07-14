@@ -3,7 +3,8 @@ import AuthenticationServices
 
 struct Welcome: View {
     @State private var showActionSheet = false
-    
+    @ObservedObject var appState: AppState
+
     var body: some View {
         ZStack {
             // Background Color
@@ -37,7 +38,9 @@ struct Welcome: View {
                     .padding(.top, 20)
                 
                 SignInWithAppleButton()
-                    .frame(width: 280, height: 45)
+                    .frame(width: 280, height: 45).onTapGesture {
+                        appState.currentScreen = .setup
+                    }
                 
                 Text("By signing in, you agree to be bound by our Terms of Service and accept our Privacy Policy. \nClick here to review them.")
                     .font(.system(size: 16, design: .monospaced))
@@ -84,6 +87,6 @@ struct SignInWithAppleButton: UIViewRepresentable {
     func updateUIView(_ uiView: ASAuthorizationAppleIDButton, context: Context) {}
 }
 
-#Preview {
-    Welcome()
-}
+//#Preview {
+    //Welcome()
+//}

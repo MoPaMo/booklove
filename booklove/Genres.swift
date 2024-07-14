@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct Genres: View {
+    @ObservedObject var appState: AppState
+
     let bookGenres = [
         "Non-Fiction", "Romance", "Mystery", "Thriller",
         "Young Adults", "Fantasy", "Classics", "Sci-Fi",
@@ -66,7 +68,7 @@ struct Genres: View {
                 }
                 if showContinueButton {
                     Button("continue") {
-                        
+                        appState.currentScreen = .main
                     }
                     .font(.system(size: 28, weight: .medium, design: .rounded)).foregroundColor(.black)
                 }
@@ -88,6 +90,6 @@ struct Genres: View {
     }
 }
 
-#Preview {
-    Genres()
-}
+//#Preview {
+//    Genres()
+//}
