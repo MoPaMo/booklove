@@ -53,11 +53,52 @@ struct UserProfileView: View {
                     }
                 }
                 .padding()
+                .background(Color.white.opacity(0.5).blur(radius: 10))
                 
-                .cornerRadius(10)            
-                Spacer()
+                .cornerRadius(10)
+                
+                Text("Favourite Genres").font(.system(size:20, weight:.light))
+                
+                
+                HStack{
+                    Text("Friends").font(.system(size:20, weight:.light))
+                    
+                    Spacer()
+                    Text("See all").font(.system(size:20, weight:.light, design:.rounded)).foregroundColor(.blue)
+                    
+                }.padding(.horizontal)
+                HStack {
+                    Spacer()
+                    
+                    ZStack {
+                        ForEach(0 ..< 5) { item in
+                            Image("memoji_placeholder")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 61, height: 61)
+                                .background(Color(red: 0.8, green: 0.8, blue: 0.8))
+                                .clipShape(Circle())
+                                .offset(x: CGFloat(item * 35))
+                                .shadow(
+                                    color: Color(red: 0, green: 0, blue: 0, opacity: 0.25),
+                                    radius: 4,
+                                    y: 4
+                                )
+                        }
+                    }
+                    .padding(.trailing, (61 + 5 * 35)/2)
+                    .padding(.leading, 0)
+                    
+                    Spacer()
+                }
 
+                
+                
+                
+                Text("Books").font(.system(size:20, weight:.light))
+                Spacer()
             }
+            
         }
     }
 }

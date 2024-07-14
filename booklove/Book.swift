@@ -42,7 +42,7 @@ struct Book: View {
                             .font(.system(size: 16, weight: .light, design: .serif))
                             .foregroundColor(.black)
                         +
-                        Text("more")
+                        Text(" more")
                             .font(.system(size: 16, weight: .bold, design: .serif))
                             .foregroundColor(.blue)
                     }
