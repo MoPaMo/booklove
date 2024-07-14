@@ -27,7 +27,7 @@ struct GeneralView: View {
                     Image(systemName: "books.vertical")
                     Text("List")
                 }
-            SettingsView()
+            UserProfileView()
                 .tabItem {
                     Image(systemName: "person.crop.circle")
                     Text("Profile")

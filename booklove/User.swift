@@ -141,6 +141,14 @@ struct UserProfileView: View {
                     }.padding(.horizontal)
                 }
             }
+        }.safeAreaInset(edge: .top) {
+            ZStack {
+                Rectangle()
+                    .fill(.clear)
+                    .background(Color.white.opacity(1))
+                    .blur(radius: 10)
+                    .frame(height: 0)
+            }
         }
     }
 }

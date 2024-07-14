@@ -82,6 +82,14 @@ struct List: View {
                 }
             }
             .padding(.horizontal, 20)
+        }.safeAreaInset(edge: .top) {
+            ZStack {
+                Rectangle()
+                    .fill(.clear)
+                    .background(Color.white.opacity(1))
+                    .blur(radius: 10)
+                    .frame(height: 0)
+            }
         }
     }
 }
