@@ -30,7 +30,11 @@ struct Book: View {
                 .frame(width: 287, height: 0.5)
                 .overlay(Rectangle()
                 .stroke(.black, lineWidth: 0.50))
-                Text("Mr Bennet, owner of the Longbourn estate in Hertfordshire, has five daughters, but his property is entailed and can only be passed to a male heir. His wife also lacks an inheritance, so his family faces... more").font(.system(size: 16, weight: .light, design: .serif)).foregroundColor(.black).padding(.leading)
+                HStack{
+                    Text("Mr Bennet, owner of the Longbourn estate in Hertfordshire, has five daughters, but his property is entailed and can only be passed to a male heir. His wife also lacks an inheritance, so his family faces... ").font(.system(size: 16, weight: .light, design: .serif)).foregroundColor(.black)
+                    +
+                    Text("more").font(.system(size: 16, weight: .bold, design: .serif)).foregroundColor(.blue)
+                }
                
                 HStack(){ZStack() {
                     Rectangle()
