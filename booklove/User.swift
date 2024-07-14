@@ -13,6 +13,7 @@ struct UserProfileView: View {
     var body: some View {
         ZStack{
             BackgroundBlurElement()
+            
             ScrollView{
                 VStack{
                     Text("booklove.")
@@ -141,6 +142,16 @@ struct UserProfileView: View {
                     }.padding(.horizontal)
                 }
             }
+            VStack {
+                           HStack {
+                               Spacer()
+                               Image(systemName: "gearshape.fill")
+                                   .foregroundColor(.black)
+                                   .font(.title)
+                                   .padding()
+                           }
+                           Spacer()
+                       }
         }.safeAreaInset(edge: .top) {
             ZStack {
                 Rectangle()
