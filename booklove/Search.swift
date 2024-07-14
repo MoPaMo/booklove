@@ -9,6 +9,19 @@ import SwiftUI
 
 struct SearchView: View {
     @State private var searchText = ""
+    @State private var isLoading = false
+    @State private var searchResults: [String] = []
+    
+    let sampleBooks = [
+        "The Great Gatsby",
+        "Moby Dick",
+        "To Kill a Mockingbird",
+        "1984",
+        "The Catcher in the Rye",
+        "Pride and Prejudice",
+        "War and Peace",
+        "The Odyssey"
+    ]
     
     var body: some View {
         VStack {
@@ -16,19 +29,49 @@ struct SearchView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.gray)
                 
-                TextField("Search for books, authors, or genres", text: $searchText)
-                    .font(.system(size:16, design:.serif))
-                    .padding(8)
+                TextField("Search for books, authors, or readers", text: $searchText, onCommit: {
+                    performSearch()
+                })
+                .font(.custom("Georgia", size: 16))
+                .padding(8)
             }
             .padding()
             .background(BlurView(style: .systemMaterial))
             .cornerRadius(10)
             .padding([.leading, .trailing], 16)
+            
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .padding()
+            } else {
+                
+                    ForEach(searchResults, id: \.self) { result in
+                        Text(result)
+                            .font(.system(size: 16, design:.serif))
+                            .padding()
+                    }
+                .listStyle(PlainListStyle())
+
+            }
         }
         .background(Color.white.edgesIgnoringSafeArea(.all))
         .overlay(
             BackgroundBlur()
         )
+    }
+    
+    private func performSearch() {
+        isLoading = true
+        searchResults = []
+        
+        DispatchQueue.global().asyncAfter(deadline: .now() + 1.5) {
+            let results = sampleBooks.filter { $0.localizedCaseInsensitiveContains(searchText) }
+            DispatchQueue.main.async {
+                searchResults = results
+                isLoading = false
+            }
+        }
     }
 }
 
@@ -58,13 +101,6 @@ struct BlurView: UIViewRepresentable {
     
     func updateUIView(_ uiView: UIVisualEffectView, context: Context) {}
 }
-
-struct SearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchView()
-    }
-}
-
 
 #Preview {
     SearchView()
