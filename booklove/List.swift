@@ -31,7 +31,7 @@ struct List: View {
             // Background Color
             BackgroundBlurElement()
                 .edgesIgnoringSafeArea(.all)
-            
+            ScrollView {
             VStack(alignment: .leading) {
                 
                         
@@ -63,7 +63,7 @@ struct List: View {
                 .padding(.bottom, 20)
                 
                 
-                ScrollView {
+                
                     VStack(alignment: .leading, spacing: 10) {
                         ForEach(books) { book in
                             VStack(alignment: .leading) {
