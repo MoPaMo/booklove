@@ -61,9 +61,11 @@ struct SettingsView: View {
                             .font(.system(size: 32, weight: .regular, design: .serif))
                             .foregroundColor(.black)
                     }
-                    Text("Book Vendor")
-                        .font(.system(size: 32, weight: .regular, design: .serif))
-                        .foregroundStyle(.black)
+                    NavigationLink(destination: VendorView()) {
+                        Text("Book Vendor")
+                            .font(.system(size: 32, weight: .regular, design: .serif))
+                            .foregroundStyle(.black)
+                    }
                     Link("Feedback", destination: URL(string: "mailto:feedback@example.com")!)
                         .font(.system(size: 32, weight: .regular, design: .serif))
                         .foregroundColor(.black)
@@ -114,6 +116,58 @@ struct AccountView: View {
                 Text("Delete Account")
                     .font(.system(size: 32, weight: .regular, design: .serif))
                     .foregroundColor(.red)
+                
+                Spacer()
+            }
+            .padding(.leading, 18)
+            .padding([.top, .bottom, .trailing])
+        }
+    }
+}
+
+struct VendorView: View{
+    var body: some View{
+        ZStack{
+            BackgroundBlurElement()
+            VStack(spacing: 50) {
+                
+                Text("Vendor")
+                    .font(.system(size: 32, weight: .regular, design: .serif))
+                    .foregroundColor(.black)
+                
+                HStack(){ZStack() {
+                    Rectangle()
+                        .foregroundColor(.clear)
+                        .frame(width: 161, height: 53)
+                        .background(.white)
+                        .cornerRadius(21)
+                        .offset(x: 0, y: 0)
+                        .shadow(
+                            color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2
+                        )
+                    Text("Amazon")
+                        .font(.system(size: 20))
+                        .foregroundColor(.black)
+                        .offset(x: 0, y: 0.50)
+                }
+                .frame(width: 161, height: 53)
+                    ZStack() {
+                        Rectangle()
+                            .foregroundColor(.clear)
+                            .frame(width: 161, height: 53)
+                            .background(.white)
+                            .cornerRadius(21)
+                            .offset(x: 0, y: 0)
+                            .shadow(
+                                color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2
+                            )
+                        Text("eBay")
+                            .font(.system(size: 20))
+                            .foregroundColor(.black)
+                            .offset(x: 0, y: 0.50)
+                    }
+                    .frame(height: 53)
+                }
                 
                 Spacer()
             }
