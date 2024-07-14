@@ -135,39 +135,26 @@ struct VendorView: View{
                     .font(.system(size: 32, weight: .regular, design: .serif))
                     .foregroundColor(.black)
                 
-                HStack(){ZStack() {
-                    Rectangle()
-                        .foregroundColor(.clear)
-                        .frame(width: 161, height: 53)
-                        .background(.white)
-                        .cornerRadius(21)
-                        .offset(x: 0, y: 0)
-                        .shadow(
-                            color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2
-                        )
-                    Text("Amazon")
-                        .font(.system(size: 20))
-                        .foregroundColor(.black)
-                        .offset(x: 0, y: 0.50)
-                }
-                .frame(width: 161, height: 53)
-                    ZStack() {
-                        Rectangle()
-                            .foregroundColor(.clear)
-                            .frame(width: 161, height: 53)
-                            .background(.white)
-                            .cornerRadius(21)
-                            .offset(x: 0, y: 0)
-                            .shadow(
-                                color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2
-                            )
-                        Text("eBay")
-                            .font(.system(size: 20))
-                            .foregroundColor(.black)
-                            .offset(x: 0, y: 0.50)
+                LazyVGrid(columns:[
+                    GridItem(.flexible()),
+                    GridItem(.flexible())
+                ], spacing: 10) {
+                            ForEach(["Amazon", "eBay", "bookshop.org", "Thrift Books"], id: \.self) { title in
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(.clear)
+                                        .frame(width: 161, height: 161) // Making the frame quadratic
+                                        .background(Color.white)
+                                        .cornerRadius(34)
+                                        .shadow(color: Color.black.opacity(0.2), radius: 6, y: 2)
+                                    Text(title)
+                                        .font(.system(size: 24, design:.serif))
+                                        .foregroundColor(.black)
+                                }
+                            }
+                        }
+                        .padding()
                     }
-                    .frame(height: 53)
-                }
                 
                 Spacer()
             }
@@ -175,7 +162,7 @@ struct VendorView: View{
             .padding([.top, .bottom, .trailing])
         }
     }
-}
+
 
 #Preview {
     SettingsView()
