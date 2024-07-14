@@ -77,7 +77,7 @@ struct SettingsView: View {
                             .foregroundColor(.black)
                     }
                     .sheet(isPresented: $isShowingShareSheet) {
-                        ShareSheet(activityItems: ["Check out this awesome app!"])
+                        ShareSheet(activityItems: ["Hey, come join me on booklove! booklove: new books, new friends.", URL(string: "https://get.booklove.top")!])
                             .presentationDetents([.medium, .large])
                             .presentationDragIndicator(.hidden)
                     }
@@ -104,11 +104,11 @@ struct AccountView: View {
         ZStack {
             BackgroundBlurElement().edgesIgnoringSafeArea(.all)
             VStack(spacing: 50) {
-                
-                Text("Account")
+               
+                Text("Account.")
                     .font(.system(size: 32, weight: .regular, design: .serif))
                     .foregroundColor(.black)
-                
+                Spacer()
                 Text("Set New Name")
                     .font(.system(size: 32, weight: .regular, design: .serif))
                 Text("Download My Data")
@@ -183,5 +183,5 @@ struct VendorView: View{
 
 
 #Preview {
-    VendorView()
+    SettingsView()
 }
