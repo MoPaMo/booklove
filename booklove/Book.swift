@@ -17,18 +17,20 @@ struct Book: View {
                         Text("Pride and Prejudice")
                             .font(.system(size: 40, weight: .bold, design: .serif))
                             .foregroundColor(Color(red: 0.20, green: 0.68, blue: 0.90))
+                            .multilineTextAlignment(.leading)
                         Text("Jane Austen, 1813")
                             .font(.system(size: 20, weight: .light, design: .monospaced))
                             .foregroundColor(.black)
+                            .multilineTextAlignment(.leading)
                     }
                     Spacer()
-                }
+                }.padding(.leading)
                 Rectangle()
                 .foregroundColor(.clear)
                 .frame(width: 287, height: 0.5)
                 .overlay(Rectangle()
                 .stroke(.black, lineWidth: 0.50))
-                Text("Mr Bennet, owner of the Longbourn estate in Hertfordshire, has five daughters, but his property is entailed and can only be passed to a male heir. His wife also lacks an inheritance, so his family faces... more").font(.system(size: 16, weight: .light, design: .serif)).foregroundColor(.black)
+                Text("Mr Bennet, owner of the Longbourn estate in Hertfordshire, has five daughters, but his property is entailed and can only be passed to a male heir. His wife also lacks an inheritance, so his family faces... more").font(.system(size: 16, weight: .light, design: .serif)).foregroundColor(.black).padding(.leading)
                
                 HStack(){ZStack() {
                     Rectangle()
@@ -62,16 +64,16 @@ struct Book: View {
                             .offset(x: 0, y: 0.50)
                     }
                     .frame(width: 161, height: 53)
-                }
+                }.padding(.top)
                 Rectangle()
                 .foregroundColor(.clear)
                 .frame(width: 287, height: 0.5)
                 .overlay(Rectangle()
-                .stroke(.black, lineWidth: 0.50))
+                    .stroke(.black, lineWidth: 0.50)).padding(.vertical)
                 
                 HStack(spacing: 0) {  // No spacing between elements
                             Text("Read by")
-                                .font(.system(size: 30))
+                        .font(.system(size: 24, weight: .light))
                                 .foregroundColor(.black)
                             
                             ZStack {
@@ -105,7 +107,7 @@ struct Book: View {
 
                             }.padding(.horizontal)
                     Spacer()
-                }.padding(.leading, 31.0)
+                }.padding(.leading)
             }.padding(.all)
             
                     
