@@ -22,6 +22,7 @@
 		CD648BF42C440DCD00A3F7E6 /* Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD648BF32C440DCD00A3F7E6 /* Setup.swift */; };
 		CD648BF62C4414B400A3F7E6 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD648BF52C4414B400A3F7E6 /* AppState.swift */; };
 		CD648BF82C4414E200A3F7E6 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD648BF72C4414E200A3F7E6 /* MainAppView.swift */; };
+		CD648BFA2C4421E800A3F7E6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD648BF92C4421E800A3F7E6 /* User.swift */; };
 		CDB501212C3F9162002DC85C /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501202C3F9162002DC85C /* Feed.swift */; };
 		CDB501232C3FAA0D002DC85C /* GeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501222C3FAA0D002DC85C /* GeneralView.swift */; };
 		CDB501252C3FAAC9002DC85C /* Quotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501242C3FAAC9002DC85C /* Quotes.swift */; };
@@ -67,6 +68,7 @@
 		CD648BF32C440DCD00A3F7E6 /* Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setup.swift; sourceTree = "<group>"; };
 		CD648BF52C4414B400A3F7E6 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		CD648BF72C4414E200A3F7E6 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
+		CD648BF92C4421E800A3F7E6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CDB501202C3F9162002DC85C /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		CDB501222C3FAA0D002DC85C /* GeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralView.swift; sourceTree = "<group>"; };
 		CDB501242C3FAAC9002DC85C /* Quotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quotes.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				CD648BEF2C41A17600A3F7E6 /* Book.swift */,
 				CD648BF32C440DCD00A3F7E6 /* Setup.swift */,
 				CD648BF52C4414B400A3F7E6 /* AppState.swift */,
+				CD648BF92C4421E800A3F7E6 /* User.swift */,
 				CD648BF72C4414E200A3F7E6 /* MainAppView.swift */,
 				CDB501282C3FAC9E002DC85C /* List.swift */,
 				CDE4B8472C413F52004C3282 /* Settings.swift */,
@@ -310,6 +313,7 @@
 				CD5D50692C3F03C400C1A2B4 /* bookloveApp.swift in Sources */,
 				CD648BF42C440DCD00A3F7E6 /* Setup.swift in Sources */,
 				CD648BEC2C41710800A3F7E6 /* Genres.swift in Sources */,
+				CD648BFA2C4421E800A3F7E6 /* User.swift in Sources */,
 				CDE4B8482C413F52004C3282 /* Settings.swift in Sources */,
 				CDB501252C3FAAC9002DC85C /* Quotes.swift in Sources */,
 				CDB501212C3F9162002DC85C /* Feed.swift in Sources */,
