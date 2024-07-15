@@ -16,15 +16,29 @@ struct Quotes: View {
                         .padding(.top, 20).padding(.bottom, 50)
                     QuoteItem()
                     QuoteItem()
+                    QuoteItem()
+                    QuoteItem()
                     
                 }
             }
             VStack{
                 HStack{
                     Spacer()
-                    Image(systemName: "plus.circle.fill").font(.system(size: 32))
+                    ZStack {
+                        Circle()
+                            .fill(
+                                LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(7), Color.white.opacity(7)]),
+                                               startPoint: .topLeading,
+                                               endPoint: .bottomTrailing)
+                            )
+                            .frame(width: 32, height: 32)
+                            .blur(radius: 10)
+                        
+                        Image(systemName: "plus.circle.fill").font(.system(size: 32))
+                    }
+                    
 
-                }.padding(.trailing)
+                }.padding()
                 Spacer()
             }
         }
