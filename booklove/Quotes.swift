@@ -75,7 +75,29 @@ struct QuoteItem: View {
                             .foregroundColor(.black)
                             .kerning(-2)
                     }.padding()
-                    
+                    VStack{
+                        HStack{
+                            Spacer()
+                            ZStack {
+                                Circle()
+                                    .fill(
+                                        LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.white.opacity(0.3)]),
+                                                       startPoint: .topLeading,
+                                                       endPoint: .bottomTrailing)
+                                    )
+                                    .frame(width: 70, height: 70)
+                                    .blur(radius: 10)
+                                
+                                Image("memoji_placeholder")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 60, height: 60)
+                            }.offset(x:30,y:-30)
+                            
+                                
+                        }
+                        Spacer()
+                    }
                 }.frame(width: geometry.size.width*0.75).padding()
                 // Interaction Buttons
                 VStack {
