@@ -59,15 +59,15 @@ struct Quotes: View {
                             }.frame(width: geometry.size.width*0.75).padding()
                             // Interaction Buttons
                             VStack {
-                                Image(systemName: "heart")
-                                Image(systemName: "bookmark")
+                                Image(systemName: "heart").padding(.bottom, 10)
+                                Image(systemName: "bookmark").padding(.bottom, 10)
                                 Image(systemName: "square.and.arrow.up")
                                 Spacer()
                                 Image(systemName: "flag")
-                            }
+                            }.padding(.vertical, 30)
                             .font(.system(size: 32))
                             .foregroundColor(.black)
-                        }
+                    }.frame(height: 512)
                         
                         
                         Spacer()
