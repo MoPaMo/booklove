@@ -11,7 +11,7 @@ struct SearchView: View {
     @State private var searchText = ""
     @State private var isLoading = false
     @State private var searchResults: [String] = []
-    
+    @FocusState private var isFocused;
     let sampleBooks = [
         "The Great Gatsby",
         "Moby Dick",
@@ -31,6 +31,8 @@ struct SearchView: View {
                 
                 TextField("Search for books, authors, or readers", text: $searchText, onCommit: {
                     performSearch()
+                }).focused($isFocused).onAppear(perform: {
+                    isFocused=true;
                 })
                 .font(.custom("Georgia", size: 16))
                 .padding(8)
