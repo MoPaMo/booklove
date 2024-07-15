@@ -35,14 +35,14 @@ struct QuoteItem: View {
                         // Shape with shadow
                         RoundedRectangle(cornerRadius: 37)
                             .fill(Color.white.opacity(0.1))
-                            .frame(height: 512)
+                            
                             .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
                             .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 4)
                         
                         // Transparent card
                         RoundedRectangle(cornerRadius: 37)
                             .fill(Color.clear)
-                            .frame( height: 512)
+                            
                             .mask(RoundedRectangle(cornerRadius: 37))
                     }
                     VStack{
