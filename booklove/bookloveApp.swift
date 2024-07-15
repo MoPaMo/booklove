@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct bookloveApp: App {
+    @StateObject private var tabViewModel = TabViewModel()
     var body: some Scene {
         WindowGroup {
-            MainAppView()
+            MainAppView().environmentObject(tabViewModel)
         }
     }
+}
+class TabViewModel: ObservableObject {
+    @Published var selectedTab = 0
 }
