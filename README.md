@@ -6,6 +6,9 @@ Swift code for the BookLove app (in development, only placeholder content/no ser
  Booklove will allow you to discover new books, find people who read similar books and create book lists.
  
 ## showcase
+| Book       | Feed       | List       | Quotes       | Search       | Settings       | User       |
+|------------|------------|------------|--------------|--------------|----------------|------------|
+| ![book](/screenshots/book.png) | ![feed](/screenshots/feed.png) | ![list](/screenshots/list.png) | ![quotes](/screenshots/quotes.png) | ![search](/screenshots/search.png) | ![settings](/screenshots/settings.png) | ![user](/screenshots/user.png) |
 
 
 
