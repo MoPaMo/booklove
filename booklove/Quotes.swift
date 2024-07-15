@@ -4,7 +4,7 @@ struct Quotes: View {
     var body: some View {
         ZStack {
             // Background Color
-            BackgroundBlurElement()
+            BackgroundBlurElement(option: 2)
             ScrollView{
                 VStack(spacing: 20) {
                     

@@ -30,7 +30,7 @@ struct List: View {
     var body: some View {
         ZStack {
             // Background Color
-            BackgroundBlurElement()
+            BackgroundBlurElement(option:2)
                 .edgesIgnoringSafeArea(.all)
             ScrollView {
             VStack(alignment: .leading) {

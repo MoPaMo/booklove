@@ -13,7 +13,7 @@ struct UserProfileView: View {
     ]
     var body: some View {
         ZStack{
-            BackgroundBlurElement()
+            BackgroundBlurElement(option:3)
             
             ScrollView{
                 VStack{
