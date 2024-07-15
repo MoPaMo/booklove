@@ -19,6 +19,14 @@ struct Quotes: View {
                     
                 }
             }
+            VStack{
+                HStack{
+                    Spacer()
+                    Image(systemName: "plus.circle.fill").font(.system(size: 32))
+
+                }.padding(.trailing)
+                Spacer()
+            }
         }
     }
     
@@ -41,17 +49,17 @@ struct QuoteItem: View {
                         
                         // Transparent card
                         RoundedRectangle(cornerRadius: 37)
-                            .fill(Color.clear)
+                            .fill(Color.white.opacity(0.55)).blur(radius: /*@START_MENU_TOKEN@*/3.0/*@END_MENU_TOKEN@*/)
                             
                             .mask(RoundedRectangle(cornerRadius: 37))
                     }
-                    VStack{
+                    VStack (alignment: .leading){
                         // Quote
                         Text("      You must allow me to tell you how ardently I love and admire you.")
-                            .font(.system(size: 40, weight: .regular, design: .serif))
+                            .font(.system(size: 40, weight: .ultraLight, design: .serif)).lineSpacing(-1)
                             .foregroundColor(.black)
                             
-                        
+                        Spacer()
                         Text("-Mr. Darcy")
                             .font(.system(size: 20, weight: .light, design: .rounded))
                             .foregroundColor(.black)
@@ -86,8 +94,6 @@ struct QuoteItem: View {
         }.frame(height: 512)
     }
 }
-struct Feed_Previews: PreviewProvider {
-    static var previews: some View {
-        Quotes()
-    }
+#Preview {
+    Quotes()
 }
