@@ -19,11 +19,14 @@ struct BackgroundBlurElement: View {
             Color(red: 1, green: 0.98, blue: 0.98)
                 .edgesIgnoringSafeArea(.all)
             
-            if option == 2 {
-                secondBackground
-            } else {
-                defaultBackground
-            }
+            switch option {
+                        case 2:
+                            secondBackground
+                        case 3:
+                            thirdBackground
+                        default:
+                            defaultBackground
+                        }
         }
     }
     
@@ -90,10 +93,52 @@ struct BackgroundBlurElement: View {
                 .offset(x: -120, y: 280)
         }
     }
+    var thirdBackground: some View {
+            ZStack {
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .frame(width: 400, height: 400)
+                    .background(
+                        Image("blur_hex")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 400, height: 400)
+                            .clipped()
+                    )
+                    .cornerRadius(80)
+                    .shadow(color: .blue.opacity(0.3), radius: 10, x: 5, y: 5)
+                    .blur(radius: 8)
+                    .rotationEffect(Angle(degrees: 45))
+                    .offset(x: -100, y: -200)
+                
+                
+                Image("blur_base")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 350, height: 250)
+                            .mask(
+                                wavyShape
+                                    .frame(width: 350, height: 250)
+                            )
+                            .blur(radius: 8)
+                            .rotationEffect(Angle(degrees: -15)).offset(x:150,y:200)
+            }
+        }
+    var wavyShape: some View {
+            Path { path in
+                path.move(to: CGPoint(x: 0, y: 100))
+                path.addCurve(to: CGPoint(x: 350, y: 100),
+                              control1: CGPoint(x: 100, y: 0),
+                              control2: CGPoint(x: 250, y: 200))
+                path.addLine(to: CGPoint(x: 350, y: 250))
+                path.addLine(to: CGPoint(x: 0, y: 250))
+                path.closeSubpath()
+            }
+        }
 }
 
 #Preview {
-    BackgroundBlurElement()
+    BackgroundBlurElement(option:3)
 }
 
 #Preview {
