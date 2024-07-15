@@ -2,6 +2,9 @@ import SwiftUI
 
 struct Feed: View {
     @State private var isSheetPresented = false;
+    
+    @EnvironmentObject var tabViewModel: TabViewModel
+
     var body: some View {
         ZStack {
             // Background Color
@@ -49,7 +52,8 @@ struct Feed: View {
                        }
         }.sheet(isPresented: $isSheetPresented) {
             SearchView()
-        }.safeAreaInset(edge: .top) {
+        }
+        .safeAreaInset(edge: .top) {
             ZStack {
                 Rectangle()
                     .fill(.clear)
@@ -62,6 +66,8 @@ struct Feed: View {
 }
 
 struct singleBookReview : View{
+    @EnvironmentObject var tabViewModel: TabViewModel
+    @State private var isBookPresented = false;
     var book: BookItem;
     var body: some View{
         VStack(alignment: .leading, spacing: 10) {
@@ -94,6 +100,8 @@ struct singleBookReview : View{
                 }
                 .padding(.leading, 10.0)
                 
+            }.onTapGesture {
+                tabViewModel.selectedTab=3
             }
             
             
@@ -101,7 +109,9 @@ struct singleBookReview : View{
             
             Text(book.title)
                 .font(.system(size: 24, weight: .heavy, design: .serif))
-                .foregroundColor(.cyan).padding(.bottom, -10)
+                .foregroundColor(.cyan).padding(.bottom, -10).onTapGesture {
+                    isBookPresented=true
+                }
             
             Text("\(book.author), \(book.year)")
                 .font(.system(size: 18, weight: .light, design: .monospaced))
@@ -112,7 +122,9 @@ struct singleBookReview : View{
         """)
             .font(.system(size: 16.5, weight: .regular, design: .serif))
             .foregroundColor(.black)
-            .padding(.top, 1)
+            .padding(.top, 1).onTapGesture {
+                isBookPresented=true
+            }
         }
         .padding(.horizontal, 33)
         
@@ -139,7 +151,9 @@ struct singleBookReview : View{
             Spacer()
             Image(systemName: "flag")
                 .font(.system(size: 32))
-        }
+        }.sheet(isPresented: $isBookPresented, content: {
+            Book()
+        })
         
         
         .padding(.horizontal, 40)
@@ -152,6 +166,8 @@ struct singleBookReview : View{
 
 
 struct recommendedUsers: View {
+    @EnvironmentObject var tabViewModel: TabViewModel
+
     var body: some View {
      
         VStack(alignment: .leading) {
@@ -185,6 +201,8 @@ struct recommendedUsers: View {
                                        .fontWeight(.bold)
                                        .foregroundColor(.primary)
                                        .padding(.top, 4)
+                               }.onTapGesture {
+                                   tabViewModel.selectedTab = 3
                                }
                                .padding(.vertical, 10) // Added padding to ensure the image is not cut off
                            }
@@ -199,5 +217,5 @@ struct recommendedUsers: View {
 
 
 #Preview {
-    Feed()
+    Feed().environmentObject(TabViewModel())
 }

@@ -12,6 +12,8 @@ struct SearchView: View {
     @State private var isLoading = false
     @State private var searchResults: [String] = []
     @FocusState private var isFocused;
+    @EnvironmentObject var tabViewModel: TabViewModel
+
     let sampleBooks = [
         "The Great Gatsby",
         "Moby Dick",
@@ -110,5 +112,5 @@ struct BlurView: UIViewRepresentable {
 }
 
 #Preview {
-    SearchView()
+    SearchView().environmentObject(TabViewModel())
 }
