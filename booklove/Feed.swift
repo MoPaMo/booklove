@@ -21,10 +21,19 @@ struct Feed: View {
                     
                 }
                 singleBookReview(book:BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: 1813)).padding(.bottom)
-                recommendedUsers()
+                recommendedUsers().padding(.leading, 30).background(Color.white.opacity(0.9).blur(radius: 1))
+                
+                    .cornerRadius(10)
                 singleBookReview(book:BookItem(title: "Sense and Sensibility", author: "Jane Austen", year: 1811)).padding(.bottom)
                 
             singleBookReview(book: BookItem(title: "Northanger Abbey", author: "Jane Austen", year: 1818))
+                Text("This is a prototype app.")
+                                      .padding()
+                                      .background(Color.red.opacity(0.8))
+                                      .foregroundColor(.white)
+                                      .cornerRadius(8)
+                                      .transition(.opacity)
+                Spacer().padding(.vertical, 300)
             }
             VStack {
                            HStack {
@@ -40,6 +49,14 @@ struct Feed: View {
                        }
         }.sheet(isPresented: $isSheetPresented) {
             SearchView()
+        }.safeAreaInset(edge: .top) {
+            ZStack {
+                Rectangle()
+                    .fill(.clear)
+                    .background(Color.white.opacity(1))
+                    .blur(radius: 10)
+                    .frame(height: 0)
+            }
         }
     }
 }
@@ -141,7 +158,7 @@ struct recommendedUsers: View {
                    Text("Like-minded readers")
                 .font(.system(size: 32, design:.serif))
                        .fontWeight(.bold).foregroundColor(.mint)
-                       .padding(.leading, 16)
+                       
 
                    ScrollView(.horizontal, showsIndicators: false) {
                        HStack(spacing: 16) {
