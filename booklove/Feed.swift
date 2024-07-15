@@ -21,6 +21,7 @@ struct Feed: View {
                     
                 }
                 singleBookReview(book:BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: 1813)).padding(.bottom)
+                recommendedUsers()
                 singleBookReview(book:BookItem(title: "Sense and Sensibility", author: "Jane Austen", year: 1811)).padding(.bottom)
                 
             singleBookReview(book: BookItem(title: "Northanger Abbey", author: "Jane Austen", year: 1818))
@@ -48,10 +49,22 @@ struct singleBookReview : View{
     var body: some View{
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Image(systemName: "person.circle.fill")
-                    .resizable().foregroundColor(.black)
-                    .frame(width: 50, height: 50)
-                    .clipShape(Circle())
+                ZStack {
+                    Circle()
+                        .fill(
+                            LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.red.opacity(0.3)]),
+                                           startPoint: .topLeading,
+                                           endPoint: .bottomTrailing)
+                        )
+                        .frame(width: 70, height: 70)
+                        .blur(radius: 10)
+                    
+                    Image("memoji_placeholder")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 60, height: 60)
+                }
+
                 
                 VStack(alignment: .leading) {
                     Text("Jane Appleseed")
@@ -119,6 +132,55 @@ struct singleBookReview : View{
     
     }
 }
+
+
+struct recommendedUsers: View {
+    var body: some View {
+     
+        VStack(alignment: .leading) {
+                   Text("Like-minded readers")
+                .font(.system(size: 32, design:.serif))
+                       .fontWeight(.bold).foregroundColor(.mint)
+                       .padding(.leading, 16)
+
+                   ScrollView(.horizontal, showsIndicators: false) {
+                       HStack(spacing: 16) {
+                           ForEach(0..<10) { _ in
+                               VStack {
+                                   ZStack {
+                                       Circle()
+                                           .fill(
+                                               LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.red.opacity(0.3)]),
+                                                              startPoint: .topLeading,
+                                                              endPoint: .bottomTrailing)
+                                           )
+                                           .frame(width: 70, height: 70)
+                                           .blur(radius: 10)
+                                       
+                                       Image("memoji_placeholder")
+                                           .resizable()
+                                           .aspectRatio(contentMode: .fit)
+                                           .frame(width: 60, height: 60)
+                                   }
+                                   
+                                   Text("User Name")
+                                       .font(.caption)
+                                       .fontWeight(.bold)
+                                       .foregroundColor(.primary)
+                                       .padding(.top, 4)
+                               }
+                               .padding(.vertical, 10) // Added padding to ensure the image is not cut off
+                           }
+                       }
+                       .padding(.horizontal, 16)
+                   }
+                   .padding(.top, 8)
+               }
+               .padding(.vertical, 16)
+    }
+}
+
+
 #Preview {
     Feed()
 }
