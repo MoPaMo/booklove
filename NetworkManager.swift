@@ -37,7 +37,7 @@ class NetworkManager {
         }
     }
     
-    func fetch(urlString: String, method: HTTPMethod, params: [String: Any]? = nil, completion: @escaping (Result<Data, NetworkError>) -> Void) {
+    func fetch(urlString: String, method: HTTPMethod, params: [String: Any]? = nil, completion: @escaping (Result<[String: Any], NetworkError>) -> Void) {
         guard let url = URL(string: urlString) else {
             completion(.failure(.invalidURL))
             return
@@ -85,7 +85,16 @@ class NetworkManager {
                 return
             }
             
-            completion(.success(data))
+            do {
+                // Parse JSON into a dictionary
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    completion(.success(json))
+                } else {
+                    completion(.failure(.decodingFailed(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to parse JSON into dictionary"]))))
+                }
+            } catch {
+                completion(.failure(.decodingFailed(error)))
+            }
         }
         
         task.resume()

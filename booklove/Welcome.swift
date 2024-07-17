@@ -115,16 +115,29 @@ struct SignInWithAppleButton: UIViewRepresentable {
                 let urlString = "https://api.booklove.top/login/app"
                 let params = ["userID": userID, "identityToken": identityToken] as [String : Any]
                 NetworkManager.shared.fetch(urlString: urlString, method: .POST, params: params) { result in
-                    print(result)
                     switch result {
-                    case .success(let data):
-                        print("Data received: \(data)")
-                        if let responseString = String(data: data, encoding: .utf8) {
-                            print("Response String: \(responseString)")
+                    case .success(let jsonResponse):
+                        // Check if there's an error in the response
+                        if let error = jsonResponse["error"] as? Bool, error {
+                            let reason = jsonResponse["reason"] as? String
+                            print("Error: \(reason ?? "Unknown error")")
+                        } else {
+                            // Extract data fields from the response
+                            if let data = jsonResponse["data"] as? [String: Any] {
+                                let loggedIn = data["loggedIn"] as? Bool ?? false
+                                let userID = data["userID"] as? String ?? ""
+                                let name = data["name"] as? String ?? ""
+                                
+                                print("Logged In: \(loggedIn)")
+                                print("User ID: \(userID)")
+                                print("Name: \(name)")
+                            } else {
+                                print("No data in the response.")
+                            }
                         }
                         
                     case .failure(let error):
-                        print("Error: \(error)")
+                        print("Network Error: \(error.localizedDescription)")
                     }
                 }
             }
