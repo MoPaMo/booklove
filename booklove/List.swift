@@ -28,89 +28,94 @@ struct List: View {
     ]
     
     var body: some View {
-        ZStack {
-            // Background Color
-            BackgroundBlurElement(option:2)
-                .edgesIgnoringSafeArea(.all)
-            ScrollView {
-            VStack(alignment: .leading) {
-                
+        NavigationView {
+            ZStack {
+                // Background Color
+                BackgroundBlurElement(option:2)
+                    .edgesIgnoringSafeArea(.all)
+                ScrollView {
+                    VStack(alignment: .leading) {
+                        
                         
                         Text("Your\nBooks")
                             .font(.system(size: 64, weight: .bold, design: .serif))
                             .foregroundColor(.orange)
-                            
+                        
                             .padding(.top, 100)
-                    
-                
-                Text("By Genre")
-                    .font(.system(size: 24, weight: .regular, design: .serif))
-                    .foregroundColor(.black)
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(["Adventure", "Horror", "Comedy", "History"], id: \.self) { genre in
-                            Text(genre)
-                                .font(.system(size: 18, weight: .bold, design: .serif))
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
-                                .background(Color.black)
-                                .foregroundColor(.white)
-                                .cornerRadius(20)
-                        }
-                    }
-                    .padding(.vertical, 10)
-                }
-                .padding(.bottom, 20)
-                
-                
-                
-                    VStack(alignment: .leading, spacing: 10) {
-                        ForEach(books) { book in
-                            VStack(alignment: .leading) {
-                                Text(book.title)
-                                    .font(.system(size: 24, weight: .bold, design: .serif))
-                                    .foregroundColor(.cyan)
-                                
-                                Text("\(book.author), \(book.year)")
-                                    .font(.system(size: 18, weight: .light, design: .serif))
-                                    .foregroundColor(.black)
+                        
+                        
+                        Text("By Genre")
+                            .font(.system(size: 24, weight: .regular, design: .serif))
+                            .foregroundColor(.black)
+                        
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack {
+                                ForEach(["Adventure", "Horror", "Comedy", "History"], id: \.self) { genre in
+                                    Text(genre)
+                                        .font(.system(size: 18, weight: .bold, design: .serif))
+                                        .padding(.horizontal, 20)
+                                        .padding(.vertical, 10)
+                                        .background(Color.black)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(20)
+                                }
                             }
-                            .padding(.bottom, 10)
+                            .padding(.vertical, 10)
                         }
-
+                        .padding(.bottom, 20)
+                        
+                        
+                        
+                        VStack(alignment: .leading, spacing: 10) {
+                            ForEach(books) { book in
+                                VStack(alignment: .leading) {
+                                    NavigationLink(destination: Book()){
+                                        VStack(alignment: .leading) {
+                                            Text(book.title)
+                                                .font(.system(size: 24, weight: .bold, design: .serif))
+                                                .foregroundColor(.cyan)
+                                            
+                                            Text("\(book.author), \(book.year)")
+                                                .font(.system(size: 18, weight: .light, design: .serif))
+                                                .foregroundColor(.black)
+                                        }
+                                    }
+                                }
+                                .padding(.bottom, 10)
+                            }
+                            
+                        }
                     }
                 }
+                .padding(.horizontal, 20)
+                VStack {
+                    HStack {
+                        Spacer()
+                        Image(systemName: "magnifyingglass.circle.fill")
+                            .foregroundColor(.black)
+                            .font(.system(size: 32))
+                            .padding().onTapGesture {
+                                isSheetPresented = true
+                            }
+                    }
+                    Spacer()
+                }
+            }.sheet(isPresented: $isSheetPresented) {
+                SearchView()
             }
-            .padding(.horizontal, 20)
-            VStack {
-                           HStack {
-                               Spacer()
-                               Image(systemName: "magnifyingglass.circle.fill")
-                                   .foregroundColor(.black)
-                                   .font(.system(size: 32))
-                                   .padding().onTapGesture {
-                                        isSheetPresented = true
-                                   }
-                           }
-                           Spacer()
-                       }
-        }.sheet(isPresented: $isSheetPresented) {
-            SearchView()
-        }
-        
-        .safeAreaInset(edge: .top) {
-            ZStack {
-                Rectangle()
-                    .fill(.clear)
-                    .background(Color.white.opacity(1))
-                    .blur(radius: 10)
-                    .frame(height: 0)
+            
+            .safeAreaInset(edge: .top) {
+                ZStack {
+                    Rectangle()
+                        .fill(.clear)
+                        .background(Color.white.opacity(1))
+                        .blur(radius: 10)
+                        .frame(height: 0)
+                }
             }
         }
     }
 }
-
 
 #Preview {
     List()
