@@ -4,7 +4,8 @@ import AuthenticationServices
 struct Welcome: View {
     @State private var showActionSheet = false
     @ObservedObject var appState: AppState
-    @State var loading = false
+    @State private var loading = false
+
     var body: some View {
         ZStack {
             // Background Color
@@ -36,10 +37,10 @@ struct Welcome: View {
                     .font(.system(size: 32, design: .serif))
                     .foregroundColor(.black)
                     .padding(.top, 20)
-                if(!loading){
-                    SignInWithAppleButton(appState: appState)
+                if !loading {
+                    SignInWithAppleButton(appState: appState, loading: $loading)
                         .frame(width: 280, height: 45)
-                }else{
+                } else {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
                         .scaleEffect(1.5, anchor: .center)
@@ -82,6 +83,7 @@ struct Welcome: View {
 
 struct SignInWithAppleButton: UIViewRepresentable {
     @ObservedObject var appState: AppState
+    @Binding var loading: Bool
 
     func makeUIView(context: Context) -> ASAuthorizationAppleIDButton {
         let button = ASAuthorizationAppleIDButton(type: .default, style: .whiteOutline)
@@ -92,17 +94,20 @@ struct SignInWithAppleButton: UIViewRepresentable {
     func updateUIView(_ uiView: ASAuthorizationAppleIDButton, context: Context) {}
 
     func makeCoordinator() -> Coordinator {
-        return Coordinator(appState: appState)
+        return Coordinator(appState: appState, loading: $loading)
     }
 
     class Coordinator: NSObject, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
         @ObservedObject var appState: AppState
+        @Binding var loading: Bool
 
-        init(appState: AppState) {
+        init(appState: AppState, loading: Binding<Bool>) {
+            self._loading = loading
             self.appState = appState
         }
 
         @objc func didTapButton() {
+            loading = true
             let request = ASAuthorizationAppleIDProvider().createRequest()
             request.requestedScopes = []
             
@@ -118,41 +123,38 @@ struct SignInWithAppleButton: UIViewRepresentable {
                 let userID = appleIDCredential.user
                 let urlString = "https://api.booklove.top/login/app"
                 let params = ["userID": userID, "identityToken": identityToken] as [String : Any]
-                var loading = true
+                
                 NetworkManager.shared.fetch(urlString: urlString, method: .POST, params: params) { result in
-                    switch result {
-                    case .success(let jsonResponse):
-                        if let error = jsonResponse["error"] as? Bool, error {
-                            let reason = jsonResponse["reason"] as? String
-                            print("Error: \(reason ?? "Unknown error")")
-                        } else {
-                            print(jsonResponse)
-                            if let data = jsonResponse["data"] as? [String: Any] {
-                                let new = data["new"] as? Bool ?? false
-                                let userID = data["userID"] as? String ?? ""
-                                
-                                print("User ID: \(userID)")
-                                
-                                    DispatchQueue.main.async {
-                                        self.appState.isLoggedIn = SecureStorage.set(userID)
-                                        self.appState.userID = self.appState.isLoggedIn ? userID : ""
-                                        if self.appState.isLoggedIn {
-                                            self.appState.currentScreen = new ? .setup : .main
-                                        }
-                                        else{
-                                            loading=false
-                                        }
-                                    }
-                                
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let jsonResponse):
+                            if let error = jsonResponse["error"] as? Bool, error {
+                                let reason = jsonResponse["reason"] as? String
+                                print("Error: \(reason ?? "Unknown error")")
                             } else {
-                                print("No data in the response.")
-                                loading=false
+                                print(jsonResponse)
+                                if let data = jsonResponse["data"] as? [String: Any] {
+                                    let new = data["new"] as? Bool ?? false
+                                    let userID = data["userID"] as? String ?? ""
+                                    
+                                    print("User ID: \(userID)")
+                                    
+                                    self.appState.isLoggedIn = SecureStorage.set(userID)
+                                    self.appState.userID = self.appState.isLoggedIn ? userID : ""
+                                    if self.appState.isLoggedIn {
+                                        self.appState.currentScreen = new ? .setup : .main
+                                    } else {
+                                        self.loading = false
+                                    }
+                                } else {
+                                    print("No data in the response.")
+                                    self.loading = false
+                                }
                             }
+                        case .failure(let error):
+                            print("Network Error: \(error.localizedDescription)")
+                            self.loading = false
                         }
-                        
-                    case .failure(let error):
-                        print("Network Error: \(error.localizedDescription)")
-                        loading = false
                     }
                 }
             }
@@ -161,6 +163,7 @@ struct SignInWithAppleButton: UIViewRepresentable {
         func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
             // Handle error
             print("Sign in with Apple errored: \(error)")
+            loading = false
         }
 
         func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
