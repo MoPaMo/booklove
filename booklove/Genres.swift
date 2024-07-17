@@ -74,7 +74,10 @@ struct Genres: View {
                             NetworkManager.shared.fetch(urlString: "https://api.booklove.top/set-genres", method: .POST, params: params, token: token) { result in
                                 switch result {
                                 case .success(let response):
-                                    print("Success:", response)
+                                    
+                                        print("Success:", response)
+                                        appState.currentScreen = .main
+                                    
                                 case .failure(let error):
                                     print("Error:", error.localizedDescription)
                                 }
