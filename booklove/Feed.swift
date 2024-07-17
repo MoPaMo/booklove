@@ -4,62 +4,65 @@ struct Feed: View {
     @State private var isSheetPresented = false;
     
     @EnvironmentObject var tabViewModel: TabViewModel
-
+    
     var body: some View {
-        ZStack {
-            // Background Color
-            Color(red: 1, green: 0.98, blue: 0.98)
-                .edgesIgnoringSafeArea(.all)
-            
-            // Background Blur Elements
-            BackgroundBlurElement()
-            ScrollView {
-                
-                VStack {
-                    Text("booklove.")
-                        .font(.system(size: 64, weight: .bold, design: .serif))
-                        .foregroundColor(.black)
-                        .multilineTextAlignment(.center)
-                        .padding(.top, 20)
-                    
-                }
-                singleBookReview(book:BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: 1813)).padding(.bottom)
-                recommendedUsers().padding(.leading, 30).background(Color.white.opacity(0.9).blur(radius: 1))
-                
-                    .cornerRadius(10)
-                singleBookReview(book:BookItem(title: "Sense and Sensibility", author: "Jane Austen", year: 1811)).padding(.bottom)
-                
-            singleBookReview(book: BookItem(title: "Northanger Abbey", author: "Jane Austen", year: 1818))
-                Text("This is a prototype app.")
-                                      .padding()
-                                      .background(Color.red.opacity(0.8))
-                                      .foregroundColor(.white)
-                                      .cornerRadius(8)
-                                      .transition(.opacity)
-                Spacer().padding(.vertical, 300)
-            }
-            VStack {
-                           HStack {
-                               Spacer()
-                               Image(systemName: "magnifyingglass.circle.fill")
-                                   .foregroundColor(.black)
-                                   .font(.title)
-                                   .padding().onTapGesture {
-                                       isSheetPresented = true
-                                   }
-                           }
-                           Spacer()
-                       }
-        }.sheet(isPresented: $isSheetPresented) {
-            SearchView()
-        }
-        .safeAreaInset(edge: .top) {
+        NavigationView {
             ZStack {
-                Rectangle()
-                    .fill(.clear)
-                    .background(Color.white.opacity(1))
-                    .blur(radius: 10)
-                    .frame(height: 0)
+            
+                // Background Color
+                Color(red: 1, green: 0.98, blue: 0.98)
+                    .edgesIgnoringSafeArea(.all)
+                
+                // Background Blur Elements
+                BackgroundBlurElement()
+                ScrollView {
+                    
+                    VStack {
+                        Text("booklove.")
+                            .font(.system(size: 64, weight: .bold, design: .serif))
+                            .foregroundColor(.black)
+                            .multilineTextAlignment(.center)
+                            .padding(.top, 20)
+                        
+                    }
+                    singleBookReview(book:BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: 1813)).padding(.bottom)
+                    recommendedUsers().padding(.leading, 30).background(Color.white.opacity(0.9).blur(radius: 1))
+                    
+                        .cornerRadius(10)
+                    singleBookReview(book:BookItem(title: "Sense and Sensibility", author: "Jane Austen", year: 1811)).padding(.bottom)
+                    
+                    singleBookReview(book: BookItem(title: "Northanger Abbey", author: "Jane Austen", year: 1818))
+                    Text("This is a prototype app.")
+                        .padding()
+                        .background(Color.red.opacity(0.8))
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                        .transition(.opacity)
+                    Spacer().padding(.vertical, 300)
+                }
+                VStack {
+                    HStack {
+                        Spacer()
+                        Image(systemName: "magnifyingglass.circle.fill")
+                            .foregroundColor(.black)
+                            .font(.title)
+                            .padding().onTapGesture {
+                                isSheetPresented = true
+                            }
+                    }
+                    Spacer()
+                }
+            }.sheet(isPresented: $isSheetPresented) {
+                SearchView()
+            }
+            .safeAreaInset(edge: .top) {
+                ZStack {
+                    Rectangle()
+                        .fill(.clear)
+                        .background(Color.white.opacity(1))
+                        .blur(radius: 10)
+                        .frame(height: 0)
+                }
             }
         }
     }
@@ -106,16 +109,15 @@ struct singleBookReview : View{
             
             
             
-            
-            Text(book.title)
-                .font(.system(size: 24, weight: .heavy, design: .serif))
-                .foregroundColor(.cyan).padding(.bottom, -10).onTapGesture {
-                    isBookPresented=true
-                }
-            
-            Text("\(book.author), \(book.year)")
-                .font(.system(size: 18, weight: .light, design: .monospaced))
-                .foregroundColor(.black).kerning(-2)
+            NavigationLink(destination: Book()){
+                VStack (alignment: .leading){
+                    Text(book.title)
+                        .font(.system(size: 24, weight: .heavy, design: .serif))
+                        .foregroundColor(.cyan).padding(.bottom, -10)
+                    
+                    Text("\(book.author), \(book.year)")
+                        .font(.system(size: 18, weight: .light, design: .monospaced))
+                    .foregroundColor(.black).kerning(-2)}}.buttonStyle(PlainButtonStyle())
             
             Text("""
         Mr Bennet, owner of the Longbourn estate in Hertfordshire, has five daughters, but his property is entailed and can only be passed to a male heir. His wife also lacks an inheritance, so his family faces becoming poor upon his death. Thus, it is imperative that at least one of the daughters marry well to support the others, which is a primary motivation driving the plot.
