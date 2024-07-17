@@ -93,6 +93,7 @@ struct SettingsView: View {
                         .foregroundColor(.red).onTapGesture {
                             appState.isLoggedIn=SecureStorage.logout();
                             appState.userID=SecureStorage.get() ?? ""
+                            appState.currentScreen = .welcome
                             
                         }
                     
