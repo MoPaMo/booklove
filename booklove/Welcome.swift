@@ -37,10 +37,8 @@ struct Welcome: View {
                     .foregroundColor(.black)
                     .padding(.top, 20)
                 
-                SignInWithAppleButton()
-                    .frame(width: 280, height: 45).onTapGesture {
-                        appState.currentScreen = .setup
-                    }
+                SignInWithAppleButton(appState: appState)
+                    .frame(width: 280, height: 45)
                 
                 Text("By signing in, you agree to be bound by our Terms of Service and accept our Privacy Policy. \nClick here to review them.")
                     .font(.system(size: 16, design: .monospaced))
@@ -75,18 +73,62 @@ struct Welcome: View {
                 Spacer()
             }
         }
-        
     }
 }
 
 struct SignInWithAppleButton: UIViewRepresentable {
+    @ObservedObject var appState: AppState
+
     func makeUIView(context: Context) -> ASAuthorizationAppleIDButton {
-        return ASAuthorizationAppleIDButton(type: .default, style: .whiteOutline)
+        let button = ASAuthorizationAppleIDButton(type: .default, style: .whiteOutline)
+        button.addTarget(context.coordinator, action: #selector(Coordinator.didTapButton), for: .touchUpInside)
+        return button
     }
     
     func updateUIView(_ uiView: ASAuthorizationAppleIDButton, context: Context) {}
-}
 
-//#Preview {
-    //Welcome()
-//}
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(appState: appState)
+    }
+
+    class Coordinator: NSObject, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+        @ObservedObject var appState: AppState
+
+        init(appState: AppState) {
+            self.appState = appState
+        }
+
+        @objc func didTapButton() {
+            let request = ASAuthorizationAppleIDProvider().createRequest()
+            request.requestedScopes = [.fullName, .email]
+            
+            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+            authorizationController.delegate = self
+            authorizationController.presentationContextProvider = self
+            authorizationController.performRequests()
+        }
+
+        func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+            if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+                let userIdentifier = appleIDCredential.user
+                let fullName = appleIDCredential.fullName
+                let email = appleIDCredential.email
+                
+                // Handle user data, e.g., send it to the backend or save locally
+                // For example, transition to the next screen
+                DispatchQueue.main.async {
+                    self.appState.currentScreen = .setup
+                }
+            }
+        }
+
+        func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+            // Handle error
+            print("Sign in with Apple errored: \(error)")
+        }
+
+        func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+            return UIApplication.shared.windows.first!
+        }
+    }
+}
