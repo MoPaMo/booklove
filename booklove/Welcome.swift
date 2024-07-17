@@ -110,10 +110,12 @@ struct SignInWithAppleButton: UIViewRepresentable {
 
         func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
             if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-                let userIdentifier = appleIDCredential.user
+                let identityToken = String(data: appleIDCredential.identityToken ?? Data(), encoding: .utf8) ?? ""
+                let userID = appleIDCredential.user
                 let urlString = "https://api.booklove.top/login/app"
-                let params = ["ID": userIdentifier]
+                let params = ["userID": userID, "identityToken": identityToken] as [String : Any]
                 NetworkManager.shared.fetch(urlString: urlString, method: .POST, params: params) { result in
+                    print(result)
                     switch result {
                     case .success(let data):
                         print("Data received: \(data)")
