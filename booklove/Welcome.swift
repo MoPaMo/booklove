@@ -111,11 +111,19 @@ struct SignInWithAppleButton: UIViewRepresentable {
         func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
             if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
                 let userIdentifier = appleIDCredential.user
-                
-                // Handle user data, e.g., send it to the backend or save locally
-                // For example, transition to the next screen
-                DispatchQueue.main.async {
-                    self.appState.currentScreen = .setup
+                let urlString = "https://api.booklove.top/login/app"
+                let params = ["ID": userIdentifier]
+                NetworkManager.shared.fetch(urlString: urlString, method: .POST, params: params) { result in
+                    switch result {
+                    case .success(let data):
+                        print("Data received: \(data)")
+                        if let responseString = String(data: data, encoding: .utf8) {
+                            print("Response String: \(responseString)")
+                        }
+                        
+                    case .failure(let error):
+                        print("Error: \(error)")
+                    }
                 }
             }
         }
