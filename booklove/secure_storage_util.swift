@@ -10,7 +10,7 @@ import Security
 
 class SecureStorage {
     
-    static func set(_ token: String) -> Bool { // (to set the token in keychain)
+    static func set(_ token: String) -> Bool {// (to set the token in keychain)
         let tokenData = token.data(using: .utf8)!
         
         let query: [String: Any] = [
@@ -26,11 +26,11 @@ class SecureStorage {
         return status == errSecSuccess
     }
     
-    static func get() -> String? { // (to get the token from keychan)
+    static func get() -> String? {// (to get the token from keychan)
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: "userToken",
-            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock
+            kSecReturnData as String: true
         ]
         
         var result: AnyObject?
