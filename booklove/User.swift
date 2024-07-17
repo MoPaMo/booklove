@@ -142,7 +142,7 @@ struct UserProfileView: View {
                         }
                     }.padding(.horizontal)
                 }
-            }
+            }.padding(.horizontal)
             VStack {
                            HStack {
                                Spacer()
