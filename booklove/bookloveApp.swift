@@ -12,7 +12,7 @@ struct bookloveApp: App {
     @StateObject private var tabViewModel = TabViewModel()
     var body: some Scene {
         WindowGroup {
-            MainAppView().environmentObject(tabViewModel)
+            MainAppView().environmentObject(tabViewModel).preferredColorScheme(.light)
         }
     }
 }

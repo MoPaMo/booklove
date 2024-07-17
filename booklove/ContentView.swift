@@ -24,8 +24,18 @@ struct ContentView: View {
                     .foregroundColor(.black)
                     .multilineTextAlignment(.center)
                     .frame(width: 158, height: 158, alignment: .topLeading)
+            VStack{
+                Spacer()
+                VStack{
+                    ProgressView()
+                    Text("loading…")
+                        .font(.system(size: 16, weight: .light, design: .monospaced))
+                        .foregroundColor(.black)
+                        .multilineTextAlignment(.center)
+                }
+            }
         }
-        .frame(width: 393, height: 852)
+        
         .background(Color(red: 1, green: 0.98, blue: 0.98))
         
         
