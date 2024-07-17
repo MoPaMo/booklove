@@ -68,8 +68,17 @@ struct Genres: View {
                 }
                 if showContinueButton {
                     Button("continue") {
-                        NetworkManager.shared.fetch(urlString: "https://api.booklove.top", method: .POST){_ in 
-                        appState.currentScreen = .main}
+                        let params: [String: Any] = ["genres": Array(selectedGenres)]
+                        let token = SecureStorage.get()!
+                        print(token)
+                            NetworkManager.shared.fetch(urlString: "https://api.booklove.top/set-genres", method: .POST, params: params, token: token) { result in
+                                switch result {
+                                case .success(let response):
+                                    print("Success:", response)
+                                case .failure(let error):
+                                    print("Error:", error.localizedDescription)
+                                }
+                            }
                     }
                     .font(.system(size: 28, weight: .medium, design: .rounded)).foregroundColor(.black)
                 }

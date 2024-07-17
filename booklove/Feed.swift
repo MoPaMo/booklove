@@ -91,17 +91,19 @@ struct singleBookReview : View{
                         .frame(width: 60, height: 60)
                 }
 
-                
-                VStack(alignment: .leading) {
-                    Text("Jane Appleseed")
-                        .font(.system(size: 24, weight: .bold, design: .serif))
-                        .foregroundColor(.mint)
-                    
-                    Text("is reading:")
-                        .font(.system(size: 16, weight: .light, design: .rounded))
-                        .foregroundColor(.black)
+                NavigationLink(destination: ProfileView())
+                {
+                    VStack(alignment: .leading) {
+                        Text("Jane Appleseed")
+                            .font(.system(size: 24, weight: .bold, design: .serif))
+                            .foregroundColor(.mint)
+                        
+                        Text("is reading:")
+                            .font(.system(size: 16, weight: .light, design: .rounded))
+                            .foregroundColor(.black)
+                    }
+                    .padding(.leading, 10.0)
                 }
-                .padding(.leading, 10.0)
                 
             }.onTapGesture {
                 tabViewModel.selectedTab=3

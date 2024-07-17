@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 
-struct Profile: View {
+struct ProfileView: View {
     @State var followed = false
     @State private var isSheetPresented = false
     let books: [BookItem] = [
@@ -179,5 +179,5 @@ struct Profile: View {
 }
 
 #Preview {
-    Profile()
+    ProfileView()
 }
