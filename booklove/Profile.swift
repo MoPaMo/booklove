@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct Profile: View {
-    @State var followed = false;
-    @State private var isSheetPresented = false;
+    @State var followed = false
+    @State private var isSheetPresented = false
     let books: [BookItem] = [
         BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: 1813),
         BookItem(title: "Sense and Sensibility", author: "Jane Austen", year: 1811),
@@ -18,12 +19,13 @@ struct Profile: View {
         BookItem(title: "Mansfield Park", author: "Jane Austen", year: 1814),
         BookItem(title: "Northanger Abbey", author: "Jane Austen", year: 1818)
     ]
+    
     var body: some View {
-        ZStack{
-            BackgroundBlurElement(option:3)
+        ZStack {
+            BackgroundBlurElement(option: 3)
             
-            ScrollView{
-                VStack{
+            ScrollView {
+                VStack {
                     Text("booklove.")
                         .font(.system(size: 64, weight: .bold, design: .serif))
                         .foregroundColor(.black)
@@ -48,22 +50,21 @@ struct Profile: View {
                             
                             // Favourite Book
                             Text("\(Image(systemName: "book.circle.fill")) Pride and Prejudice")
-                                .font(.system( size: 18, weight:.regular))
+                                .font(.system(size: 18, weight: .regular))
                                 .foregroundColor(.black)
                         }
-                        
                         
                         Spacer()
                         
                         // Follow Button
                         Button(action: {
-                            followed=(followed==false)
+                            followed.toggle()
                         }) {
-                            if(!followed){
+                            if !followed {
                                 Image(systemName: "heart")
                                     .font(.title2)
-                                .foregroundColor(.red)}
-                            else{
+                                    .foregroundColor(.red)
+                            } else {
                                 Image(systemName: "heart.fill")
                                     .font(.title2)
                                     .foregroundColor(.red)
@@ -72,10 +73,10 @@ struct Profile: View {
                     }
                     .padding()
                     .background(Color.white.opacity(0.5).blur(radius: 10))
-                    
                     .cornerRadius(10)
-                    VStack (alignment: .leading){
-                        Text("Favourite Genres").font(.system(size:20, weight:.light))
+                    
+                    VStack(alignment: .leading) {
+                        Text("Favourite Genres").font(.system(size: 20, weight: .light))
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
@@ -89,22 +90,24 @@ struct Profile: View {
                                         .cornerRadius(20)
                                 }
                             }
-                            
                         }
                         .padding(.bottom, 20)
-                    }.padding(.leading)
-                    HStack{
-                        Text("Friends").font(.system(size:20, weight:.light))
+                    }
+                    .padding(.leading)
+                    
+                    HStack {
+                        Text("Friends").font(.system(size: 20, weight: .light))
                         
                         Spacer()
-                        Text("See all").font(.system(size:20, weight:.light, design:.rounded)).foregroundColor(.blue)
-                        
-                    }.padding(.horizontal)
+                        Text("See all").font(.system(size: 20, weight: .light, design: .rounded)).foregroundColor(.blue)
+                    }
+                    .padding(.horizontal)
+                    
                     HStack {
                         Spacer()
                         
                         ZStack {
-                            ForEach(0 ..< 5) { item in
+                            ForEach(0..<5) { item in
                                 Image("memoji_placeholder")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
@@ -112,26 +115,21 @@ struct Profile: View {
                                     .background(Color(red: 0.8, green: 0.8, blue: 0.8))
                                     .clipShape(Circle())
                                     .offset(x: CGFloat(item * 35))
-                                    .shadow(
-                                        color: Color(red: 0, green: 0, blue: 0, opacity: 0.25),
-                                        radius: 4,
-                                        y: 4
-                                    )
+                                    .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.25), radius: 4, y: 4)
                             }
                         }
-                        .padding(.trailing, (61 + 5 * 35)/2)
+                        .padding(.trailing, (61 + 5 * 35) / 2)
                         .padding(.leading, 0)
                         
                         Spacer()
                     }
                     
-                    
-                    
-                    
-                    VStack (alignment: .leading){
-                        HStack{
-                            Text("Books").font(.system(size:20, weight:.light)).multilineTextAlignment(.leading)
-                            Spacer()}
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("Books").font(.system(size: 20, weight: .light)).multilineTextAlignment(.leading)
+                            Spacer()
+                        }
+                        
                         VStack(alignment: .leading, spacing: 10) {
                             ForEach(books) { book in
                                 VStack(alignment: .leading) {
@@ -145,24 +143,27 @@ struct Profile: View {
                                 }
                                 .padding(.bottom, 10)
                             }
-                            
                         }
-                    }.padding(.horizontal)
+                    }
+                    .padding(.horizontal)
                 }
             }
+            
             VStack {
-                           HStack {
-                               Spacer()
-                               Image(systemName: "square.and.arrow.up.circle.fill")
-                                   .foregroundColor(.black)
-                                   .font(.system(size: 32))
-                                   .padding()
-                           }
-                           Spacer()
-            }.onTapGesture {
+                HStack {
+                    Spacer()
+                    Image(systemName: "square.and.arrow.up.circle.fill")
+                        .foregroundColor(.black)
+                        .font(.system(size: 32))
+                        .padding()
+                }
+                Spacer()
+            }
+            .onTapGesture {
                 isSheetPresented = true
             }
-        }.safeAreaInset(edge: .top) {
+        }
+        .safeAreaInset(edge: .top) {
             ZStack {
                 Rectangle()
                     .fill(.clear)
@@ -170,8 +171,9 @@ struct Profile: View {
                     .blur(radius: 10)
                     .frame(height: 0)
             }
-        }.sheet(isPresented: $isSheetPresented) {
-            SettingsView()
+        }
+        .sheet(isPresented: $isSheetPresented) {
+            ShareSheet(activityItems: ["Check out my booklove profile!"])
         }
     }
 }
@@ -179,4 +181,3 @@ struct Profile: View {
 #Preview {
     Profile()
 }
-
