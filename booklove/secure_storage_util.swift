@@ -16,7 +16,8 @@ class SecureStorage {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: "userToken",
-            kSecValueData as String: tokenData
+            kSecValueData as String: tokenData,
+            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock
         ]
         
         SecItemDelete(query as CFDictionary)
@@ -29,7 +30,7 @@ class SecureStorage {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: "userToken",
-            kSecReturnData as String: true
+            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock
         ]
         
         var result: AnyObject?
