@@ -18,6 +18,8 @@ struct MainAppView: View {
             Setup(appState: appState)
         case .genres:
             Genres(appState: appState)
+        case .loading:
+            ContentView()
         case .main:
             GeneralView()
         }

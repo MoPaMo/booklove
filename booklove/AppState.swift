@@ -12,10 +12,11 @@ enum AppScreen {
     case setup
     case genres
     case main
+    case loading
 }
 
 class AppState: ObservableObject {
-    @Published var currentScreen: AppScreen = .welcome
+    @Published var currentScreen: AppScreen = .loading
     @Published var isLoggedIn: Bool = false
     @Published var userID: String = ""
     @Published var name: String = ""
