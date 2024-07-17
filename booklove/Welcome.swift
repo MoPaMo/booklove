@@ -39,10 +39,12 @@ struct Welcome: View {
                     .padding(.top, 20)
                 
                 if(loading){
-                    ProgressView()
+                    ProgressView().padding(.bottom)
                 }
                     SignInWithAppleButton(appState: appState, loading: $loading)
-                    .frame(width: 280, height: loading ? 0: 45)
+                    .frame(width: 280, height: 45)
+                    
+                
                
                 Text("By signing in, you agree to be bound by our Terms of Service and accept our Privacy Policy. \nClick here to review them.")
                     .font(.system(size: 16, design: .monospaced))
