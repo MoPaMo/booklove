@@ -24,6 +24,7 @@
 		CD648BF82C4414E200A3F7E6 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD648BF72C4414E200A3F7E6 /* MainAppView.swift */; };
 		CD648BFA2C4421E800A3F7E6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD648BF92C4421E800A3F7E6 /* User.swift */; };
 		CDAB2A1E2C47D8C000F91D23 /* secure_storage_util.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAB2A1D2C47D8C000F91D23 /* secure_storage_util.swift */; };
+		CDAB2A212C47EB2B00F91D23 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAB2A202C47EB2B00F91D23 /* NetworkManager.swift */; };
 		CDB501212C3F9162002DC85C /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501202C3F9162002DC85C /* Feed.swift */; };
 		CDB501232C3FAA0D002DC85C /* GeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501222C3FAA0D002DC85C /* GeneralView.swift */; };
 		CDB501252C3FAAC9002DC85C /* Quotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB501242C3FAAC9002DC85C /* Quotes.swift */; };
@@ -72,6 +73,7 @@
 		CD6C6B602C44487C00175F98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CDAB2A1D2C47D8C000F91D23 /* secure_storage_util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = secure_storage_util.swift; sourceTree = "<group>"; };
 		CDAB2A1F2C47E16B00F91D23 /* booklove.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = booklove.entitlements; sourceTree = "<group>"; };
+		CDAB2A202C47EB2B00F91D23 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CDB501202C3F9162002DC85C /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		CDB501222C3FAA0D002DC85C /* GeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralView.swift; sourceTree = "<group>"; };
 		CDB501242C3FAAC9002DC85C /* Quotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quotes.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 		CD5D505C2C3F03C400C1A2B4 = {
 			isa = PBXGroup;
 			children = (
+				CDAB2A202C47EB2B00F91D23 /* NetworkManager.swift */,
 				CD5D50672C3F03C400C1A2B4 /* booklove */,
 				CD5D50782C3F03C900C1A2B4 /* bookloveTests */,
 				CD5D50822C3F03C900C1A2B4 /* bookloveUITests */,
@@ -310,6 +313,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDAB2A212C47EB2B00F91D23 /* NetworkManager.swift in Sources */,
 				CD648BF22C43F40400A3F7E6 /* Search.swift in Sources */,
 				CD5D506B2C3F03C400C1A2B4 /* ContentView.swift in Sources */,
 				CDE4B8462C413B4D004C3282 /* BackgroundBlur.swift in Sources */,
