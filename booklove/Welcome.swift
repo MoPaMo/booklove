@@ -125,18 +125,17 @@ struct SignInWithAppleButton: UIViewRepresentable {
                             if let data = jsonResponse["data"] as? [String: Any] {
                                 let new = data["new"] as? Bool ?? false
                                 let userID = data["userID"] as? String ?? ""
-                                let name = data["name"] as? String ?? ""
                                 
-                                print("Logged In: \(new)")
                                 print("User ID: \(userID)")
-                                print("Name: \(name)")
-                                if new {
+                                
                                     DispatchQueue.main.async {
-                                        self.appState.isLoggedIn = true
-                                        self.appState.userID = userID
-                                        self.appState.name = name
+                                        self.appState.isLoggedIn = SecureStorage.set(userID)
+                                        self.appState.userID = self.appState.isLoggedIn ? userID : ""
+                                        if self.appState.isLoggedIn {
+                                            self.appState.currentScreen = new ? .setup : .main
+                                        }
                                     }
-                                }
+                                
                             } else {
                                 print("No data in the response.")
                             }
