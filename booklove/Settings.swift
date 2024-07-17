@@ -9,6 +9,7 @@ import SwiftUI
 import UIKit
 
 struct ShareSheet: UIViewControllerRepresentable {
+    
     var activityItems: [Any]
     var applicationActivities: [UIActivity]? = nil
     
@@ -45,7 +46,7 @@ struct ShareSheet: UIViewControllerRepresentable {
 
 struct SettingsView: View {
     @State private var isShowingShareSheet = false
-
+    @EnvironmentObject var appState: AppState
     var body: some View {
         NavigationView {
             ZStack {
@@ -89,7 +90,11 @@ struct SettingsView: View {
                         .foregroundColor(.black)
                     Text("Sign Out")
                         .font(.system(size: 32, weight: .regular, design: .serif))
-                        .foregroundColor(.red)
+                        .foregroundColor(.red).onTapGesture {
+                            appState.isLoggedIn=SecureStorage.logout();
+                            appState.userID=SecureStorage.get() ?? ""
+                            
+                        }
                     
                     Spacer()
                 }
@@ -183,5 +188,5 @@ struct VendorView: View{
 
 
 #Preview {
-    SettingsView()
+    SettingsView().environmentObject(AppState())
 }

@@ -68,7 +68,7 @@ struct Genres: View {
                 }
                 if showContinueButton {
                     Button("continue") {
-                        NetworkManager.shared.fetch(urlString: "https://api.booklove.top", method: .POST){
+                        NetworkManager.shared.fetch(urlString: "https://api.booklove.top", method: .POST){_ in 
                         appState.currentScreen = .main}
                     }
                     .font(.system(size: 28, weight: .medium, design: .rounded)).foregroundColor(.black)

@@ -38,7 +38,7 @@ struct Setup: View {
                         Spacer()
                         VStack(spacing: 0) {
                             TextField("", text: $name)
-                                .padding(.vertical, 10)
+                                .padding(.vertical, 20)
                                 .multilineTextAlignment(.trailing)
                             Rectangle()
                                 .frame(height: 1)

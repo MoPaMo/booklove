@@ -21,7 +21,7 @@ struct MainAppView: View {
         case .loading:
             ContentView()
         case .main:
-            GeneralView()
+            GeneralView().environmentObject(appState)
         }
     }
 }
