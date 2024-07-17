@@ -4,7 +4,7 @@ import AuthenticationServices
 struct Welcome: View {
     @State private var showActionSheet = false
     @ObservedObject var appState: AppState
-
+    @State var loading = false
     var body: some View {
         ZStack {
             // Background Color
@@ -36,10 +36,14 @@ struct Welcome: View {
                     .font(.system(size: 32, design: .serif))
                     .foregroundColor(.black)
                     .padding(.top, 20)
-                
-                SignInWithAppleButton(appState: appState)
-                    .frame(width: 280, height: 45)
-                
+                if(!loading){
+                    SignInWithAppleButton(appState: appState)
+                        .frame(width: 280, height: 45)
+                }else{
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .scaleEffect(1.5, anchor: .center)
+                }
                 Text("By signing in, you agree to be bound by our Terms of Service and accept our Privacy Policy. \nClick here to review them.")
                     .font(.system(size: 16, design: .monospaced))
                     .foregroundColor(.black)
@@ -114,6 +118,7 @@ struct SignInWithAppleButton: UIViewRepresentable {
                 let userID = appleIDCredential.user
                 let urlString = "https://api.booklove.top/login/app"
                 let params = ["userID": userID, "identityToken": identityToken] as [String : Any]
+                var loading = true
                 NetworkManager.shared.fetch(urlString: urlString, method: .POST, params: params) { result in
                     switch result {
                     case .success(let jsonResponse):
@@ -134,15 +139,20 @@ struct SignInWithAppleButton: UIViewRepresentable {
                                         if self.appState.isLoggedIn {
                                             self.appState.currentScreen = new ? .setup : .main
                                         }
+                                        else{
+                                            loading=false
+                                        }
                                     }
                                 
                             } else {
                                 print("No data in the response.")
+                                loading=false
                             }
                         }
                         
                     case .failure(let error):
                         print("Network Error: \(error.localizedDescription)")
+                        loading = false
                     }
                 }
             }
