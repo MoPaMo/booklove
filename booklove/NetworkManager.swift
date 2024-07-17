@@ -37,7 +37,7 @@ class NetworkManager {
         }
     }
     
-    func fetch(urlString: String, method: HTTPMethod, params: [String: Any]? = nil, completion: @escaping (Result<[String: Any], NetworkError>) -> Void) {
+    func fetch(urlString: String, method: HTTPMethod, params: [String: Any]? = nil, token: String? = nil, completion: @escaping (Result<[String: Any], NetworkError>) -> Void) {
         guard let url = URL(string: urlString) else {
             completion(.failure(.invalidURL))
             return
@@ -45,6 +45,10 @@ class NetworkManager {
         
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
+        
+        if let token = token {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         
         if method == .POST, let params = params {
             do {
