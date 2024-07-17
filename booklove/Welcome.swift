@@ -100,7 +100,7 @@ struct SignInWithAppleButton: UIViewRepresentable {
 
         @objc func didTapButton() {
             let request = ASAuthorizationAppleIDProvider().createRequest()
-            request.requestedScopes = [.fullName, .email]
+            request.requestedScopes = []
             
             let authorizationController = ASAuthorizationController(authorizationRequests: [request])
             authorizationController.delegate = self
@@ -111,8 +111,6 @@ struct SignInWithAppleButton: UIViewRepresentable {
         func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
             if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
                 let userIdentifier = appleIDCredential.user
-                let fullName = appleIDCredential.fullName
-                let email = appleIDCredential.email
                 
                 // Handle user data, e.g., send it to the backend or save locally
                 // For example, transition to the next screen
