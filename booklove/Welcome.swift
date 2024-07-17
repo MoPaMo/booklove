@@ -117,20 +117,26 @@ struct SignInWithAppleButton: UIViewRepresentable {
                 NetworkManager.shared.fetch(urlString: urlString, method: .POST, params: params) { result in
                     switch result {
                     case .success(let jsonResponse):
-                        // Check if there's an error in the response
                         if let error = jsonResponse["error"] as? Bool, error {
                             let reason = jsonResponse["reason"] as? String
                             print("Error: \(reason ?? "Unknown error")")
                         } else {
-                            // Extract data fields from the response
+                            print(jsonResponse)
                             if let data = jsonResponse["data"] as? [String: Any] {
-                                let loggedIn = data["loggedIn"] as? Bool ?? false
+                                let new = data["new"] as? Bool ?? false
                                 let userID = data["userID"] as? String ?? ""
                                 let name = data["name"] as? String ?? ""
                                 
-                                print("Logged In: \(loggedIn)")
+                                print("Logged In: \(new)")
                                 print("User ID: \(userID)")
                                 print("Name: \(name)")
+                                if new {
+                                    DispatchQueue.main.async {
+                                        self.appState.isLoggedIn = true
+                                        self.appState.userID = userID
+                                        self.appState.name = name
+                                    }
+                                }
                             } else {
                                 print("No data in the response.")
                             }

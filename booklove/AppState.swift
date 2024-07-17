@@ -16,4 +16,16 @@ enum AppScreen {
 
 class AppState: ObservableObject {
     @Published var currentScreen: AppScreen = .welcome
+    @Published var isLoggedIn: Bool = false
+    @Published var userID: String = ""
+    @Published var name: String = ""
+    init() {
+        let token = SecureStorage.get()
+        if token != nil {
+            self.isLoggedIn = true
+            self.userID = token!
+        }
+        self.currentScreen = self.isLoggedIn ? .main : .welcome
+        
+    }
 }

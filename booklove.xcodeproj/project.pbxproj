@@ -110,7 +110,6 @@
 		CD5D505C2C3F03C400C1A2B4 = {
 			isa = PBXGroup;
 			children = (
-				CDAB2A202C47EB2B00F91D23 /* NetworkManager.swift */,
 				CD5D50672C3F03C400C1A2B4 /* booklove */,
 				CD5D50782C3F03C900C1A2B4 /* bookloveTests */,
 				CD5D50822C3F03C900C1A2B4 /* bookloveUITests */,
@@ -131,6 +130,7 @@
 		CD5D50672C3F03C400C1A2B4 /* booklove */ = {
 			isa = PBXGroup;
 			children = (
+				CDAB2A202C47EB2B00F91D23 /* NetworkManager.swift */,
 				CDAB2A1F2C47E16B00F91D23 /* booklove.entitlements */,
 				CD6C6B602C44487C00175F98 /* Info.plist */,
 				CD648BEB2C41710800A3F7E6 /* Genres.swift */,
