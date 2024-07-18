@@ -1,23 +1,33 @@
 import SwiftUI
+import Alamofire
+
+
+struct User: Decodable {
+    var id: UUID
+    var name: String
+    var profile_image_url: String
+    var favorite_book: String
+}
+
+struct UserProfileResponse: Decodable {
+    var user: User
+    var genres: [String]
+}
 
 struct UserProfileView: View {
-    @State var followed = false;
-    @State private var isSheetPresented = false;
-    let books: [BookItem] = [
-        BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: "1813"),
-        BookItem(title: "Sense and Sensibility", author: "Jane Austen", year: "1811"),
-        BookItem(title: "Emma", author: "Jane Austen", year: "1815"),
-        BookItem(title: "Persuasion", author: "Jane Austen", year: "1818"),
-        BookItem(title: "Mansfield Park", author: "Jane Austen", year: "1814"),
-        BookItem(title: "Northanger Abbey", author: "Jane Austen", year: "1818")
-    ]
+    @State private var followed = false
+    @State private var isSheetPresented = false
+    @State private var user: User?
+    @State private var genres: [String] = []
+    @State private var books: [BookItem] = []
+
     var body: some View {
-        NavigationView{
-            ZStack{
-                BackgroundBlurElement(option:3)
+        NavigationView {
+            ZStack {
+                BackgroundBlurElement(option: 3)
                 
-                ScrollView{
-                    VStack{
+                ScrollView {
+                    VStack {
                         Text("booklove.")
                             .font(.system(size: 64, weight: .bold, design: .serif))
                             .foregroundColor(.black)
@@ -25,55 +35,53 @@ struct UserProfileView: View {
                             .padding(.top, 20)
                             .padding(.bottom)
                         
-                        HStack(spacing: 15) {
-                            // Profile Picture
-                            Image("memoji_placeholder")
-                                .resizable()
+                        if let user = user {
+                            HStack(spacing: 15) {
+                                // Profile Picture
+                                AsyncImage(url: URL(string: user.profile_image_url)) { image in
+                                    image.resizable()
+                                } placeholder: {
+                                    Image("memoji_placeholder").resizable()
+                                }
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 70, height: 70)
                                 .clipShape(Circle())
                                 .shadow(radius: 5)
-                            
-                            VStack(alignment: .leading, spacing: 5) {
-                                // User Name
-                                Text("Jane Appleseed")
-                                    .font(.system(size: 30, weight: .bold, design: .serif))
-                                    .foregroundColor(.mint)
                                 
-                                // Favourite Book
-                                Text("\(Image(systemName: "book.circle.fill")) Pride and Prejudice")
-                                    .font(.system( size: 18, weight:.regular))
-                                    .foregroundColor(.black)
-                            }
-                            
-                            
-                            Spacer()
-                            
-                            // Follow Button
-                            Button(action: {
-                                followed=(followed==false)
-                            }) {
-                                if(!followed){
-                                    Image(systemName: "heart")
-                                        .font(.title2)
-                                    .foregroundColor(.red)}
-                                else{
-                                    Image(systemName: "heart.fill")
+                                VStack(alignment: .leading, spacing: 5) {
+                                    // User Name
+                                    Text(user.name)
+                                        .font(.system(size: 30, weight: .bold, design: .serif))
+                                        .foregroundColor(.mint)
+                                    
+                                    // Favourite Book
+                                    Text("\(Image(systemName: "book.circle.fill")) \(user.favorite_book)")
+                                        .font(.system(size: 18, weight: .regular))
+                                        .foregroundColor(.black)
+                                }
+                                
+                                Spacer()
+                                
+                                // Follow Button
+                                Button(action: {
+                                    followed.toggle()
+                                }) {
+                                    Image(systemName: followed ? "heart.fill" : "heart")
                                         .font(.title2)
                                         .foregroundColor(.red)
                                 }
                             }
+                            .padding()
+                            .background(Color.white.opacity(0.5).blur(radius: 10))
+                            .cornerRadius(10)
                         }
-                        .padding()
-                        .background(Color.white.opacity(0.5).blur(radius: 10))
                         
-                        .cornerRadius(10)
-                        VStack (alignment: .leading){
-                            Text("Favourite Genres").font(.system(size:20, weight:.light))
+                        VStack(alignment: .leading) {
+                            Text("Favourite Genres").font(.system(size: 20, weight: .light))
                             
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack {
-                                    ForEach(["Adventure", "Horror", "Comedy", "History"], id: \.self) { genre in
+                                    ForEach(genres, id: \.self) { genre in
                                         Text(genre)
                                             .font(.system(size: 15, weight: .bold, design: .serif))
                                             .padding(.horizontal, 16)
@@ -83,24 +91,23 @@ struct UserProfileView: View {
                                             .cornerRadius(20)
                                     }
                                 }
-                                
                             }
                             .padding(.bottom, 20)
-                        }.padding(.leading)
-                        HStack{
-                            Text("Friends").font(.system(size:20, weight:.light))
-                            
+                        }
+                        .padding(.leading)
+                        
+                        HStack {
+                            Text("Friends").font(.system(size: 20, weight: .light))
                             Spacer()
-                            Text("See all").font(.system(size:20, weight:.light, design:.rounded)).foregroundColor(.blue)
-                            
-                        }.padding(.horizontal)
+                            Text("See all").font(.system(size: 20, weight: .light, design: .rounded)).foregroundColor(.blue)
+                        }
+                        .padding(.horizontal)
+                        
                         HStack {
                             Spacer()
-                            
                             ZStack {
                                 ForEach(0 ..< 5) { item in
-                                    NavigationLink(destination: ProfileView())
-                                    {
+                                    NavigationLink(destination: ProfileView()) {
                                         Image("memoji_placeholder")
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
@@ -116,19 +123,16 @@ struct UserProfileView: View {
                                     }
                                 }
                             }
-                            .padding(.trailing, (61 + 5 * 35)/2)
+                            .padding(.trailing, (61 + 5 * 35) / 2)
                             .padding(.leading, 0)
-                            
                             Spacer()
                         }
                         
-                        
-                        
-                        
-                        VStack (alignment: .leading){
-                            HStack{
-                                Text("Books").font(.system(size:20, weight:.light)).multilineTextAlignment(.leading)
-                                Spacer()}
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text("Books").font(.system(size: 20, weight: .light)).multilineTextAlignment(.leading)
+                                Spacer()
+                            }
                             VStack(alignment: .leading, spacing: 10) {
                                 ForEach(books) { book in
                                     VStack(alignment: .leading) {
@@ -142,11 +146,13 @@ struct UserProfileView: View {
                                     }
                                     .padding(.bottom, 10)
                                 }
-                                
                             }
-                        }.padding(.horizontal)
+                        }
+                        .padding(.horizontal)
                     }
-                }.padding(.horizontal)
+                }
+                .padding(.horizontal)
+                
                 VStack {
                     HStack {
                         Spacer()
@@ -156,10 +162,12 @@ struct UserProfileView: View {
                             .padding()
                     }
                     Spacer()
-                }.onTapGesture {
+                }
+                .onTapGesture {
                     isSheetPresented = true
                 }
-            }.safeAreaInset(edge: .top) {
+            }
+            .safeAreaInset(edge: .top) {
                 ZStack {
                     Rectangle()
                         .fill(.clear)
@@ -167,12 +175,42 @@ struct UserProfileView: View {
                         .blur(radius: 10)
                         .frame(height: 0)
                 }
-            }.sheet(isPresented: $isSheetPresented) {
+            }
+            .sheet(isPresented: $isSheetPresented) {
                 SettingsView()
+            }
+        }
+        .onAppear {
+            fetchUserProfile()
+            fetchBooks()
+        }
+    }
+    
+    private func fetchUserProfile() {
+        let userId = "your_user_id"  // Replace with the actual user ID
+        AF.request("http://localhost:3000/user/\(userId)").responseDecodable(of: UserProfileResponse.self) { response in
+            switch response.result {
+            case .success(let data):
+                self.user = data.user
+                self.genres = data.genres
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func fetchBooks() {
+        AF.request("http://localhost:3000/books").responseDecodable(of: [BookItem].self) { response in
+            switch response.result {
+            case .success(let data):
+                self.books = data
+            case .failure(let error):
+                print(error)
             }
         }
     }
 }
+
 struct UserProfileHeaderView_Previews: PreviewProvider {
     static var previews: some View {
         UserProfileView()

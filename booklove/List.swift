@@ -8,17 +8,18 @@
 import SwiftUI
 import Alamofire
 
-struct BookItem: Identifiable {
-    let id : UUID
+struct BookItem: Identifiable, Decodable {
+    let id: UUID
     let title: String
     let author: String
     let year: String
+    
     init(id: UUID = UUID(), title: String, author: String, year: String) {
-            self.id = id
-            self.title = title
-            self.author = author
-            self.year = year
-        }
+        self.id = id
+        self.title = title
+        self.author = author
+        self.year = year
+    }
 }
 
 
