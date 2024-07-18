@@ -10,10 +10,16 @@
 import SwiftUI
 
 struct BookItem: Identifiable {
-    let id = UUID()
+    let id : UUID
     let title: String
     let author: String
     let year: Int
+    init(id: UUID = UUID(), title: String, author: String, year: Int) {
+            self.id = id
+            self.title = title
+            self.author = author
+            self.year = year
+        }
 }
 
 struct List: View {

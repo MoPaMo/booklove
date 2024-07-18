@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import Alamofire
 
 struct SearchView: View {
     @State private var searchText = ""
     @State private var isLoading = false
-    @State private var searchResults: [String] = []
+    @State private var searchResults: [BookItem] = []
     @FocusState private var isFocused;
     @EnvironmentObject var tabViewModel: TabViewModel
 
@@ -41,14 +42,14 @@ struct SearchView: View {
                         .padding()
                 } else {
                     
-                    ForEach(searchResults, id: \.self) { result in
+                    ForEach(searchResults, id: \.self.id) { result in
                         VStack(alignment: .leading) {
-                            Text(result)
+                            Text(result.title)
                                 .font(.system(size: 24, weight: .heavy, design: .serif))
                                 .foregroundColor(.cyan)
                                 .padding(.bottom, -10)
                             
-                            Text("Jane Austen, 1813") // Adjust or remove as per actual data structure
+                            Text("\(result.author), \(result.year)")
                                 .font(.system(size: 18, weight: .light, design: .monospaced))
                                 .foregroundColor(.black)
                                 .kerning(-2)
@@ -67,64 +68,44 @@ struct SearchView: View {
     }
     
     func fetchBooks() {
-        guard let url = URL(string: "https://api.booklove.top/book/search") else {
-            print("Invalid URL")
-            return
-        }
-        
-        // Prepare the request
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        // Add bearer token from SecureStorage as authorization header
-        if let bearerToken = SecureStorage.get() {
-            request.setValue("Bearer \(bearerToken)", forHTTPHeaderField: "Authorization")
-        }
-        
-        // Create the request body
-        let body: [String: Any] = [
-            "query": "your_query_here"
+        isLoading=true;
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+            "Content-Type": "application/json"
         ]
-        
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: body)
-        } catch {
-            print("Error serializing JSON: \(error)")
-            return
+        AF.request("https://api.booklove.top/book/search", method:.post, parameters: ["query":searchText], encoding: JSONEncoding.default, headers: headers).responseDecodable(of:Response.self)
+        {response in
+            switch response.result {
+            case .success(let responseData):
+                // Access the nested data
+                isLoading=false;
+                searchResults = responseData.data.books.map { k in
+                    return BookItem(id: k.id, title: k.title,
+                                    author: k.author,
+                                    year: k.year)
+                   }
+                
+            case .failure(let error):
+                isLoading=false;
+                print("Error: \(error)")
+            }
         }
-        
-        // Perform the request
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("Error fetching books: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let data = data else {
-                print("No data received")
-                return
-            }
-            
-            // Decode JSON response
-            do {
-                let decodedResponse = try JSONDecoder().decode(BookResponse.self, from: data)
-                DispatchQueue.main.async {
-                    self.books = decodedResponse.data.books.compactMap { book in
-                        if let author = book.author, let year = book.year {
-                            return BookItem(title: book.title, author: author, year: year)
-                        } else {
-                            return nil
-                        }
-                    }
-                }
-            } catch {
-                print("Error decoding JSON: \(error)")
-            }
-        }.resume()
     }
     
 
+}
+struct Response: Codable {
+    let data: DataClass
+}
+
+struct DataClass: Codable {
+    let books: [BookItemRequest]
+}
+struct BookItemRequest: Codable {
+    var id = UUID()
+    let title: String
+    let author: String
+    let year: Int
 }
 
 struct BackgroundBlur: View {
@@ -153,21 +134,7 @@ struct BlurView: UIViewRepresentable {
     
     func updateUIView(_ uiView: UIVisualEffectView, context: Context) {}
 }
-struct BookResponse: Codable {
-    let error: Bool
-    let data: BookData
-}
 
-struct BookData: Codable {
-    let books: [Book]
-}
-
-struct BookRes: Codable {
-    let title: String
-    let author: String?
-    let id: String
-    let year: Int?
-}
 
 #Preview {
     SearchView().environmentObject(TabViewModel())
