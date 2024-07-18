@@ -15,7 +15,7 @@ struct UserProfileResponse: Decodable {
 struct DataResponse : Decodable{
     var user: User
     var genres: [String]
-    var books: [BookItem]
+    var books: [BookItem]?
 }
 struct UserProfileView: View {
     @State private var followed = false
@@ -207,6 +207,7 @@ struct UserProfileView: View {
             case .success(let data):
                 self.user = data.data.user
                 self.genres = data.data.genres
+                self.books = data.data.books ?? []
             case .failure(let error):
                 print(error)
             }
