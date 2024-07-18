@@ -71,11 +71,11 @@ struct List: View {
                                             VStack(alignment: .leading) {
                                                 Text(book.title)
                                                     .font(.system(size: 24, weight: .bold, design: .serif))
-                                                    .foregroundColor(.cyan)
+                                                    .foregroundColor(.cyan).multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                                                 
                                                 Text("\(book.author), \(book.year)")
                                                     .font(.system(size: 18, weight: .light, design: .serif))
-                                                    .foregroundColor(.black)
+                                                    .foregroundColor(.black).multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                                             }
                                         }
                                     }

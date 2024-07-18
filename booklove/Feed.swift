@@ -71,7 +71,6 @@ struct Feed: View {
 
 struct singleBookReview : View{
     @EnvironmentObject var tabViewModel: TabViewModel
-    @State private var isBookPresented = false;
     var book: BookItem;
     var body: some View{
         VStack(alignment: .leading, spacing: 10) {
@@ -127,9 +126,7 @@ struct singleBookReview : View{
         """)
             .font(.system(size: 16.5, weight: .regular, design: .serif))
             .foregroundColor(.black)
-            .padding(.top, 1).onTapGesture {
-                isBookPresented=true
-            }
+            .padding(.top, 1)
         }
         .padding(.horizontal, 33)
         
@@ -156,9 +153,7 @@ struct singleBookReview : View{
             Spacer()
             Image(systemName: "flag")
                 .font(.system(size: 32))
-        }.sheet(isPresented: $isBookPresented, content: {
-            Book()
-        })
+        }
         
         
         .padding(.horizontal, 40)
@@ -170,7 +165,6 @@ struct singleBookReview : View{
 }
 struct bookloverecommendedBook : View{
     @EnvironmentObject var tabViewModel: TabViewModel
-    @State private var isBookPresented = false;
     var book: BookItem;
     var body: some View{
         VStack(alignment: .leading, spacing: 10) {
@@ -191,8 +185,7 @@ struct bookloverecommendedBook : View{
                         .frame(width: 60, height: 60)
                 }
 
-                NavigationLink(destination: ProfileView())
-                {
+               
                     VStack(alignment: .leading) {
                         Text("booklove")
                             .font(.system(size: 24, weight: .bold, design: .serif))
@@ -203,10 +196,8 @@ struct bookloverecommendedBook : View{
                             .foregroundColor(.black)
                     }
                     .padding(.leading, 10.0)
-                }
                 
-            }.onTapGesture {
-                tabViewModel.selectedTab=3
+                
             }
             
             
@@ -226,9 +217,7 @@ struct bookloverecommendedBook : View{
         """)
             .font(.system(size: 16.5, weight: .regular, design: .serif))
             .foregroundColor(.black)
-            .padding(.top, 1).onTapGesture {
-                isBookPresented=true
-            }
+            .padding(.top, 1)
         }
         .padding(.horizontal, 33)
         
@@ -255,9 +244,7 @@ struct bookloverecommendedBook : View{
             Spacer()
             Image(systemName: "flag")
                 .font(.system(size: 32))
-        }.sheet(isPresented: $isBookPresented, content: {
-            Book()
-        })
+        }
         
         
         .padding(.horizontal, 40)

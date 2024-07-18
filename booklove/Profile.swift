@@ -147,7 +147,7 @@ struct ProfileView: View {
                     }
                     .padding(.horizontal)
                 }
-            }
+            }.padding(.horizontal)
             
             VStack {
                 HStack {
