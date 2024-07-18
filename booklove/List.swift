@@ -147,6 +147,8 @@ struct List: View {
 
 
 struct LoadingSkeleton: View {
+    @State private var isAnimating = false
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             ForEach(0..<5) { _ in
@@ -154,13 +156,20 @@ struct LoadingSkeleton: View {
                     RoundedRectangle(cornerRadius: 5)
                         .fill(Color.gray.opacity(0.3))
                         .frame(height: 30)
-                    
+                        .opacity(isAnimating ? 0.6 : 1.0)
+                        .animation(Animation.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: isAnimating)
+
                     RoundedRectangle(cornerRadius: 5)
                         .fill(Color.gray.opacity(0.3))
                         .frame(height: 20)
+                        .opacity(isAnimating ? 0.6 : 1.0)
+                        .animation(Animation.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: isAnimating)
                 }
                 .padding(.vertical, 5)
             }
+        }
+        .onAppear {
+            isAnimating = true
         }
     }
 }
