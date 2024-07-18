@@ -14,17 +14,6 @@ struct SearchView: View {
     @FocusState private var isFocused;
     @EnvironmentObject var tabViewModel: TabViewModel
 
-    let sampleBooks = [
-        "The Great Gatsby",
-        "Moby Dick",
-        "To Kill a Mockingbird",
-        "1984",
-        "The Catcher in the Rye",
-        "Pride and Prejudice",
-        "War and Peace",
-        "The Odyssey"
-    ]
-    
     var body: some View {
         VStack {
             HStack {
@@ -32,9 +21,9 @@ struct SearchView: View {
                     .foregroundColor(.gray)
                 
                 TextField("Search for books, authors, or readers", text: $searchText, onCommit: {
-                    performSearch()
+                    fetchBooks()
                 }).focused($isFocused).onAppear(perform: {
-                    isFocused=true;
+                    isFocused = true
                 })
                 .font(.custom("Georgia", size: 16))
                 .padding(8)
@@ -51,16 +40,20 @@ struct SearchView: View {
             } else {
                 
                     ForEach(searchResults, id: \.self) { result in
-                        Text(result)
-                            .font(.system(size: 24, weight: .heavy, design: .serif))
-                            .foregroundColor(.cyan).padding(.bottom, -10)
-                        
-                        Text("Jane Austen, 1813")
-                            .font(.system(size: 18, weight: .light, design: .monospaced))
-                            .foregroundColor(.black).kerning(-2)
-                        
+                        VStack(alignment: .leading) {
+                            Text(result)
+                                .font(.system(size: 24, weight: .heavy, design: .serif))
+                                .foregroundColor(.cyan)
+                                .padding(.bottom, -10)
+                            
+                            Text("Jane Austen, 1813") // Adjust or remove as per actual data structure
+                                .font(.system(size: 18, weight: .light, design: .monospaced))
+                                .foregroundColor(.black)
+                                .kerning(-2)
+                        }
+                        .padding(.vertical, 8)
                     }
-                .listStyle(PlainListStyle())
+                
 
             }
         }
@@ -70,18 +63,59 @@ struct SearchView: View {
         )
     }
     
-    private func performSearch() {
-        isLoading = true
-        searchResults = []
-        
-        DispatchQueue.global().asyncAfter(deadline: .now() + 1.5) {
-            let results = sampleBooks.filter { $0.localizedCaseInsensitiveContains(searchText) }
-            DispatchQueue.main.async {
-                searchResults = results
-                isLoading = false
+    func fetchBooks() {
+            guard let url = URL(string: "https://api.booklove.top/book/search") else {
+                print("Invalid URL")
+                return
             }
+            
+            // Prepare the request
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            // Add bearer token from SecureStorage as authorization header
+            if let bearerToken = SecureStorage.get() {
+                request.setValue("Bearer \(bearerToken)", forHTTPHeaderField: "Authorization")
+            }
+            
+            // Create the request body
+            let body: [String: Any] = [
+                "query": "your_query_here"
+            ]
+            
+            do {
+                request.httpBody = try JSONSerialization.data(withJSONObject: body)
+            } catch {
+                print("Error serializing JSON: \(error)")
+                return
+            }
+            
+            // Perform the request
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    print("Error fetching books: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let data = data else {
+                    print("No data received")
+                    return
+                }
+                
+                // Decode JSON response
+                do {
+                    let decodedResponse = try JSONDecoder().decode(BookResponse.self, from: data)
+                    DispatchQueue.main.async {
+                        self.searchResults = decodedResponse.data.books
+                    }
+                } catch {
+                    print("Error decoding JSON: \(error)")
+                }
+            }.resume()
         }
-    }
+    
+
 }
 
 struct BackgroundBlur: View {
@@ -109,6 +143,14 @@ struct BlurView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UIVisualEffectView, context: Context) {}
+}
+struct BookResponse: Codable {
+    let error: Bool
+    let data: BookData
+}
+
+struct BookData: Codable {
+    let books: [String]
 }
 
 #Preview {
