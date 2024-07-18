@@ -14,8 +14,8 @@ struct BookItem: Identifiable {
     let id : UUID
     let title: String
     let author: String
-    let year: Int
-    init(id: UUID = UUID(), title: String, author: String, year: Int) {
+    let year: String
+    init(id: UUID = UUID(), title: String, author: String, year: String) {
             self.id = id
             self.title = title
             self.author = author
@@ -128,7 +128,7 @@ struct List: View {
                 books = responseData.data.books.map { k in
                     return BookItem(id: k.id, title: k.title,
                                     author: k.author,
-                                    year: k.year)
+                                    year: k.year ?? "sometime")
                    }
                 
             case .failure(let error):

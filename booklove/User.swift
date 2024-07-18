@@ -4,12 +4,12 @@ struct UserProfileView: View {
     @State var followed = false;
     @State private var isSheetPresented = false;
     let books: [BookItem] = [
-        BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: 1813),
-        BookItem(title: "Sense and Sensibility", author: "Jane Austen", year: 1811),
-        BookItem(title: "Emma", author: "Jane Austen", year: 1815),
-        BookItem(title: "Persuasion", author: "Jane Austen", year: 1818),
-        BookItem(title: "Mansfield Park", author: "Jane Austen", year: 1814),
-        BookItem(title: "Northanger Abbey", author: "Jane Austen", year: 1818)
+        BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: "1813"),
+        BookItem(title: "Sense and Sensibility", author: "Jane Austen", year: "1811"),
+        BookItem(title: "Emma", author: "Jane Austen", year: "1815"),
+        BookItem(title: "Persuasion", author: "Jane Austen", year: "1818"),
+        BookItem(title: "Mansfield Park", author: "Jane Austen", year: "1814"),
+        BookItem(title: "Northanger Abbey", author: "Jane Austen", year: "1818")
     ]
     var body: some View {
         NavigationView{

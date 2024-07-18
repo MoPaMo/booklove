@@ -82,7 +82,7 @@ struct SearchView: View {
                 searchResults = responseData.data.books.map { k in
                     return BookItem(id: k.id, title: k.title,
                                     author: k.author,
-                                    year: k.year)
+                                    year: k.year ?? "sometime")
                    }
                 
             case .failure(let error):
@@ -101,12 +101,30 @@ struct Response: Codable {
 struct DataClass: Codable {
     let books: [BookItemRequest]
 }
+
 struct BookItemRequest: Codable {
     var id = UUID()
     let title: String
     let author: String
-    let year: Int
+    let year: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id, title, author, year
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        title = try container.decode(String.self, forKey: .title)
+        author = try container.decode(String.self, forKey: .author)
+        if let yearInt = try? container.decode(Int.self, forKey: .year) {
+            year = String(yearInt)
+        } else {
+            year = try? container.decode(String.self, forKey: .year)
+        }
+    }
 }
+
 
 struct BackgroundBlur: View {
     var body: some View {
