@@ -25,6 +25,7 @@ struct Feed: View {
                             .padding(.top, 20)
                         
                     }
+                    bookloverecommendedBook(book: BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: 1813)).padding(.bottom)
                     singleBookReview(book:BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: 1813)).padding(.bottom)
                     recommendedUsers().padding(.leading, 30).background(Color.white.opacity(0.9).blur(radius: 1))
                     
@@ -167,7 +168,105 @@ struct singleBookReview : View{
     
     }
 }
+struct bookloverecommendedBook : View{
+    @EnvironmentObject var tabViewModel: TabViewModel
+    @State private var isBookPresented = false;
+    var book: BookItem;
+    var body: some View{
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                ZStack {
+                    Circle()
+                        .fill(
+                            LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.red.opacity(0.3)]),
+                                           startPoint: .topLeading,
+                                           endPoint: .bottomTrailing)
+                        )
+                        .frame(width: 70, height: 70)
+                        .blur(radius: 10)
+                    
+                    Image("Icon")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 60, height: 60)
+                }
 
+                NavigationLink(destination: ProfileView())
+                {
+                    VStack(alignment: .leading) {
+                        Text("booklove")
+                            .font(.system(size: 24, weight: .bold, design: .serif))
+                            .foregroundColor(.mint)
+                        
+                        Text("recommends for you:")
+                            .font(.system(size: 16, weight: .light, design: .rounded))
+                            .foregroundColor(.black)
+                    }
+                    .padding(.leading, 10.0)
+                }
+                
+            }.onTapGesture {
+                tabViewModel.selectedTab=3
+            }
+            
+            
+            
+            NavigationLink(destination: Book()){
+                VStack (alignment: .leading){
+                    Text(book.title)
+                        .font(.system(size: 24, weight: .heavy, design: .serif))
+                        .foregroundColor(.cyan).padding(.bottom, -10)
+                    
+                    Text("\(book.author), \(book.year)")
+                        .font(.system(size: 18, weight: .light, design: .monospaced))
+                    .foregroundColor(.black).kerning(-2)}}.buttonStyle(PlainButtonStyle())
+            
+            Text("""
+        Mr Bennet, owner of the Longbourn estate in Hertfordshire, has five daughters, but his property is entailed and can only be passed to a male heir. His wife also lacks an inheritance, so his family faces becoming poor upon his death. Thus, it is imperative that at least one of the daughters marry well to support the others, which is a primary motivation driving the plot.
+        """)
+            .font(.system(size: 16.5, weight: .regular, design: .serif))
+            .foregroundColor(.black)
+            .padding(.top, 1).onTapGesture {
+                isBookPresented=true
+            }
+        }
+        .padding(.horizontal, 33)
+        
+        Rectangle()
+            .foregroundColor(.clear)
+            .frame(width: 300, height: 0.5)
+            .overlay(Rectangle()
+                .stroke(.black, lineWidth: 0.50)).padding(.vertical, 2.0)
+        
+        HStack {
+            Image(systemName: "heart")
+                .font(.system(size: 32)).foregroundColor(.black)
+            
+            Image(systemName: "bookmark").foregroundColor(.black)
+                .font(.system(size: 32))
+            
+            Image(systemName: "square.and.arrow.up")
+                .font(.system(size: 32)).foregroundColor(.black)
+            Spacer()
+            Spacer()
+            Spacer()
+            Spacer()
+            
+            Spacer()
+            Image(systemName: "flag")
+                .font(.system(size: 32))
+        }.sheet(isPresented: $isBookPresented, content: {
+            Book()
+        })
+        
+        
+        .padding(.horizontal, 40)
+        
+        
+        Spacer()
+    
+    }
+}
 
 struct recommendedUsers: View {
     @EnvironmentObject var tabViewModel: TabViewModel
