@@ -8,6 +8,7 @@
 
 
 import SwiftUI
+import Alamofire
 
 struct BookItem: Identifiable {
     let id : UUID
@@ -24,14 +25,7 @@ struct BookItem: Identifiable {
 
 struct List: View {
     @State private var isSheetPresented = false;
-    let books: [BookItem] = [
-        BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: 1813),
-        BookItem(title: "Sense and Sensibility", author: "Jane Austen", year: 1811),
-        BookItem(title: "Emma", author: "Jane Austen", year: 1815),
-        BookItem(title: "Persuasion", author: "Jane Austen", year: 1818),
-        BookItem(title: "Mansfield Park", author: "Jane Austen", year: 1814),
-        BookItem(title: "Northanger Abbey", author: "Jane Austen", year: 1818)
-    ]
+    @State var books: [BookItem] = []
     
     var body: some View {
         NavigationView {
@@ -90,7 +84,7 @@ struct List: View {
                                 .padding(.bottom, 10)
                             }
                             
-                        }
+                        }.onAppear(perform: fetchBooks)
                     }
                 }
                 .padding(.horizontal, 20)
@@ -118,6 +112,28 @@ struct List: View {
                         .blur(radius: 10)
                         .frame(height: 0)
                 }
+            }
+        }
+    }
+    func fetchBooks() {
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+            "Content-Type": "application/json"
+        ]
+        AF.request("https://api.booklove.top/user/list", method:.post, encoding: JSONEncoding.default, headers: headers).responseDecodable(of:Response.self)
+        {response in
+            switch response.result {
+            case .success(let responseData):
+                // Access the nested data
+                books = responseData.data.books.map { k in
+                    return BookItem(id: k.id, title: k.title,
+                                    author: k.author,
+                                    year: k.year)
+                   }
+                
+            case .failure(let error):
+                
+                print("Error: \(error)")
             }
         }
     }
