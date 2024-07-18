@@ -148,10 +148,13 @@ struct List: View {
 
 struct LoadingSkeleton: View {
     @State private var isAnimating = false
-
+    let items:Int;
+    init(i_items:Int=5){
+        items = i_items
+    }
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            ForEach(0..<5) { _ in
+            ForEach(0..<items) { _ in
                 VStack(alignment: .leading, spacing: 5) {
                     RoundedRectangle(cornerRadius: 5)
                         .fill(Color.gray.opacity(0.3))
