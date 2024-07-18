@@ -10,10 +10,12 @@ struct User: Decodable {
 }
 
 struct UserProfileResponse: Decodable {
+    var data: DataResponse
+}
+struct DataResponse : Decodable{
     var user: User
     var genres: [String]
 }
-
 struct UserProfileView: View {
     @State private var followed = false
     @State private var isSheetPresented = false
@@ -182,25 +184,28 @@ struct UserProfileView: View {
         }
         .onAppear {
             fetchUserProfile()
-            fetchBooks()
+            //fetchBooks()
         }
     }
     
     private func fetchUserProfile() {
-        let userId = "your_user_id"  // Replace with the actual user ID
-        AF.request("http://localhost:3000/user/\(userId)").responseDecodable(of: UserProfileResponse.self) { response in
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+            "Content-Type": "application/json"
+        ]
+        AF.request("https://api.booklove.top/user/self", method:.get, headers: headers).responseDecodable(of: UserProfileResponse.self) { response in
             switch response.result {
             case .success(let data):
-                self.user = data.user
-                self.genres = data.genres
+                self.user = data.data.user
+                self.genres = data.data.genres
             case .failure(let error):
                 print(error)
             }
         }
     }
-    
+    /*
     private func fetchBooks() {
-        AF.request("http://localhost:3000/books").responseDecodable(of: [BookItem].self) { response in
+        AF.request("https://api.booklove.top/users/self").responseDecodable(of: [BookItem].self) { response in
             switch response.result {
             case .success(let data):
                 self.books = data
@@ -209,6 +214,7 @@ struct UserProfileView: View {
             }
         }
     }
+     */
 }
 
 struct UserProfileHeaderView_Previews: PreviewProvider {
