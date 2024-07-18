@@ -15,6 +15,7 @@ struct UserProfileResponse: Decodable {
 struct DataResponse : Decodable{
     var user: User
     var genres: [String]
+    var books: [BookItem]
 }
 struct UserProfileView: View {
     @State private var followed = false
@@ -40,15 +41,23 @@ struct UserProfileView: View {
                         if let user = user {
                             HStack(spacing: 15) {
                                 // Profile Picture
-                                AsyncImage(url: URL(string: user.profile_image_url)) { image in
+                                if(user.profile_image_url=="_default")
+                                {AsyncImage(url: URL(string: user.profile_image_url)) { image in
                                     image.resizable()
                                 } placeholder: {
                                     Image("memoji_placeholder").resizable()
+                                }.aspectRatio(contentMode: .fill)
+                                        .frame(width: 70, height: 70)
+                                        .clipShape(Circle())
+                                        .shadow(radius: 5)
                                 }
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 70, height: 70)
-                                .clipShape(Circle())
-                                .shadow(radius: 5)
+                                else{
+                                    Image("memoji_placeholder").resizable().aspectRatio(contentMode: .fill)
+                                        .frame(width: 70, height: 70)
+                                        .clipShape(Circle())
+                                        .shadow(radius: 5)
+                                }
+                                
                                 
                                 VStack(alignment: .leading, spacing: 5) {
                                     // User Name
