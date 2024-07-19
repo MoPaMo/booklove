@@ -24,43 +24,43 @@ struct ProfilePickerView: View {
                 Text("Choose Your Avatar")
                     .font(.system(size: 32, weight: .regular, design: .serif))
                     .foregroundColor(.black)
-                
-                LazyVGrid(columns: [
-                    GridItem(.flexible()),
-                    GridItem(.flexible()),
-                    GridItem(.flexible())
-                ], spacing: 20) {
-                    ForEach(avatars, id: \.self) { avatarUrl in
-                        Button(action: {
-                            selectedAvatar = avatarUrl
-                        }) {
-                            ZStack {
-                                Rectangle()
-                                    .foregroundColor(.clear)
-                                    .frame(width: 100, height: 100)
-                                    .background(Color.white)
-                                    .cornerRadius(20)
-                                    .shadow(color: Color.black.opacity(0.2), radius: 6, y: 2)
-                                
-                                AsyncImage(url: URL(string: avatarUrl)) { image in
-                                    image
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 80, height: 80)
-                                } placeholder: {
-                                    ProgressView()
+                ScrollView{
+                    LazyVGrid(columns: [
+                        GridItem(.flexible()),
+                        GridItem(.flexible()),
+                        GridItem(.flexible())
+                    ], spacing: 20) {
+                        ForEach(avatars, id: \.self) { avatarUrl in
+                            Button(action: {
+                                selectedAvatar = avatarUrl
+                            }) {
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(.clear)
+                                        .frame(width: 100, height: 100)
+                                        .background(Color.white)
+                                        .cornerRadius(20)
+                                        .shadow(color: Color.black.opacity(0.2), radius: 6, y: 2)
+                                    
+                                    AsyncImage(url: URL(string: avatarUrl)) { image in
+                                        image
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 80, height: 80)
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
                                 }
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(selectedAvatar == avatarUrl ? Color.black : Color.clear, lineWidth: 3)
+                                )
                             }
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .stroke(selectedAvatar == avatarUrl ? Color.blue : Color.clear, lineWidth: 3)
-                            )
                         }
-                    }
+                    }.padding(.horizontal)
+                    
                 }
-                .padding()
                 
-                Spacer()
                 
                 
                 Button(action: {
@@ -73,7 +73,7 @@ struct ProfilePickerView: View {
                         .font(.system(size: 20, design: .serif))
                         .foregroundColor(.white)
                         .padding()
-                        .background(Color.blue)
+                        .background(Color.black)
                         .cornerRadius(10)
                 }
                 .disabled(selectedAvatar == nil)
