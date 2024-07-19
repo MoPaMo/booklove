@@ -18,6 +18,7 @@ struct BookResponse: Decodable {
     let description: String
     let genres: [String]
     let userBooks: [UserBook]
+    let userliked: Bool
 
     func toBookItem() -> BookItem {
         return BookItem(id: id, title: title, author: author, year: year ?? "sometime")
@@ -187,6 +188,7 @@ struct Book: View {
                 self.comments = data.userBooks
                 self.fullText = data.description
                 self.isbn = data.isbn
+                self.liked = data.userliked
                 self.errorMessage = nil // Clear error message on success
             case .failure(let error):
                 print(error)
