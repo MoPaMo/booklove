@@ -132,8 +132,8 @@ struct AccountView: View {
 }
 
 struct VendorView: View{
-    @State var selected = "Amazon"
-    var vURL = "https://www.amazon.com/s?k="
+    @State var selected: String
+    var vURL: String
     let searchURLs: [String: String] = [
         "Amazon": "https://www.amazon.com/s?k=",
         "eBay": "https://www.ebay.com/sch/i.html?_nkw=",
@@ -176,6 +176,7 @@ struct VendorView: View{
                                 .foregroundColor(.black)
                         }.onTapGesture {
                             UserDefaults.standard.set(title, forKey: "vendorName")
+                            print(UserDefaults.standard.string(forKey: "vendorName")as Any)
                             UserDefaults.standard.set(searchURLs[title], forKey: "vendorURL")
                             selected = title
                             
