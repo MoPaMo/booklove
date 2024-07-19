@@ -65,6 +65,12 @@ struct List: View {
                         
                         if isLoading {
                             LoadingSkeleton()
+                        }
+                        else if books.count<1 {
+                            Text("\(Image(systemName: "bookmark.slash.fill")) Looks like you don't have any books in your list yet. Try a search (top right), look through your feed (bottom left), or scroll through some quotes to find new books!")
+                                .font(.system(size: 16, weight: .regular, design: .monospaced))
+                                .foregroundColor(.gray)
+                                .padding(.top, 10).multilineTextAlignment(.center)
                         } else {
                             VStack(alignment: .leading, spacing: 10) {
                                 ForEach(books) { book in

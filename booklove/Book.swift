@@ -141,6 +141,13 @@ struct Book: View {
                                 }
                             }
                         }
+                        Rectangle()
+                            .foregroundColor(.clear)
+                            .frame(width: 287, height: 0.5)
+                            .overlay(Rectangle().stroke(.black, lineWidth: 0.50))
+                        Text("ISBN: "+isbn).font(.system(size: 18, design: .monospaced))
+                        Text("\(Image(systemName: "info.bubble.fill.rtl")) More content coming soon ").font(.system(size: 18, design: .monospaced))
+
                     } else {
                         Spacer()
                         Text("Loading...")
