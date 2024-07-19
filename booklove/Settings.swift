@@ -132,8 +132,14 @@ struct AccountView: View {
 }
 
 struct VendorView: View{
-    var selected = "Amazon"
+    @State var selected = "Amazon"
     var vURL = "https://www.amazon.com/s?k="
+    let searchURLs: [String: String] = [
+        "Amazon": "https://www.amazon.com/s?k=",
+        "eBay": "https://www.ebay.com/sch/i.html?_nkw=",
+        "bookshop.org": "https://bookshop.org/search?keywords=",
+        "Thrift Books": "https://www.thriftbooks.com/browse/?b.search=",
+    ]
     init(){
         vURL = UserDefaults.standard.string(forKey: "vendorURL") ?? "https://www.amazon.com/s?k="
         selected = UserDefaults.standard.string(forKey: "vendorName") ?? "Amazon"
@@ -155,18 +161,24 @@ struct VendorView: View{
                 ], spacing: 10) {
                     ForEach(["Amazon", "eBay", "bookshop.org", "Thrift Books"], id: \.self) { title in
                         ZStack {
-                            Rectangle()
-                                .foregroundColor(.clear).stroke(Color.black, lineWidth: selected == title ? 2 : 0)
-                                .frame(width: 161, height: 161) // Making the frame quadratic
-                                .background(Color.white)
-                                .cornerRadius(34)
-                                .shadow(color: Color.black.opacity(0.2), radius: 6, y: 2)
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 34)
+                                    .fill(Color.white)
+                                    .frame(width: 161, height: 161)
+                                    .shadow(color: Color.black.opacity(0.2), radius: 6, y: 2)
+                                RoundedRectangle(cornerRadius: 34)
+                                    .stroke(Color.black, lineWidth: selected == title ? 2 : 0)
+                                    .frame(width: 161, height: 161)
+                            }
                                 
                             Text(title)
                                 .font(.system(size: 24, design:.serif))
                                 .foregroundColor(.black)
                         }.onTapGesture {
                             UserDefaults.standard.set(title, forKey: "vendorName")
+                            UserDefaults.standard.set(searchURLs[title], forKey: "vendorURL")
+                            selected = title
+                            
                         }
                     }
                 }
