@@ -1,8 +1,8 @@
 import SwiftUI
-
+import Alamofire
 struct ProfilePickerView: View {
     @State private var selectedAvatar: String?
-    
+    @State var loading = false
     var avatars = [
       "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/0avatar-1.png",
       "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/1avatar-2.png",
@@ -62,7 +62,8 @@ struct ProfilePickerView: View {
                     ], spacing: 20) {
                         ForEach(avatars, id: \.self) { avatarUrl in
                             Button(action: {
-                                selectedAvatar = avatarUrl
+                                if(!loading){
+                                selectedAvatar = avatarUrl}
                             }) {
                                 ZStack {
                                     Rectangle()
@@ -94,17 +95,40 @@ struct ProfilePickerView: View {
                 
                 
                 Button(action: {
-                
+                    
                     if let selected = selectedAvatar {
+                        loading = true
                         print("Confirmed avatar: \(selected)")
+                        
+                            let headers: HTTPHeaders = [
+                                "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+                                "Content-Type": "application/json"
+                            ]
+                        AF.request("https://api.booklove.top/set/image", method: .post, parameters:["url":selected], headers: headers).responseString { response in
+                                switch response.result {
+                                case .success(let responseData):
+                                    loading=false
+                                case .failure(let error):
+                                    loading = false
+                                }
+                            
+                        }
                     }
                 }) {
+                    if(!loading){
                     Text("Confirm Selection")
                         .font(.system(size: 20, design: .serif))
                         .foregroundColor(.white)
                         .padding()
                         .background(Color.black)
-                        .cornerRadius(10)
+                        .cornerRadius(10)}
+                    else{
+                        ProgressView().font(.system(size: 20, design: .serif))
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.black)
+                            .cornerRadius(10)
+                    }
                 }
                 .disabled(selectedAvatar == nil)
                 .padding(.bottom)

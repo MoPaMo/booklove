@@ -103,6 +103,6 @@ struct Genres: View {
     }
 }
 
-//#Preview {
-//    Genres()
-//}
+#Preview {
+   Genres(appState: AppState())
+}
