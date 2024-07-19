@@ -37,10 +37,12 @@ struct Book: View {
     @State var bookGenres: [String] = []
     @State var comments: [UserBook] = []
     @State var isbn = ""
-    @State private var isButtonPressed = false 
+    @State private var isButtonPressed = false
+    @State private var errorMessage: String? // State variable for error messages
     var bookID: String
-    init(book:UUID){
-        self.bookID=book.uuidString
+
+    init(book: UUID) {
+        self.bookID = book.uuidString
     }
 
     var body: some View {
@@ -48,7 +50,13 @@ struct Book: View {
             BackgroundBlurElement()
             ScrollView {
                 VStack {
-                    if let bookItem = bookItem {
+                    if let errorMessage = errorMessage {
+                        Text(errorMessage)
+                            .font(.system(size: 20, weight: .bold, design: .serif))
+                            .foregroundColor(.red)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                    } else if let bookItem = bookItem {
                         VStack(alignment: .leading) {
                             Text(bookItem.title)
                                 .font(.system(size: 40, weight: .bold, design: .serif))
@@ -167,8 +175,9 @@ struct Book: View {
                 self.comments = data.userBooks
                 self.fullText = data.description
                 self.isbn = data.isbn
+                self.errorMessage = nil // Clear error message on success
             case .failure(let error):
-                print("Error fetching book data: \(error)")
+                self.errorMessage = "Error fetching book data: \(error.localizedDescription)"
             }
         }
     }
