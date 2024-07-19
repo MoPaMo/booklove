@@ -38,7 +38,7 @@ struct Book: View {
     @State  var bookGenres: [String] = []
     @State  var comments: [UserBook] = []
 
-    let bookID = "933952f3-a265-4dc0-b2f6-0179c7e29529"  // Replace with actual book ID
+    let bookID = "933952f3-a265-4dc0-b2f6-0179c7e29529"
 
     var body: some View {
         ZStack {
@@ -56,7 +56,7 @@ struct Book: View {
                                 .foregroundColor(.black)
                                 .multilineTextAlignment(.leading)
                         }
-                        .padding(.leading).padding(.top, 200)
+                        .padding(.leading).padding(.top, 50)
                         Rectangle()
                             .foregroundColor(.clear)
                             .frame(width: 287, height: 0.5)
@@ -68,12 +68,41 @@ struct Book: View {
                                 .foregroundColor(.black)
                         }
                         .padding(.top)
-                        HStack {
-                            Text(comments.map { $0.status }.joined(separator: ", "))
-                                .font(.system(size: 16, weight: .light, design: .serif))
-                                .foregroundColor(.black)
-                        }
-                        .padding(.top)
+                        HStack(){ZStack() {
+                                                Rectangle()
+                                                    .foregroundColor(.clear)
+                                                    .frame(width: 161, height: 53)
+                                                    .background(.white)
+                                                    .cornerRadius(21)
+                                                    .offset(x: 0, y: 0)
+                                                    .shadow(
+                                                        color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2
+                                                    )
+                                                Image(systemName: "bookmark")
+                                                    .font(.system(size: 20))
+                                                    .foregroundColor(.black)
+                                                    .offset(x: 0, y: 0.50)
+                                            }
+                                            .frame(width: 161, height: 53)
+                                                ZStack() {
+                                                    Rectangle()
+                                                        .foregroundColor(.clear)
+                                                        .frame(width: 161, height: 53)
+                                                        .background(.white)
+                                                        .cornerRadius(21)
+                                                        .offset(x: 0, y: 0)
+                                                        .shadow(
+                                                            color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2
+                                                        )
+                                                    Image(systemName: "cart")
+                                                        .font(.system(size: 20))
+                                                        .foregroundColor(.black)
+                                                        .offset(x: 0, y: 0.50)
+                                                }
+                                                .frame(height: 53)
+                                            }
+                        
+                        
                     } else {
                         Text("Loading...")
                             .font(.system(size: 40, weight: .bold, design: .serif))
