@@ -99,7 +99,9 @@ struct Book: View {
                                     .font(.system(size: 20))
                                     .foregroundColor(.black)
                             }
-                            .frame(width: 161, height: 53)
+                            .frame(width: 161, height: 53).onTapGesture {
+                                like_book(id: bookItem.id)
+                            }
                             ZStack {
                                 Rectangle()
                                     .foregroundColor(.clear)
@@ -193,6 +195,24 @@ struct Book: View {
     }
 }
 
+func like_book(id:UUID){
+    let url = "https://api.booklove.top/book/like"
+    let headers: HTTPHeaders = [
+        "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+        "Content-Type": "application/json"
+    ]
+    AF.request(url, headers: headers).responseString {
+        response in
+        switch response.result {
+          case .success(let responseBody):
+              print("Response body: \(responseBody)")
+              // Do something with the response body string
+          case .failure(let error):
+              print("Error: \(error)")
+              // Handle the error
+          }
+    }
+}
 #Preview {
     Book(book: UUID.init(uuidString: "933952f3-a265-4dc0-b2f6-0179c7e29529") ?? UUID())
 }

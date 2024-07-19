@@ -16,55 +16,58 @@ struct SearchView: View {
     @EnvironmentObject var tabViewModel: TabViewModel
 
     var body: some View {
-        ScrollView{
-            VStack {
-                HStack {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundColor(.gray)
-                    
-                    TextField("Search for new books", text: $searchText, onCommit: {
-                        fetchBooks()
-                    }).focused($isFocused).onAppear(perform: {
-                        isFocused = true
-                    })
-                    .font(.system(size: 16, design: .serif))
-                    .padding(8)
-                }
-                .padding()
-                .background(BlurView(style: .systemMaterial))
-                .cornerRadius(10)
-                .padding([.leading, .trailing], 16)
-                .padding(.top, 50)
-                
-                if isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .padding()
-                } else {
-                    
-                    ForEach(searchResults, id: \.self.id) { result in
-                        NavigationLink(destination: Book(book: result.id)){
-                        VStack(alignment: .leading) {
-                            Text(result.title)
-                                .font(.system(size: 24, weight: .heavy, design: .serif))
-                                .foregroundColor(.cyan)
-                                .padding(.bottom, -10)
-                            
-                            Text("\(result.author), \(result.year)")
-                                .font(.system(size: 18, weight: .light, design: .monospaced))
-                                .foregroundColor(.black)
-                                .kerning(-2)
-                        }
-                        .padding(.vertical, 8)}
+        NavigationView {
+            ScrollView{
+                VStack {
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.gray)
+                        
+                        TextField("Search for new books", text: $searchText, onCommit: {
+                            fetchBooks()
+                        }).focused($isFocused).onAppear(perform: {
+                            isFocused = true
+                        })
+                        .font(.system(size: 16, design: .serif))
+                        .padding(8)
                     }
+                    .padding()
+                    .background(BlurView(style: .systemMaterial))
+                    .cornerRadius(10)
+                    .padding([.leading, .trailing], 16)
+                    .padding(.top, 50)
                     
-                    
+                    if isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .padding()
+                    } else {
+                        VStack (alignment:.leading){
+                            ForEach(searchResults, id: \.self.id) { result in
+                                NavigationLink(destination: Book(book: result.id)){
+                                    VStack(alignment: .leading) {
+                                        Text(result.title)
+                                            .font(.system(size: 24, weight: .heavy, design: .serif))
+                                            .foregroundColor(.cyan)
+                                            .padding(.bottom, -10)
+                                        
+                                        Text("\(result.author), \(result.year)")
+                                            .font(.system(size: 18, weight: .light, design: .monospaced))
+                                            .foregroundColor(.black)
+                                            .kerning(-2)
+                                    }
+                                    .padding(.vertical, 8)}
+                            }
+                            
+                            
+                        }.padding(.horizontal)
+                    }
                 }
+                .background(Color.white.edgesIgnoringSafeArea(.all))
+                .overlay(
+                    BackgroundBlur()
+                )
             }
-            .background(Color.white.edgesIgnoringSafeArea(.all))
-            .overlay(
-                BackgroundBlur()
-            )
         }
     }
     
