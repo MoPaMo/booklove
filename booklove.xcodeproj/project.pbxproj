@@ -113,6 +113,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CD0778122C4A53CF00BCDF37 /* App Control */ = {
+			isa = PBXGroup;
+			children = (
+				CDB501222C3FAA0D002DC85C /* GeneralView.swift */,
+				CD648BF52C4414B400A3F7E6 /* AppState.swift */,
+				CD648BF72C4414E200A3F7E6 /* MainAppView.swift */,
+			);
+			name = "App Control";
+			sourceTree = "<group>";
+		};
 		CD5D505C2C3F03C400C1A2B4 = {
 			isa = PBXGroup;
 			children = (
@@ -139,17 +149,15 @@
 				CDAB2A1F2C47E16B00F91D23 /* booklove.entitlements */,
 				CD6C6B602C44487C00175F98 /* Info.plist */,
 				CD5D50942C3F24EB00C1A2B4 /* Launch Screen.storyboard */,
-				CD648BF52C4414B400A3F7E6 /* AppState.swift */,
 				CDE4B8452C413B4D004C3282 /* BackgroundBlur.swift */,
 				CD648BEF2C41A17600A3F7E6 /* Book.swift */,
 				CD5D50682C3F03C400C1A2B4 /* bookloveApp.swift */,
 				CD5D506A2C3F03C400C1A2B4 /* ContentView.swift */,
 				CDB501202C3F9162002DC85C /* Feed.swift */,
-				CDB501222C3FAA0D002DC85C /* GeneralView.swift */,
 				CD648BEB2C41710800A3F7E6 /* Genres.swift */,
 				CDB501282C3FAC9E002DC85C /* List.swift */,
 				CD0778102C4A466F00BCDF37 /* AvatarSelect.swift */,
-				CD648BF72C4414E200A3F7E6 /* MainAppView.swift */,
+				CD0778122C4A53CF00BCDF37 /* App Control */,
 				CDAB2A202C47EB2B00F91D23 /* NetworkManager.swift */,
 				CDAB2A582C48276A00F91D23 /* Profile.swift */,
 				CDB501242C3FAAC9002DC85C /* Quotes.swift */,

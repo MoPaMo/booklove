@@ -46,12 +46,12 @@ class SecureStorage {
         return nil
     }
     static func setID(_ id: String) -> Bool {// (to set the token in keychain)
-        let tokenData = id.data(using: .utf8)!
+        let idData = id.data(using: .utf8)!
         
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: "userID",
-            kSecValueData as String: id,
+            kSecValueData as String: idData,
             kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock
         ]
         

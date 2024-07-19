@@ -137,7 +137,7 @@ struct SignInWithAppleButton: UIViewRepresentable {
                                 if let data = jsonResponse["data"] as? [String: Any] {
                                     let new = data["new"] as? Bool ?? false
                                     let token = data["token"] as? String ?? ""
-                                    let id = data["id"] as? String ?? ""
+                                    let id = data["userID"] as? String ?? ""
                                     
                                     print("User ID: \(token)")
                                     

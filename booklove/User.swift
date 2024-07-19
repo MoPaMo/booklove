@@ -23,7 +23,10 @@ struct UserProfileView: View {
     @State private var user: User?
     @State private var genres: [String] = []
     @State private var books: [BookItem] = []
-
+    var userID :UUID
+    init(userID:UUID=SecureStorage.getID()){
+        self.userID=userID
+    }
     var body: some View {
         NavigationView {
             ZStack {
