@@ -28,7 +28,7 @@ struct Feed: View {
                     }
                     ForEach (boooks)
                         {boook in
-                        bookloverecommendedBook(book: boook.book).padding(.bottom)}
+                            bookloverecommendedBook(book: boook.book, desc: boook.desc).padding(.bottom)}
                     Text("More content coming soon :)")
                     /*singleBookReview(book:BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: "1813")).padding(.bottom)
                     recommendedUsers().padding(.leading, 30).background(Color.white.opacity(0.9).blur(radius: 1))
@@ -185,6 +185,7 @@ struct singleBookReview : View{
 struct bookloverecommendedBook : View{
     @EnvironmentObject var tabViewModel: TabViewModel
     var book: BookItem;
+    var desc: String;
     var body: some View{
         VStack(alignment: .leading, spacing: 10) {
             HStack {
@@ -201,7 +202,7 @@ struct bookloverecommendedBook : View{
                     Image("Icon")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 60, height: 60)
+                        .frame(width: 60, height: 60).cornerRadius(23)
                 }
 
                
@@ -221,7 +222,7 @@ struct bookloverecommendedBook : View{
             
             
             
-            NavigationLink(destination: Book(book: UUID.init(uuidString: "933952f3-a265-4dc0-b2f6-0179c7e29529") ?? UUID())){
+            NavigationLink(destination: Book(book: book.id)){
                 VStack (alignment: .leading){
                     Text(book.title)
                         .font(.system(size: 24, weight: .heavy, design: .serif))
@@ -231,9 +232,7 @@ struct bookloverecommendedBook : View{
                         .font(.system(size: 18, weight: .light, design: .monospaced))
                     .foregroundColor(.black).kerning(-2)}}.buttonStyle(PlainButtonStyle())
             
-            Text("""
-        Mr Bennet, owner of the Longbourn estate in Hertfordshire, has five daughters, but his property is entailed and can only be passed to a male heir. His wife also lacks an inheritance, so his family faces becoming poor upon his death. Thus, it is imperative that at least one of the daughters marry well to support the others, which is a primary motivation driving the plot.
-        """)
+            Text(desc)
             .font(.system(size: 16.5, weight: .regular, design: .serif))
             .foregroundColor(.black)
             .padding(.top, 1)
