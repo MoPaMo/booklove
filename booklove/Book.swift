@@ -37,6 +37,7 @@ struct Book: View {
     @State var bookGenres: [String] = []
     @State var comments: [UserBook] = []
     @State var isbn = ""
+    @State private var isButtonPressed = false 
     let bookID = "933952f3-a265-4dc0-b2f6-0179c7e29529"
 
     var body: some View {
@@ -63,17 +64,15 @@ struct Book: View {
                             .overlay(Rectangle().stroke(.black, lineWidth: 0.50))
                         HStack {
                             Text(fullText.prefix(200))
-                                            .font(.system(size: 16, weight: .light, design: .serif))
-                                            .foregroundColor(.black)
-                                       
-                            + Text(fullText.count>200 ? " more" : "")
-                                                .font(.system(size: 16, weight: .bold, design: .serif))
-                                                .foregroundColor(.blue)
-                                        
-                                            }
-                                            .onTapGesture {
-                                                isSheetPresented = true
-                                            }
+                                .font(.system(size: 16, weight: .light, design: .serif))
+                                .foregroundColor(.black)
+                                + Text(fullText.count > 200 ? " more" : "")
+                                    .font(.system(size: 16, weight: .bold, design: .serif))
+                                    .foregroundColor(.blue)
+                        }
+                        .onTapGesture {
+                            isSheetPresented = true
+                        }
                         HStack {
                             ZStack {
                                 Rectangle()
@@ -94,11 +93,20 @@ struct Book: View {
                                     .background(.white)
                                     .cornerRadius(21)
                                     .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2)
+                                    .scaleEffect(isButtonPressed ? 0.9 : 1.0) // Apply scale effect
+                                    .animation(.spring(response: 0.2, dampingFraction: 0.5), value: isButtonPressed) // Animation when button is pressed
                                 Image(systemName: "cart")
                                     .font(.system(size: 20))
                                     .foregroundColor(.black)
                             }
-                            .frame(height: 53).onTapGesture {
+                            .frame(height: 53)
+                            .onTapGesture {
+                                isButtonPressed = true // Trigger animation
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                    isButtonPressed = false // Reset animation
+                                }
+
                                 let userDefaults = UserDefaults.standard
                                 let vendorURL = userDefaults.string(forKey: "vendorURL")
                                 
@@ -112,7 +120,6 @@ struct Book: View {
                                         UIApplication.shared.open(url)
                                     }
                                 }
-                            
                             }
                         }
                     } else {
