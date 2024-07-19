@@ -18,8 +18,6 @@ struct BookResponse: Decodable {
     let genres: [String]
     let userBooks: [UserBook]
 
-    
-
     func toBookItem() -> BookItem {
         return BookItem(id: id, title: title, author: author, year: year)
     }
@@ -33,10 +31,10 @@ struct UserBook: Decodable {
 
 struct Book: View {
     @State private var isSheetPresented = false
-    @State  var bookItem: BookItem?
-    @State  var fullText = ""
-    @State  var bookGenres: [String] = []
-    @State  var comments: [UserBook] = []
+    @State var bookItem: BookItem?
+    @State var fullText = ""
+    @State var bookGenres: [String] = []
+    @State var comments: [UserBook] = []
 
     let bookID = "933952f3-a265-4dc0-b2f6-0179c7e29529"
 
@@ -56,53 +54,44 @@ struct Book: View {
                                 .foregroundColor(.black)
                                 .multilineTextAlignment(.leading)
                         }
-                        .padding(.leading).padding(.top, 50)
+                        .padding(.leading)
+                        .padding(.top, 50)
                         Rectangle()
                             .foregroundColor(.clear)
                             .frame(width: 287, height: 0.5)
-                            .overlay(Rectangle()
-                                .stroke(.black, lineWidth: 0.50))
+                            .overlay(Rectangle().stroke(.black, lineWidth: 0.50))
                         HStack {
                             Text(bookGenres.joined(separator: ", "))
                                 .font(.system(size: 16, weight: .light, design: .serif))
                                 .foregroundColor(.black)
                         }
                         .padding(.top)
-                        HStack(){ZStack() {
-                                                Rectangle()
-                                                    .foregroundColor(.clear)
-                                                    .frame(width: 161, height: 53)
-                                                    .background(.white)
-                                                    .cornerRadius(21)
-                                                    .offset(x: 0, y: 0)
-                                                    .shadow(
-                                                        color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2
-                                                    )
-                                                Image(systemName: "bookmark")
-                                                    .font(.system(size: 20))
-                                                    .foregroundColor(.black)
-                                                    .offset(x: 0, y: 0.50)
-                                            }
-                                            .frame(width: 161, height: 53)
-                                                ZStack() {
-                                                    Rectangle()
-                                                        .foregroundColor(.clear)
-                                                        .frame(width: 161, height: 53)
-                                                        .background(.white)
-                                                        .cornerRadius(21)
-                                                        .offset(x: 0, y: 0)
-                                                        .shadow(
-                                                            color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2
-                                                        )
-                                                    Image(systemName: "cart")
-                                                        .font(.system(size: 20))
-                                                        .foregroundColor(.black)
-                                                        .offset(x: 0, y: 0.50)
-                                                }
-                                                .frame(height: 53)
-                                            }
-                        
-                        
+                        HStack {
+                            ZStack {
+                                Rectangle()
+                                    .foregroundColor(.clear)
+                                    .frame(width: 161, height: 53)
+                                    .background(.white)
+                                    .cornerRadius(21)
+                                    .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2)
+                                Image(systemName: "bookmark")
+                                    .font(.system(size: 20))
+                                    .foregroundColor(.black)
+                            }
+                            .frame(width: 161, height: 53)
+                            ZStack {
+                                Rectangle()
+                                    .foregroundColor(.clear)
+                                    .frame(width: 161, height: 53)
+                                    .background(.white)
+                                    .cornerRadius(21)
+                                    .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2)
+                                Image(systemName: "cart")
+                                    .font(.system(size: 20))
+                                    .foregroundColor(.black)
+                            }
+                            .frame(height: 53)
+                        }
                     } else {
                         Text("Loading...")
                             .font(.system(size: 40, weight: .bold, design: .serif))
