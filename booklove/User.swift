@@ -96,8 +96,8 @@ struct UserProfileView: View {
                             Text("Favourite Genres").font(.system(size: 20, weight: .light))
 
                             if genres.isEmpty {
-                                Text("Looks like this user doesn't have any favourite genres yet. You can befriend them to recommend some!")
-                                    .font(.system(size: 16, weight: .regular))
+                                Text("\(Image(systemName: "nosign")) No genres yet")
+                                    .font(.system(size: 16, weight: .regular, design: .monospaced))
                                     .foregroundColor(.gray)
                                     .padding(.top, 10)
                             } else {
@@ -130,7 +130,7 @@ struct UserProfileView: View {
                             Spacer()
                             ZStack {
                                 ForEach(0 ..< 5) { item in
-                                    NavigationLink(destination: ProfileView()) {
+                                    NavigationLink(destination: UserProfileView(userID: userID)) {
                                         Image("memoji_placeholder")
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
@@ -157,10 +157,10 @@ struct UserProfileView: View {
                                 Spacer()
                             }
                             if books.isEmpty {
-                                Text("Looks like this user doesn't have any books in their list yet. You can befriend them to recommend some!")
-                                    .font(.system(size: 16, weight: .regular))
+                                Text("\(Image(systemName: "nosign")) Looks like this reader doesn't have any books in their list yet. You can befriend them to recommend some!")
+                                    .font(.system(size: 16, weight: .regular, design: .monospaced))
                                     .foregroundColor(.gray)
-                                    .padding(.top, 10)
+                                    .padding(.top, 10).multilineTextAlignment(.center)
                             } else {
                                 VStack(alignment: .leading, spacing: 10) {
                                     ForEach(books) { book in

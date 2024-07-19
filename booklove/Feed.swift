@@ -291,8 +291,6 @@ struct recommendedUsers: View {
                                        .fontWeight(.bold)
                                        .foregroundColor(.primary)
                                        .padding(.top, 4)
-                               }.onTapGesture {
-                                   tabViewModel.selectedTab = 3
                                }
                                .padding(.vertical, 10) // Added padding to ensure the image is not cut off
                            }
