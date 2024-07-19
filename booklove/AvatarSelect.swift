@@ -3,7 +3,7 @@ import SwiftUI
 struct ProfilePickerView: View {
     @State private var selectedAvatar: String?
     
-    let avatars = [
+    var avatars = [
         "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/0avatar-1.png",
         "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/1avatar-2.png",
         "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/2avatar-3.png",
@@ -26,7 +26,11 @@ struct ProfilePickerView: View {
         "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/9avatar-34.png"
     ]
     
+    init(){
+        avatars.remix()
+    }
     var body: some View {
+        
         ZStack {
             BackgroundBlurElement().edgesIgnoringSafeArea(.all)
             
@@ -94,6 +98,18 @@ struct ProfilePickerView: View {
         }
     }
 }
+
+
+
+extension Array {
+    mutating func remix() {
+        for i in 0..<(self.count - 1) {
+            let j = Int(arc4random_uniform(UInt32(self.count - i))) + i
+            self.swapAt(i, j)
+        }
+    }
+}
+
 
 #Preview {
     ProfilePickerView()
