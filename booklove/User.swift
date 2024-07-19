@@ -20,12 +20,17 @@ struct DataResponse : Decodable{
 struct UserProfileView: View {
     @State private var followed = false
     @State private var isSheetPresented = false
+    @State private var isShareSheetPresented = false
     @State private var user: User?
     @State private var genres: [String] = []
     @State private var books: [BookItem] = []
     var userID :UUID
-    init(userID:UUID=SecureStorage.getID()){
-        self.userID=userID
+    var appuserID:UUID
+    var isownaccount:Bool
+    init(userID:UUID){
+        self.appuserID = UUID(uuidString:SecureStorage.getID() ?? "") ?? UUID()
+        self.userID = userID
+        self.isownaccount = self.userID == self.appuserID
     }
     var body: some View {
         NavigationView {
@@ -170,7 +175,8 @@ struct UserProfileView: View {
                 VStack {
                     HStack {
                         Spacer()
-                        Image(systemName: "gearshape.circle.fill")
+                        
+                        Image(systemName: isownaccount ? "gearshape.circle.fill" : "square.and.arrow.up.circle.fill")
                             .foregroundColor(.black)
                             .font(.system(size: 32))
                             .padding()
@@ -178,7 +184,14 @@ struct UserProfileView: View {
                     Spacer()
                 }
                 .onTapGesture {
-                    isSheetPresented = true
+                    if(isownaccount)
+                    {
+                        isSheetPresented = true
+                    }
+                    else
+                        {
+                            isShareSheetPresented = true
+                        }
                 }
             }
             .safeAreaInset(edge: .top) {
@@ -193,10 +206,14 @@ struct UserProfileView: View {
             .sheet(isPresented: $isSheetPresented) {
                 SettingsView()
             }
+            .sheet(isPresented: $isShareSheetPresented) {
+                ShareSheet(activityItems: [
+                    isownaccount ? "Come join me on booklove: new books, new friends" : "Check out this user on booklove: new books, new friends",
+                    URL(string: "https://api.booklove.com/join/user/"+userID.uuidString)!])
+            }
         }
         .onAppear {
             fetchUserProfile()
-            //fetchBooks()
         }
     }
     
@@ -216,22 +233,10 @@ struct UserProfileView: View {
             }
         }
     }
-    /*
-    private func fetchBooks() {
-        AF.request("https://api.booklove.top/users/self").responseDecodable(of: [BookItem].self) { response in
-            switch response.result {
-            case .success(let data):
-                self.books = data
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-     */
 }
 
 struct UserProfileHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        UserProfileView()
+        UserProfileView(userID: UUID(uuidString:SecureStorage.getID() ?? "") ?? UUID())
     }
 }

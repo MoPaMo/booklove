@@ -27,7 +27,7 @@ struct GeneralView: View {
                     Image(systemName: "books.vertical")
                     Text("List")
                 }.tag(2)
-            UserProfileView()
+            UserProfileView(userID: UUID(uuidString:SecureStorage.getID() ?? "") ?? UUID())
                 .tabItem {
                     Image(systemName: "person.crop.circle")
                     Text("Profile")
