@@ -84,3 +84,7 @@ struct ProfilePickerView: View {
         }
     }
 }
+
+#Preview {
+    ProfilePickerView()
+}

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CD0778112C4A466F00BCDF37 /* AvatarSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0778102C4A466F00BCDF37 /* AvatarSelect.swift */; };
 		CD4369702C49101C0065D5EE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CD43696F2C49101C0065D5EE /* Alamofire */; };
 		CD5D50692C3F03C400C1A2B4 /* bookloveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D50682C3F03C400C1A2B4 /* bookloveApp.swift */; };
 		CD5D506B2C3F03C400C1A2B4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D506A2C3F03C400C1A2B4 /* ContentView.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CD0778102C4A466F00BCDF37 /* AvatarSelect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarSelect.swift; sourceTree = "<group>"; };
 		CD5D50652C3F03C400C1A2B4 /* booklove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = booklove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5D50682C3F03C400C1A2B4 /* bookloveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookloveApp.swift; sourceTree = "<group>"; };
 		CD5D506A2C3F03C400C1A2B4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -134,30 +136,31 @@
 		CD5D50672C3F03C400C1A2B4 /* booklove */ = {
 			isa = PBXGroup;
 			children = (
-				CDAB2A202C47EB2B00F91D23 /* NetworkManager.swift */,
 				CDAB2A1F2C47E16B00F91D23 /* booklove.entitlements */,
 				CD6C6B602C44487C00175F98 /* Info.plist */,
-				CD648BEB2C41710800A3F7E6 /* Genres.swift */,
-				CDB501222C3FAA0D002DC85C /* GeneralView.swift */,
+				CD5D50942C3F24EB00C1A2B4 /* Launch Screen.storyboard */,
+				CD648BF52C4414B400A3F7E6 /* AppState.swift */,
+				CDE4B8452C413B4D004C3282 /* BackgroundBlur.swift */,
+				CD648BEF2C41A17600A3F7E6 /* Book.swift */,
 				CD5D50682C3F03C400C1A2B4 /* bookloveApp.swift */,
 				CD5D506A2C3F03C400C1A2B4 /* ContentView.swift */,
+				CDB501202C3F9162002DC85C /* Feed.swift */,
+				CDB501222C3FAA0D002DC85C /* GeneralView.swift */,
+				CD648BEB2C41710800A3F7E6 /* Genres.swift */,
+				CDB501282C3FAC9E002DC85C /* List.swift */,
+				CD0778102C4A466F00BCDF37 /* AvatarSelect.swift */,
+				CD648BF72C4414E200A3F7E6 /* MainAppView.swift */,
+				CDAB2A202C47EB2B00F91D23 /* NetworkManager.swift */,
+				CDAB2A582C48276A00F91D23 /* Profile.swift */,
+				CDB501242C3FAAC9002DC85C /* Quotes.swift */,
+				CD648BF12C43F40300A3F7E6 /* Search.swift */,
+				CDAB2A1D2C47D8C000F91D23 /* secure_storage_util.swift */,
+				CDE4B8472C413F52004C3282 /* Settings.swift */,
+				CD648BF32C440DCD00A3F7E6 /* Setup.swift */,
+				CD648BF92C4421E800A3F7E6 /* User.swift */,
+				CD5D50962C3F25B000C1A2B4 /* Welcome.swift */,
 				CD5D506C2C3F03C800C1A2B4 /* Assets.xcassets */,
 				CD5D506E2C3F03C800C1A2B4 /* Preview Content */,
-				CD5D50942C3F24EB00C1A2B4 /* Launch Screen.storyboard */,
-				CD5D50962C3F25B000C1A2B4 /* Welcome.swift */,
-				CDB501202C3F9162002DC85C /* Feed.swift */,
-				CD648BF12C43F40300A3F7E6 /* Search.swift */,
-				CDE4B8452C413B4D004C3282 /* BackgroundBlur.swift */,
-				CDB501242C3FAAC9002DC85C /* Quotes.swift */,
-				CD648BEF2C41A17600A3F7E6 /* Book.swift */,
-				CD648BF32C440DCD00A3F7E6 /* Setup.swift */,
-				CD648BF52C4414B400A3F7E6 /* AppState.swift */,
-				CD648BF92C4421E800A3F7E6 /* User.swift */,
-				CDAB2A582C48276A00F91D23 /* Profile.swift */,
-				CD648BF72C4414E200A3F7E6 /* MainAppView.swift */,
-				CDAB2A1D2C47D8C000F91D23 /* secure_storage_util.swift */,
-				CDB501282C3FAC9E002DC85C /* List.swift */,
-				CDE4B8472C413F52004C3282 /* Settings.swift */,
 			);
 			path = booklove;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				CD648BFA2C4421E800A3F7E6 /* User.swift in Sources */,
 				CDE4B8482C413F52004C3282 /* Settings.swift in Sources */,
 				CDB501252C3FAAC9002DC85C /* Quotes.swift in Sources */,
+				CD0778112C4A466F00BCDF37 /* AvatarSelect.swift in Sources */,
 				CDB501212C3F9162002DC85C /* Feed.swift in Sources */,
 				CD648BF02C41A17600A3F7E6 /* Book.swift in Sources */,
 				CDB501232C3FAA0D002DC85C /* GeneralView.swift in Sources */,
