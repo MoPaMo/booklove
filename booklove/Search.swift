@@ -22,12 +22,12 @@ struct SearchView: View {
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(.gray)
                     
-                    TextField("Search for books, authors, or readers", text: $searchText, onCommit: {
+                    TextField("Search for new books", text: $searchText, onCommit: {
                         fetchBooks()
                     }).focused($isFocused).onAppear(perform: {
                         isFocused = true
                     })
-                    .font(.custom("Georgia", size: 16))
+                    .font(.system(size: 16, design: .serif))
                     .padding(8)
                 }
                 .padding()
@@ -43,6 +43,7 @@ struct SearchView: View {
                 } else {
                     
                     ForEach(searchResults, id: \.self.id) { result in
+                        NavigationLink(destination: Book(book: result.id)){
                         VStack(alignment: .leading) {
                             Text(result.title)
                                 .font(.system(size: 24, weight: .heavy, design: .serif))
@@ -54,7 +55,7 @@ struct SearchView: View {
                                 .foregroundColor(.black)
                                 .kerning(-2)
                         }
-                        .padding(.vertical, 8)
+                        .padding(.vertical, 8)}
                     }
                     
                     

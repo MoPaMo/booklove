@@ -171,7 +171,11 @@ struct Book: View {
 
     func fetchBookData() {
         let url = "https://api.booklove.top/book/\(bookID)"
-        AF.request(url).responseDecodable(of: BookResponse.self) { response in
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+            "Content-Type": "application/json"
+        ]
+        AF.request(url, headers: headers).responseDecodable(of: BookResponse.self) { response in
             switch response.result {
             case .success(let data):
                 self.bookItem = data.toBookItem()
