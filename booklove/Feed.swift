@@ -76,11 +76,11 @@ struct Feed: View {
             "Authorization": "Bearer \(SecureStorage.get() ?? "")",
             "Content-Type": "application/json"
         ]
-        AF.request("https://api.booklove.top/recommendations", method: .post, encoding: JSONEncoding.default, headers: headers).responseDecodable(of: ResponseModel.self) { response in
+        AF.request("https://api.booklove.top/recommendations", method: .get, encoding: JSONEncoding.default, headers: headers).responseDecodable(of: ResponseModel.self) { response in
             switch response.result {
             case .success(let responseData):
                 print(responseData)
-                self.boooks = responseData.data.books
+                self.boooks = responseData.data
             case .failure(let error):
                 print(error)
             }
@@ -329,11 +329,8 @@ struct BookEntry: Codable, Identifiable {
     let desc: String
 }
 
-struct BooksResponse: Codable {
-    let books: [BookEntry]
-}
 struct ResponseModel: Codable{
-    let data: BooksResponse
+    let data: [BookEntry]
 }
 
 #Preview {
