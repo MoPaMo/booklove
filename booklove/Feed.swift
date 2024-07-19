@@ -109,7 +109,7 @@ struct singleBookReview : View{
             
             
             
-            NavigationLink(destination: Book()){
+            NavigationLink(destination: Book(book: UUID.init(uuidString: "933952f3-a265-4dc0-b2f6-0179c7e29529") ?? UUID())){
                 VStack (alignment: .leading){
                     Text(book.title)
                         .font(.system(size: 24, weight: .heavy, design: .serif))
@@ -200,7 +200,7 @@ struct bookloverecommendedBook : View{
             
             
             
-            NavigationLink(destination: Book()){
+            NavigationLink(destination: Book(book: UUID.init(uuidString: "933952f3-a265-4dc0-b2f6-0179c7e29529") ?? UUID())){
                 VStack (alignment: .leading){
                     Text(book.title)
                         .font(.system(size: 24, weight: .heavy, design: .serif))

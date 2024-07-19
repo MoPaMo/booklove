@@ -38,7 +38,10 @@ struct Book: View {
     @State var comments: [UserBook] = []
     @State var isbn = ""
     @State private var isButtonPressed = false 
-    let bookID = "933952f3-a265-4dc0-b2f6-0179c7e29529"
+    var bookID: String
+    init(book:UUID){
+        self.bookID=book.uuidString
+    }
 
     var body: some View {
         ZStack {
@@ -172,5 +175,5 @@ struct Book: View {
 }
 
 #Preview {
-    Book()
+    Book(book: UUID.init(uuidString: "933952f3-a265-4dc0-b2f6-0179c7e29529") ?? UUID())
 }

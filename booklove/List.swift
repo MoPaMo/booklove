@@ -14,7 +14,7 @@ struct BookItem: Identifiable, Decodable {
     let author: String
     let year: String
     
-    init(id: UUID = UUID(), title: String, author: String, year: String) {
+    init(id: UUID = UUID(), title: String, author: String, year: String="sometime") {
         self.id = id
         self.title = title
         self.author = author
@@ -68,7 +68,7 @@ struct List: View {
                             VStack(alignment: .leading, spacing: 10) {
                                 ForEach(books) { book in
                                     VStack(alignment: .leading) {
-                                        NavigationLink(destination: Book()) {
+                                        NavigationLink(destination:Book( book:book.id)) {
                                             VStack(alignment: .leading) {
                                                 Text(book.title)
                                                     .font(.system(size: 24, weight: .bold, design: .serif))
