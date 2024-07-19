@@ -6,126 +6,83 @@
 //
 
 import SwiftUI
+import Alamofire
+
+// Response model to handle the server response
+struct BookResponse: Decodable {
+    let id: UUID
+    let title: String
+    let author: String
+    let year: String
+    let description: String
+    let genres: [String]
+    let userBooks: [UserBook]
+
+    
+
+    func toBookItem() -> BookItem {
+        return BookItem(id: id, title: title, author: author, year: year)
+    }
+}
+
+struct UserBook: Decodable {
+    let userId: UUID
+    let status: String
+    let comment: String?
+}
 
 struct Book: View {
     @State private var isSheetPresented = false
-    let fullText = """
-        Mr Bennet, owner of the Longbourn estate in Hertfordshire, has five daughters, but his property is entailed and can only be passed to a male heir. His wife also lacks an inheritance, so his family faces becoming poor upon his death. Thus, it is imperative that at least one of the daughters marry well to support the others, which is a primary motivation driving the plot.
-        """
-    
+    @State  var bookItem: BookItem?
+    @State  var fullText = ""
+    @State  var bookGenres: [String] = []
+    @State  var comments: [UserBook] = []
+
+    let bookID = "933952f3-a265-4dc0-b2f6-0179c7e29529"  // Replace with actual book ID
+
     var body: some View {
         ZStack {
             BackgroundBlurElement()
             ScrollView {
-                
-                VStack{
-                    HStack(alignment: .top, spacing: 16) {
+                VStack {
+                    if let bookItem = bookItem {
                         VStack(alignment: .leading) {
-                            Text("Pride and Prejudice")
+                            Text(bookItem.title)
                                 .font(.system(size: 40, weight: .bold, design: .serif))
                                 .foregroundColor(Color(red: 0.20, green: 0.68, blue: 0.90))
                                 .multilineTextAlignment(.leading)
-                            Text("Jane Austen, 1813")
+                            Text("\(bookItem.author), \(bookItem.year)")
                                 .font(.system(size: 20, weight: .light, design: .monospaced))
                                 .foregroundColor(.black)
                                 .multilineTextAlignment(.leading)
                         }
-                        Spacer()
-                    }.padding(.leading).padding(.top, 200)
-                    Rectangle()
-                        .foregroundColor(.clear)
-                        .frame(width: 287, height: 0.5)
-                        .overlay(Rectangle()
-                            .stroke(.black, lineWidth: 0.50))
-                    HStack {
-                        Text("Mr Bennet, owner of the Longbourn estate in Hertfordshire, has five daughters, but his property is entailed and can only be passed to a male heir. His wife also lacks an inheritance, so his family faces...")
-                            .font(.system(size: 16, weight: .light, design: .serif))
-                            .foregroundColor(.black)
-                        +
-                        Text(" more")
-                            .font(.system(size: 16, weight: .bold, design: .serif))
-                            .foregroundColor(.blue)
-                    }
-                    .onTapGesture {
-                        isSheetPresented = true
-                    }
-                    HStack(){ZStack() {
+                        .padding(.leading).padding(.top, 200)
                         Rectangle()
                             .foregroundColor(.clear)
-                            .frame(width: 161, height: 53)
-                            .background(.white)
-                            .cornerRadius(21)
-                            .offset(x: 0, y: 0)
-                            .shadow(
-                                color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2
-                            )
-                        Image(systemName: "bookmark")
-                            .font(.system(size: 20))
-                            .foregroundColor(.black)
-                            .offset(x: 0, y: 0.50)
-                    }
-                    .frame(width: 161, height: 53)
-                        ZStack() {
-                            Rectangle()
-                                .foregroundColor(.clear)
-                                .frame(width: 161, height: 53)
-                                .background(.white)
-                                .cornerRadius(21)
-                                .offset(x: 0, y: 0)
-                                .shadow(
-                                    color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2
-                                )
-                            Image(systemName: "cart")
-                                .font(.system(size: 20))
+                            .frame(width: 287, height: 0.5)
+                            .overlay(Rectangle()
+                                .stroke(.black, lineWidth: 0.50))
+                        HStack {
+                            Text(bookGenres.joined(separator: ", "))
+                                .font(.system(size: 16, weight: .light, design: .serif))
                                 .foregroundColor(.black)
-                                .offset(x: 0, y: 0.50)
                         }
-                        .frame(height: 53)
-                    }.padding(.top)
-                    Rectangle()
-                        .foregroundColor(.clear)
-                        .frame(width: 287, height: 0.5)
-                        .overlay(Rectangle()
-                            .stroke(.black, lineWidth: 0.50)).padding(.vertical)
-                    
-                    HStack(spacing: 0) {  // No spacing between elements
-                        Text("Read by")
-                            .font(.system(size: 24, weight: .light))
-                            .foregroundColor(.black)
-                        
-                        ZStack {
-                            Image("memoji_placeholder")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 44, height: 44).background(Color(red: 0.8, green: 0.8, blue: 0.8))
-                                .clipShape(Circle())
-                                .offset(x: 0).shadow(
-                                    color: Color(red: 0, green: 0, blue: 0, opacity: 0.25), radius: 4, y: 4
-                                )
-                            
-                            Image("memoji_placeholder")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 44, height: 44).background(Color(red: 0.8, green: 0.8, blue: 0.8))
-                                .clipShape(Circle())
-                            
-                                .offset(x: 25).shadow(
-                                    color: Color(red: 0, green: 0, blue: 0, opacity: 0.25), radius: 4, y: 4
-                                )
-                            
-                            Image("memoji_placeholder")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 44, height: 44).background(Color(red: 0.8, green: 0.8, blue: 0.8))
-                                .clipShape(Circle())
-                                .offset(x: 50).shadow(
-                                    color: Color(red: 0, green: 0, blue: 0, opacity: 0.25), radius: 4, y: 4
-                                )
-                            
-                        }.padding(.horizontal)
-                        Spacer()
-                    }.padding(.leading)
-                }.padding(.all).sheet(isPresented: $isSheetPresented) {
+                        .padding(.top)
+                        HStack {
+                            Text(comments.map { $0.status }.joined(separator: ", "))
+                                .font(.system(size: 16, weight: .light, design: .serif))
+                                .foregroundColor(.black)
+                        }
+                        .padding(.top)
+                    } else {
+                        Text("Loading...")
+                            .font(.system(size: 40, weight: .bold, design: .serif))
+                            .foregroundColor(Color(red: 0.20, green: 0.68, blue: 0.90))
+                            .multilineTextAlignment(.leading)
+                    }
+                }
+                .padding(.all)
+                .sheet(isPresented: $isSheetPresented) {
                     VStack {
                         Text(fullText)
                             .font(.system(size: 16, weight: .light, design: .serif))
@@ -142,11 +99,24 @@ struct Book: View {
                         .padding()
                     }
                 }
-                
-                
-                
-                
-                
+            }
+        }
+        .onAppear {
+            fetchBookData()
+        }
+    }
+
+    func fetchBookData() {
+        let url = "https://api.booklove.top/book/\(bookID)"
+        AF.request(url).responseDecodable(of: BookResponse.self) { response in
+            switch response.result {
+            case .success(let data):
+                self.bookItem = data.toBookItem()
+                self.bookGenres = data.genres
+                self.comments = data.userBooks
+                self.fullText = data.description // Use full text if available
+            case .failure(let error):
+                print("Error fetching book data: \(error)")
             }
         }
     }
