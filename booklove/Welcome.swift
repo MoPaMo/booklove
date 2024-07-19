@@ -137,10 +137,11 @@ struct SignInWithAppleButton: UIViewRepresentable {
                                 if let data = jsonResponse["data"] as? [String: Any] {
                                     let new = data["new"] as? Bool ?? false
                                     let token = data["token"] as? String ?? ""
+                                    let id = data["id"] as? String ?? ""
                                     
                                     print("User ID: \(token)")
                                     
-                                    self.appState.isLoggedIn = SecureStorage.set(token)
+                                    self.appState.isLoggedIn = SecureStorage.set(token) && SecureStorage.setID(id)
                                     self.appState.userID = self.appState.isLoggedIn ? token : ""
                                     if self.appState.isLoggedIn {
                                         self.appState.currentScreen = new ? .genres : .main

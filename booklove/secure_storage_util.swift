@@ -45,6 +45,43 @@ class SecureStorage {
         
         return nil
     }
+    static func setID(_ id: String) -> Bool {// (to set the token in keychain)
+        let tokenData = id.data(using: .utf8)!
+        
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: "userID",
+            kSecValueData as String: id,
+            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock
+        ]
+        
+        SecItemDelete(query as CFDictionary)
+        
+        let status = SecItemAdd(query as CFDictionary, nil)
+        return status == errSecSuccess
+    }
+    
+    static func getID() -> String? {// (to get the token from keychan)
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: "userID",
+            kSecReturnData as String: true
+        ]
+        
+        var result: AnyObject?
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+        
+        if status == errSecSuccess {
+            if let tokenData = result as? Data,
+               let token = String(data: tokenData, encoding: .utf8) {
+                return token
+            }
+        }
+        
+        return nil
+    }
+    
+    
     
     static func logout() -> Bool { // deletes jwt token --> logs user out
         let query: [String: Any] = [
@@ -53,6 +90,10 @@ class SecureStorage {
         ]
         
         let status = SecItemDelete(query as CFDictionary)
+        SecItemDelete([
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: "userID"
+        ] as CFDictionary)
         return status == errSecSuccess
     }
 }
