@@ -132,7 +132,15 @@ struct AccountView: View {
 }
 
 struct VendorView: View{
+    var selected = "Amazon"
+    var vURL = "https://www.amazon.com/s?k="
+    init(){
+        vURL = UserDefaults.standard.string(forKey: "vendorURL") ?? "https://www.amazon.com/s?k="
+        selected = UserDefaults.standard.string(forKey: "vendorName") ?? "Amazon"
+
+    }
     var body: some View{
+        
         ZStack{
             BackgroundBlurElement().edgesIgnoringSafeArea(.all)
             VStack(spacing: 50) {
@@ -148,14 +156,17 @@ struct VendorView: View{
                     ForEach(["Amazon", "eBay", "bookshop.org", "Thrift Books"], id: \.self) { title in
                         ZStack {
                             Rectangle()
-                                .foregroundColor(.clear)
+                                .foregroundColor(.clear).stroke(Color.black, lineWidth: selected == title ? 2 : 0)
                                 .frame(width: 161, height: 161) // Making the frame quadratic
                                 .background(Color.white)
                                 .cornerRadius(34)
                                 .shadow(color: Color.black.opacity(0.2), radius: 6, y: 2)
+                                
                             Text(title)
                                 .font(.system(size: 24, design:.serif))
                                 .foregroundColor(.black)
+                        }.onTapGesture {
+                            UserDefaults.standard.set(title, forKey: "vendorName")
                         }
                     }
                 }
