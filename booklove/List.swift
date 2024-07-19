@@ -8,7 +8,7 @@
 import SwiftUI
 import Alamofire
 
-struct BookItem: Identifiable, Decodable {
+struct BookItem: Identifiable, Codable {
     let id: UUID
     let title: String
     let author: String

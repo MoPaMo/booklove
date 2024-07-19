@@ -1,10 +1,11 @@
 import SwiftUI
+import Alamofire
 
 struct Feed: View {
     @State private var isSheetPresented = false;
     
     @EnvironmentObject var tabViewModel: TabViewModel
-    
+    @State var boooks: [BookEntry] = []
     var body: some View {
         NavigationView {
             ZStack {
@@ -25,8 +26,11 @@ struct Feed: View {
                             .padding(.top, 20)
                         
                     }
-                    bookloverecommendedBook(book: BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: "1813")).padding(.bottom)
-                    singleBookReview(book:BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: "1813")).padding(.bottom)
+                    ForEach (boooks)
+                        {boook in
+                        bookloverecommendedBook(book: boook.book).padding(.bottom)}
+                    Text("More content coming soon :)")
+                    /*singleBookReview(book:BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: "1813")).padding(.bottom)
                     recommendedUsers().padding(.leading, 30).background(Color.white.opacity(0.9).blur(radius: 1))
                     
                         .cornerRadius(10)
@@ -38,7 +42,7 @@ struct Feed: View {
                         .background(Color.red.opacity(0.8))
                         .foregroundColor(.white)
                         .cornerRadius(8)
-                        .transition(.opacity)
+                        .transition(.opacity)*/
                     Spacer().padding(.vertical, 300)
                 }
                 VStack {
@@ -64,7 +68,23 @@ struct Feed: View {
                         .blur(radius: 10)
                         .frame(height: 0)
                 }
+            }.onAppear(perform: fetchBooks)
+        }
+    }
+    func fetchBooks (){
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+            "Content-Type": "application/json"
+        ]
+        AF.request("https://api.booklove.top/user/list", method: .post, encoding: JSONEncoding.default, headers: headers).responseDecodable(of: ResponseModel.self) { response in
+            switch response.result {
+            case .success(let responseData):
+                print(responseData)
+                self.boooks = responseData.data.books
+            case .failure(let error):
+                print(error)
             }
+            
         }
     }
 }
@@ -90,7 +110,7 @@ struct singleBookReview : View{
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 60, height: 60)
                 }
-
+                
                 NavigationLink(destination: UserProfileView(userID: UUID(uuidString: SecureStorage.getID() ?? "") ?? UUID() ))
                 {
                     VStack(alignment: .leading) {
@@ -158,8 +178,9 @@ struct singleBookReview : View{
         
         
         Spacer()
-    
+        
     }
+    
 }
 struct bookloverecommendedBook : View{
     @EnvironmentObject var tabViewModel: TabViewModel
@@ -301,6 +322,19 @@ struct recommendedUsers: View {
     }
 }
 
+
+struct BookEntry: Codable, Identifiable {
+    let id = UUID()
+    let book: BookItem
+    let desc: String
+}
+
+struct BooksResponse: Codable {
+    let books: [BookEntry]
+}
+struct ResponseModel: Codable{
+    let data: BooksResponse
+}
 
 #Preview {
     Feed().environmentObject(TabViewModel())
