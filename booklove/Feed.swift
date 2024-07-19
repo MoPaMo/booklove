@@ -76,7 +76,7 @@ struct Feed: View {
             "Authorization": "Bearer \(SecureStorage.get() ?? "")",
             "Content-Type": "application/json"
         ]
-        AF.request("https://api.booklove.top/user/list", method: .post, encoding: JSONEncoding.default, headers: headers).responseDecodable(of: ResponseModel.self) { response in
+        AF.request("https://api.booklove.top/recommendations", method: .post, encoding: JSONEncoding.default, headers: headers).responseDecodable(of: ResponseModel.self) { response in
             switch response.result {
             case .success(let responseData):
                 print(responseData)
