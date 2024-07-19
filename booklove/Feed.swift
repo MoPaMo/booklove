@@ -91,7 +91,7 @@ struct singleBookReview : View{
                         .frame(width: 60, height: 60)
                 }
 
-                NavigationLink(destination: ProfileView())
+                NavigationLink(destination: UserProfileView(userID: UUID(uuidString: SecureStorage.getID() ?? "") ?? UUID() ))
                 {
                     VStack(alignment: .leading) {
                         Text("Jane Appleseed")
@@ -105,8 +105,6 @@ struct singleBookReview : View{
                     .padding(.leading, 10.0)
                 }
                 
-            }.onTapGesture {
-                tabViewModel.selectedTab=3
             }
             
             
