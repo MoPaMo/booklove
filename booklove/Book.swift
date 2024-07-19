@@ -104,7 +104,7 @@ struct Book: View {
                             .frame(width: 161, height: 53).onTapGesture {
                                 liked = !liked;
                                 like_book(id: bookItem.id, like:liked)
-                            }
+                            }.sensoryFeedback(.success, trigger: liked)
                             ZStack {
                                 Rectangle()
                                     .foregroundColor(.clear)
@@ -199,7 +199,7 @@ struct Book: View {
     }
 }
 
-func like_book(id:UUID, like:Bool=true){
+func like_book(id:UUID, like:Bool=true)  {
     let url = (like ? "https://api.booklove.top/book/like/" :"https://api.booklove.top/book/dislike/") + id.uuidString
     let headers: HTTPHeaders = [
         "Authorization": "Bearer \(SecureStorage.get() ?? "")",
@@ -210,6 +210,10 @@ func like_book(id:UUID, like:Bool=true){
         switch response.result {
           case .success(let responseBody):
               print("Response body: \(responseBody)")
+            if(responseBody=="success")
+            {
+                
+            }
               // Do something with the response body string
           case .failure(let error):
               print("Error: \(error)")
