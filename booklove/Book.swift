@@ -61,11 +61,18 @@ struct Book: View {
                             .frame(width: 287, height: 0.5)
                             .overlay(Rectangle().stroke(.black, lineWidth: 0.50))
                         HStack {
-                            Text(bookGenres.joined(separator: ", "))
-                                .font(.system(size: 16, weight: .light, design: .serif))
-                                .foregroundColor(.black)
-                        }
-                        .padding(.top)
+                            Text(fullText.prefix(200))
+                                            .font(.system(size: 16, weight: .light, design: .serif))
+                                            .foregroundColor(.black)
+                                       
+                            + Text(fullText.count>200 ? " more" : "")
+                                                .font(.system(size: 16, weight: .bold, design: .serif))
+                                                .foregroundColor(.blue)
+                                        
+                                            }
+                                            .onTapGesture {
+                                                isSheetPresented = true
+                                            }
                         HStack {
                             ZStack {
                                 Rectangle()
