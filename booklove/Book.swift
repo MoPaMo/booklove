@@ -14,13 +14,13 @@ struct BookResponse: Decodable {
     let title: String
     let author: String
     let isbn: String
-    let year: String
+    let year: String?
     let description: String
     let genres: [String]
     let userBooks: [UserBook]
 
     func toBookItem() -> BookItem {
-        return BookItem(id: id, title: title, author: author, year: year)
+        return BookItem(id: id, title: title, author: author, year: year ?? "sometime")
     }
 }
 
@@ -51,11 +51,14 @@ struct Book: View {
             ScrollView {
                 VStack {
                     if let errorMessage = errorMessage {
+                        Spacer()
+                        Image(systemName: "exclamationmark.triangle")
                         Text(errorMessage)
-                            .font(.system(size: 20, weight: .bold, design: .serif))
-                            .foregroundColor(.red)
+                            .font(.system(size: 20, weight: .light, design: .monospaced))
+                            .foregroundColor(.gray)
                             .multilineTextAlignment(.center)
                             .padding()
+                        Spacer()
                     } else if let bookItem = bookItem {
                         VStack(alignment: .leading) {
                             Text(bookItem.title)
@@ -134,6 +137,7 @@ struct Book: View {
                             }
                         }
                     } else {
+                        Spacer()
                         Text("Loading...")
                             .font(.system(size: 40, weight: .bold, design: .serif))
                             .foregroundColor(Color(red: 0.20, green: 0.68, blue: 0.90))
@@ -177,6 +181,8 @@ struct Book: View {
                 self.isbn = data.isbn
                 self.errorMessage = nil // Clear error message on success
             case .failure(let error):
+                print(error)
+                print(error.localizedDescription)
                 self.errorMessage = "Error fetching book data: \(error.localizedDescription)"
             }
         }
