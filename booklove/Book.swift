@@ -13,6 +13,7 @@ struct BookResponse: Decodable {
     let id: UUID
     let title: String
     let author: String
+    let isbn: String
     let year: String
     let description: String
     let genres: [String]
@@ -35,7 +36,7 @@ struct Book: View {
     @State var fullText = ""
     @State var bookGenres: [String] = []
     @State var comments: [UserBook] = []
-
+    @State var isbn = ""
     let bookID = "933952f3-a265-4dc0-b2f6-0179c7e29529"
 
     var body: some View {
@@ -97,7 +98,22 @@ struct Book: View {
                                     .font(.system(size: 20))
                                     .foregroundColor(.black)
                             }
-                            .frame(height: 53)
+                            .frame(height: 53).onTapGesture {
+                                let userDefaults = UserDefaults.standard
+                                let vendorURL = userDefaults.string(forKey: "vendorURL")
+                                
+                                if let vendorURL = vendorURL, let url = URL(string: vendorURL + isbn) {
+                                    // Open the vendor URL
+                                    UIApplication.shared.open(url)
+                                } else {
+                                    // Fallback to Amazon search URL
+                                    let amazonSearchURL = "https://www.amazon.com/s?k=\(isbn)"
+                                    if let url = URL(string: amazonSearchURL) {
+                                        UIApplication.shared.open(url)
+                                    }
+                                }
+                            
+                            }
                         }
                     } else {
                         Text("Loading...")
@@ -139,7 +155,8 @@ struct Book: View {
                 self.bookItem = data.toBookItem()
                 self.bookGenres = data.genres
                 self.comments = data.userBooks
-                self.fullText = data.description // Use full text if available
+                self.fullText = data.description
+                self.isbn = data.isbn
             case .failure(let error):
                 print("Error fetching book data: \(error)")
             }
