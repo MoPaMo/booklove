@@ -39,6 +39,7 @@ struct Book: View {
     @State var isbn = ""
     @State private var isButtonPressed = false
     @State private var errorMessage: String? // State variable for error messages
+    @State var liked = false;
     var bookID: String
 
     init(book: UUID) {
@@ -77,7 +78,7 @@ struct Book: View {
                             .frame(width: 287, height: 0.5)
                             .overlay(Rectangle().stroke(.black, lineWidth: 0.50))
                         HStack {
-                            Text(fullText.prefix(200))
+                            Text(fullText.prefix(200)+((fullText.count > 200) ?"... " : ""))
                                 .font(.system(size: 16, weight: .light, design: .serif))
                                 .foregroundColor(.black)
                                 + Text(fullText.count > 200 ? " more" : "")
@@ -92,15 +93,16 @@ struct Book: View {
                                 Rectangle()
                                     .foregroundColor(.clear)
                                     .frame(width: 161, height: 53)
-                                    .background(.white)
+                                    .background(liked ? .red : .white )
                                     .cornerRadius(21)
                                     .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2)
                                 Image(systemName: "bookmark")
                                     .font(.system(size: 20))
-                                    .foregroundColor(.black)
+                                    .foregroundColor(liked ? .white : .black)
                             }
                             .frame(width: 161, height: 53).onTapGesture {
-                                like_book(id: bookItem.id)
+                                liked = !liked;
+                                like_book(id: bookItem.id, like:liked)
                             }
                             ZStack {
                                 Rectangle()
@@ -195,13 +197,13 @@ struct Book: View {
     }
 }
 
-func like_book(id:UUID){
-    let url = "https://api.booklove.top/book/like"
+func like_book(id:UUID, like:Bool=true){
+    let url = (like ? "https://api.booklove.top/book/like/" :"https://api.booklove.top/book/dislike/") + id.uuidString
     let headers: HTTPHeaders = [
         "Authorization": "Bearer \(SecureStorage.get() ?? "")",
         "Content-Type": "application/json"
     ]
-    AF.request(url, headers: headers).responseString {
+    AF.request(url, method:.get, headers: headers).responseString {
         response in
         switch response.result {
           case .success(let responseBody):
