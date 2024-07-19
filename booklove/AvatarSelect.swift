@@ -13,7 +13,17 @@ struct ProfilePickerView: View {
         "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/6avatar-7.png",
         "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/7avatar-8.png",
         "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/8avatar-9.png",
-        "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/9avatar-10.png"
+        "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/9avatar-10.png",
+        "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/0avatar-25.png",
+        "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/1avatar-26.png",
+        "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/2avatar-27.png",
+        "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/3avatar-28.png",
+        "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/4avatar-29.png",
+        "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/5avatar-30.png",
+        "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/6avatar-31.png",
+        "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/7avatar-32.png",
+        "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/8avatar-33.png",
+        "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/9avatar-34.png"
     ]
     
     var body: some View {
@@ -57,7 +67,7 @@ struct ProfilePickerView: View {
                                 )
                             }
                         }
-                    }.padding(.horizontal)
+                    }.padding(.horizontal).padding(.top)
                     
                 }
                 
