@@ -136,35 +136,34 @@ func downloadData(completion: @escaping (URL?) -> Void) {
     }
 }
 
-// Quick Look Preview Wrapper
-struct QuickLookPreview: UIViewControllerRepresentable {
-    let url: URL
-
-    func makeUIViewController(context: Context) -> QLPreviewController {
-        let controller = QLPreviewController()
-        controller.dataSource = context.coordinator
-        return controller
+func downloadAndShareFile() {
+    let destination: DownloadRequest.Destination = { _, _ in
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let fileURL = documentsURL.appendingPathComponent("test.html") // Adjust file name and extension as needed
+        return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
     }
-
-    func updateUIViewController(_ uiViewController: QLPreviewController, context: Context) {}
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    class Coordinator: NSObject, QLPreviewControllerDataSource {
-        let parent: QuickLookPreview
-
-        init(_ parent: QuickLookPreview) {
-            self.parent = parent
+    let headers: HTTPHeaders = [
+           "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+           "Content-Type": "application/json"
+       ]
+    AF.download("https://api.booklove.top/download-my-data", headers:headers, to: destination).response { response in
+        if let error = response.error {
+            print("Download error: \(error)")
+            return
         }
 
-        func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
-            return 1
+        guard let fileURL = response.fileURL else {
+            print("File URL not found")
+            return
         }
 
-        func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
-            return parent.url as QLPreviewItem
+        DispatchQueue.main.async {
+            let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
+            
+            // Present the UIActivityViewController
+            if let viewController = UIApplication.shared.windows.first?.rootViewController {
+                viewController.present(activityViewController, animated: true, completion: nil)
+            }
         }
     }
 }
@@ -190,25 +189,12 @@ struct AccountView: View {
                         .foregroundStyle(.black)
                 }
                 Button(action: {
-                    downloadData { url in
-                        if let url = url {
-                            DispatchQueue.main.async {
-                                self.documentURL = url
-                                self.showQuickLook = true
-                            }
-                        } else {
-                            print("Failed to download data")
-                        }
-                    }
+                    downloadAndShareFile()
                 }) {
                     Text("Download My Data")
                         .font(.system(size: 32, weight: .regular, design: .serif))
                 }
-                .sheet(isPresented: $showQuickLook) {
-                    if let url = documentURL {
-                        QuickLookPreview(url: url)
-                    }
-                }
+                
                 Text("Delete Account")
                     .font(.system(size: 32, weight: .regular, design: .serif))
                     .foregroundColor(.red)
