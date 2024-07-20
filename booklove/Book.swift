@@ -42,6 +42,7 @@ struct Book: View {
     @State private var errorMessage: String? // State variable for error messages
     @State var liked = false;
     var bookID: String
+    @State private var isShowingForm = false
 
     init(book: UUID) {
         self.bookID = book.uuidString
@@ -147,7 +148,23 @@ struct Book: View {
                             .overlay(Rectangle().stroke(.black, lineWidth: 0.50))
                         Text("ISBN: "+isbn).font(.system(size: 18, design: .monospaced))
                         Text("\(Image(systemName: "info.bubble.fill.rtl")) More content coming soon ").font(.system(size: 18, design: .monospaced))
+                        Spacer()
+                        HStack{
+                            ZStack {
+                                Rectangle()
+                                    .foregroundColor(.clear)
+                                    .frame(width: 161, height: 53)
+                                    .background(.white)
+                                    .cornerRadius(21)
+                                    .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2)
+                                Text("Add a Quote\( Image(systemName: "quote.bubble.fill.rtl"))")
+                                    .font(.system(size: 20))
+                                    .foregroundColor(.black)
+                            }.frame(height: 53).onTapGesture {
+                               isShowingForm = true
 
+                            }
+                        }
                     } else {
                         Spacer()
                         Text("Loading...")
@@ -173,7 +190,10 @@ struct Book: View {
                         }
                         .padding()
                     }
+                }.sheet(isPresented: $isShowingForm){
+                    QuoteAdd()
                 }
+                
             }
         }
         .onAppear {
@@ -228,6 +248,55 @@ func like_book(id:UUID, like:Bool=true)  {
           }
     }
 }
+
+
+
+
+struct QuoteAdd: View {
+    @State private var character = ""
+    @State private var note = ""
+    @State private var agreed = false;
+    @Environment(\.dismiss) var dismiss
+    
+    var body: some View {
+        NavigationView {
+            Form {
+                
+                Section(header: Text("Add A new Quote")) {
+                                    TextEditor(text: $note)
+                                        .frame(height: 100)
+                    TextField("Character (leave empty if none)", text: $character)
+                        VStack(alignment: .leading, spacing: 20) {
+                                           Text("Terms of Submission")
+                                               .font(.title)
+                                           Text("By submitting this quote, you agree to the following:")
+                                           Text("1. The quote is accurately transcribed from the book.")
+                                           Text("2. You have the right to share this quote.")
+                                           Text("3. The quote does not contain offensive or inappropriate content.")
+                                           Text("4. You understand that submitting offensive texts may result in account suspension.")
+                                       }
+                                       .padding()
+                    
+                                    Toggle("I Agree ", isOn: $agreed)
+                                }
+                
+                Section {
+                    Button("Submit") {
+                        print("Form submitted")
+                        dismiss()
+                    }.disabled(!(agreed) || note.isEmpty)
+                }
+            }
+            .navigationTitle("Form")
+            .navigationBarItems(trailing: Button("Cancel") {
+                dismiss()
+            })
+        }
+    }
+}
+
+
+
 #Preview {
     Book(book: UUID.init(uuidString: "933952f3-a265-4dc0-b2f6-0179c7e29529") ?? UUID())
 }

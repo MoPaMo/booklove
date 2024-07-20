@@ -62,12 +62,12 @@ struct Welcome: View {
                             message: Text("Please review our Terms of Service and Privacy Policy."),
                             buttons: [
                                 .default(Text("Terms of Service")) {
-                                    if let url = URL(string: "https://example.com/tos") {
+                                    if let url = URL(string: "https://api.booklove.top/docs/tos") {
                                         UIApplication.shared.open(url)
                                     }
                                 },
                                 .default(Text("Privacy Policy")) {
-                                    if let url = URL(string: "https://example.com/privacy") {
+                                    if let url = URL(string: "https://api.booklove.top/docs/privacy") {
                                         UIApplication.shared.open(url)
                                     }
                                 },

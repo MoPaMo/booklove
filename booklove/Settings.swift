@@ -87,10 +87,10 @@ struct SettingsView: View {
                             .font(.system(size: 32, weight: .regular, design: .serif))
                             .foregroundColor(.black)
                     }
-                    Link("Terms Of Service", destination: URL(string: "https://example.com/tos")!)
+                    Link("Terms Of Service", destination: URL(string: "https://api.booklove.top/docs/tos")!)
                         .font(.system(size: 32, weight: .regular, design: .serif))
                         .foregroundColor(.black)
-                    Link("Privacy Policy", destination: URL(string: "https://example.com/privacy")!)
+                    Link("Privacy Policy", destination: URL(string: "https://api.booklove.top/docs/privacy")!)
                         .font(.system(size: 32, weight: .regular, design: .serif))
                         .foregroundColor(.black)
                     Text("Sign Out")

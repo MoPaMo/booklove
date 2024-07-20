@@ -130,6 +130,8 @@ struct QuoteItem: View {
         }.frame(height: 512)
     }
 }
+
+
 #Preview {
     Quotes()
 }
