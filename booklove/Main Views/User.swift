@@ -15,6 +15,7 @@ struct DataResponse: Decodable {
     var user: User
     var genres: [String]
     var books: [BookItem]?
+    var followed: Bool
 }
 struct UserProfileView: View {
     @State private var followed = false
@@ -244,6 +245,7 @@ struct UserProfileView: View {
                 self.user = data.data.user
                 self.genres = data.data.genres
                 self.books = data.data.books ?? []
+                self.followed = data.data.followed
             case .failure(let error):
                 print(error)
             }
@@ -251,21 +253,23 @@ struct UserProfileView: View {
     }
     func follow_request(){
         if(userID.uuidString != SecureStorage.getID()){
-        follow_loading = true;
-        let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(SecureStorage.get() ?? "")",
-            "Content-Type": "application/json"
-        ]
-        AF.request("https://api.booklove.top/\(followed ? "unfollow" : "follow")/\(userID.uuidString)", method: .get, headers: headers).responseString{ response in
-            switch response.result {
-            case .success(let data):
-                followed.toggle()
-                follow_loading = false
-            case .failure(let error):
-                follow_loading = false
-                print(error)
+            follow_loading = true;
+            let headers: HTTPHeaders = [
+                "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+                "Content-Type": "application/json"
+            ]
+            AF.request("https://api.booklove.top/\(followed ? "unfollow" : "follow")/\(userID.uuidString)", method: .get, headers: headers).responseString{ response in
+                switch response.result {
+                case .success(let data):
+                    followed.toggle()
+                    follow_loading = false
+                case .failure(let error):
+                    follow_loading = false
+                    print(error)
+                }
+                
             }
-        }}
+        }
     }
 }
 
