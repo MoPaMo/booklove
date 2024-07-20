@@ -197,6 +197,21 @@ struct Book: View {
                 }
                 
             }
+            VStack {
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        let textToShare = "\(bookItem?.title ?? "Book") by \(bookItem?.author ?? "unknown") on booklove. booklove://book/?id=\(bookItem?.id.uuidString ?? "error")"
+                        let activityVC = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
+                                UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+                    }) {
+                        Image(systemName: "square.and.arrow.up.circle.fill")
+                            .foregroundColor(.black)
+                            .font(.title)
+                            .padding()                    }
+                }
+                Spacer()
+            }
         }
         .onAppear {
             fetchBookData()
