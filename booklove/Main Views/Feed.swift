@@ -223,19 +223,28 @@ struct bookloverecommendedBook : View{
             
             
             NavigationLink(destination: Book(book: book.id)){
-                VStack (alignment: .leading){
-                    Text(book.title)
-                        .font(.system(size: 24, weight: .heavy, design: .serif))
-                        .foregroundColor(.cyan).padding(.bottom, -10)
+                VStack (alignment:.leading){
+                    VStack (alignment: .leading){
+                        Text(book.title)
+                            .font(.system(size: 24, weight: .heavy, design: .serif))
+                            .foregroundColor(.cyan).padding(.bottom, -10)
+                        
+                        Text("\(book.author), \(book.year)")
+                            .font(.system(size: 18, weight: .light, design: .monospaced))
+                        .foregroundColor(.black).kerning(-2)}.buttonStyle(PlainButtonStyle())
                     
-                    Text("\(book.author), \(book.year)")
-                        .font(.system(size: 18, weight: .light, design: .monospaced))
-                    .foregroundColor(.black).kerning(-2)}}.buttonStyle(PlainButtonStyle())
-            
-            Text(desc)
-            .font(.system(size: 16.5, weight: .regular, design: .serif))
-            .foregroundColor(.black)
-            .padding(.top, 1)
+                    
+                        
+                    HStack {
+                        Text(desc.prefix(200)+((desc.count > 200) ?"... " : ""))
+                            .font(.system(size: 16, weight: .light, design: .serif))
+                            .foregroundColor(.black)
+                            + Text(desc.count > 200 ? " more" : "")
+                                .font(.system(size: 16, weight: .bold, design: .serif))
+                                .foregroundColor(.blue)
+                    }.padding(.top, 1)
+                }
+            }
         }
         .padding(.horizontal, 33)
         
@@ -323,7 +332,7 @@ struct recommendedUsers: View {
 
 
 struct BookEntry: Codable, Identifiable {
-    var id = UUID()
+    let id = UUID()
     let book: BookItem
     let desc: String
 }

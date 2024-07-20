@@ -16,7 +16,7 @@ struct DataResponse: Decodable {
     var genres: [String]
     var books: [BookItem]?
     var followed: Bool
-    var followers: [simpleUserData]
+    var followers: [simpleUserData]?
 }
 struct UserProfileView: View {
     @State private var followed = false
