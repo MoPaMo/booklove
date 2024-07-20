@@ -144,7 +144,7 @@ struct SignInWithAppleButton: UIViewRepresentable {
                                     self.appState.isLoggedIn = SecureStorage.set(token) && SecureStorage.setID(id)
                                     self.appState.userID = self.appState.isLoggedIn ? token : ""
                                     if self.appState.isLoggedIn {
-                                        self.appState.currentScreen = new ? .genres : .main
+                                        self.appState.currentScreen = new ? .setup : .main
                                     } else {
                                         self.loading = false
                                     }

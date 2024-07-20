@@ -135,11 +135,26 @@
 		CD354E662C4C0A9600485198 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				CD5D506A2C3F03C400C1A2B4 /* ContentView.swift */,
 				CDAB2A202C47EB2B00F91D23 /* NetworkManager.swift */,
 				CDE4B8452C413B4D004C3282 /* BackgroundBlur.swift */,
 				CDAB2A1D2C47D8C000F91D23 /* secure_storage_util.swift */,
 			);
 			path = utils;
+			sourceTree = "<group>";
+		};
+		CD354E672C4C26E900485198 /* Main Views */ = {
+			isa = PBXGroup;
+			children = (
+				CDB501202C3F9162002DC85C /* Feed.swift */,
+				CD648BEF2C41A17600A3F7E6 /* Book.swift */,
+				CDB501282C3FAC9E002DC85C /* List.swift */,
+				CD648BF92C4421E800A3F7E6 /* User.swift */,
+				CDB501242C3FAAC9002DC85C /* Quotes.swift */,
+				CD648BF12C43F40300A3F7E6 /* Search.swift */,
+				CDE4B8472C413F52004C3282 /* Settings.swift */,
+			);
+			path = "Main Views";
 			sourceTree = "<group>";
 		};
 		CD5D505C2C3F03C400C1A2B4 = {
@@ -168,17 +183,10 @@
 				CDAB2A1F2C47E16B00F91D23 /* booklove.entitlements */,
 				CD6C6B602C44487C00175F98 /* Info.plist */,
 				CD5D50942C3F24EB00C1A2B4 /* Launch Screen.storyboard */,
-				CD648BEF2C41A17600A3F7E6 /* Book.swift */,
 				CD354E662C4C0A9600485198 /* utils */,
-				CD5D506A2C3F03C400C1A2B4 /* ContentView.swift */,
-				CDB501202C3F9162002DC85C /* Feed.swift */,
-				CDB501282C3FAC9E002DC85C /* List.swift */,
 				CD354E652C4C0A6D00485198 /* Set Up Views */,
 				CD0778122C4A53CF00BCDF37 /* App Control */,
-				CDB501242C3FAAC9002DC85C /* Quotes.swift */,
-				CD648BF12C43F40300A3F7E6 /* Search.swift */,
-				CDE4B8472C413F52004C3282 /* Settings.swift */,
-				CD648BF92C4421E800A3F7E6 /* User.swift */,
+				CD354E672C4C26E900485198 /* Main Views */,
 				CD5D50962C3F25B000C1A2B4 /* Welcome.swift */,
 				CD5D506C2C3F03C800C1A2B4 /* Assets.xcassets */,
 				CD5D506E2C3F03C800C1A2B4 /* Preview Content */,
