@@ -38,30 +38,39 @@ struct SearchView: View {
                     .padding(.top, 50)
                     
                     if isLoading {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                            .padding()
-                        Text("If this takes longer then expected, we are probably adding new books to our index, just for you.")
+                        VStack{
+                            Spacer()
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle())
+                                .padding()
+                            Text("If this takes longer then expected, we are probably adding new books to our index, just for you.").padding().multilineTextAlignment(.center)
+                            Spacer()
+                        }
                     } else {
-                        VStack (alignment:.leading){
-                            ForEach(searchResults, id: \.self.id) { result in
-                                NavigationLink(destination: Book(book: result.id)){
-                                    VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 12) {
+                            ForEach(searchResults, id: \.id) { result in
+                                NavigationLink(destination: Book(book: result.id)) {
+                                    VStack(alignment: .leading, spacing: 2) {
                                         Text(result.title)
                                             .font(.system(size: 24, weight: .heavy, design: .serif))
                                             .foregroundColor(.cyan)
-                                            .padding(.bottom, -10)
+                                            .lineLimit(2)
+                                            .minimumScaleFactor(0.8)
                                         
                                         Text("\(result.author), \(result.year)")
                                             .font(.system(size: 18, weight: .light, design: .monospaced))
                                             .foregroundColor(.black)
-                                            .kerning(-2)
+                                            .lineLimit(1)
+                                            .truncationMode(.tail)
                                     }
-                                    .padding(.vertical, 8)}
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.vertical, 8)
+                                }
+                                .buttonStyle(PlainButtonStyle())
                             }
-                            
-                            
-                        }.padding(.horizontal)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 16)
                     }
                 }
                 .background(Color.white.edgesIgnoringSafeArea(.all))
