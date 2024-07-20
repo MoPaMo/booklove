@@ -48,7 +48,7 @@ struct UserProfileView: View {
                         if let user = user {
                             HStack(spacing: 15) {
                                 // Profile Picture
-                                if (user.profile_image_url == "_default") {
+                                if (user.profile_image_url != "_default") {
                                     AsyncImage(url: URL(string: user.profile_image_url)) { image in
                                         image.resizable()
                                     } placeholder: {
