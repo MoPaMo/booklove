@@ -114,6 +114,7 @@
 		CD0778122C4A53CF00BCDF37 /* App Control */ = {
 			isa = PBXGroup;
 			children = (
+				CD5D50682C3F03C400C1A2B4 /* bookloveApp.swift */,
 				CDB501222C3FAA0D002DC85C /* GeneralView.swift */,
 				CD648BF52C4414B400A3F7E6 /* AppState.swift */,
 				CD648BF72C4414E200A3F7E6 /* MainAppView.swift */,
@@ -169,7 +170,6 @@
 				CD5D50942C3F24EB00C1A2B4 /* Launch Screen.storyboard */,
 				CD648BEF2C41A17600A3F7E6 /* Book.swift */,
 				CD354E662C4C0A9600485198 /* utils */,
-				CD5D50682C3F03C400C1A2B4 /* bookloveApp.swift */,
 				CD5D506A2C3F03C400C1A2B4 /* ContentView.swift */,
 				CDB501202C3F9162002DC85C /* Feed.swift */,
 				CDB501282C3FAC9E002DC85C /* List.swift */,
