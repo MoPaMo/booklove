@@ -82,7 +82,7 @@ struct ProfilePickerView: View {
                                 "Authorization": "Bearer \(SecureStorage.get() ?? "")",
                                 "Content-Type": "application/json"
                             ]
-                        AF.request("https://api.booklove.top/set/image", method: .post, parameters:["url":selected], headers: headers).responseString { response in
+                        AF.request("https://api.booklove.top/set/image", method: .post, parameters:["url":selected], encoder: JSONParameterEncoder.default, headers: headers).responseString { response in
                                 switch response.result {
                                 case .success(let responseData):
                                     loading=false
