@@ -111,67 +111,16 @@ struct SettingsView: View {
             }
         }
     }
-}
-func downloadData(completion: @escaping (URL?) -> Void) {
-    let url = "https://api.booklove.top/download-my-data"
-    let destination: DownloadRequest.Destination = { _, _ in
-        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("test.html")
-        return (tempURL, [.removePreviousFile])
-    }
-    let headers: HTTPHeaders = [
-        "Authorization": "Bearer \(SecureStorage.get() ?? "")",
-        "Content-Type": "application/json"
-    ]
-    AF.download(url, headers: headers, to: destination).response { response in
-        if let error = response.error {
-            print("Download error: \(error)")
-            completion(nil)
-        } else if let tempURL = response.fileURL {
-            print("Downloaded file URL: \(tempURL)")
-            completion(tempURL)
-        } else {
-            print("Unknown error")
-            completion(nil)
-        }
-    }
+    
+    
 }
 
-func downloadAndShareFile() {
-    let destination: DownloadRequest.Destination = { _, _ in
-        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let fileURL = documentsURL.appendingPathComponent("test.html") // Adjust file name and extension as needed
-        return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
-    }
-    let headers: HTTPHeaders = [
-           "Authorization": "Bearer \(SecureStorage.get() ?? "")",
-           "Content-Type": "application/json"
-       ]
-    AF.download("https://api.booklove.top/download-my-data", headers:headers, to: destination).response { response in
-        if let error = response.error {
-            print("Download error: \(error)")
-            return
-        }
 
-        guard let fileURL = response.fileURL else {
-            print("File URL not found")
-            return
-        }
 
-        DispatchQueue.main.async {
-            let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
-            
-            // Present the UIActivityViewController
-            if let viewController = UIApplication.shared.windows.first?.rootViewController {
-                viewController.present(activityViewController, animated: true, completion: nil)
-            }
-        }
-    }
-}
+
 
 // Account View
 struct AccountView: View {
-    @State private var showQuickLook = false
-    @State private var documentURL: URL?
 
     var body: some View {
         ZStack {
@@ -188,12 +137,9 @@ struct AccountView: View {
                         .font(.system(size: 32, weight: .regular, design: .serif))
                         .foregroundStyle(.black)
                 }
-                Button(action: {
-                    downloadAndShareFile()
-                }) {
-                    Text("Download My Data")
-                        .font(.system(size: 32, weight: .regular, design: .serif))
-                }
+                Link("Download My Data", destination: URL(string: "https://api.booklove.top/download-my-data/\(SecureStorage.get()?.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? "")")!)
+                    .font(.system(size: 32, weight: .regular, design: .serif))
+                    .foregroundColor(.black)
                 
                 Text("Delete Account")
                     .font(.system(size: 32, weight: .regular, design: .serif))
