@@ -121,6 +121,26 @@
 			name = "App Control";
 			sourceTree = "<group>";
 		};
+		CD354E652C4C0A6D00485198 /* Set Up Views */ = {
+			isa = PBXGroup;
+			children = (
+				CD648BEB2C41710800A3F7E6 /* Genres.swift */,
+				CD648BF32C440DCD00A3F7E6 /* Setup.swift */,
+				CD0778102C4A466F00BCDF37 /* AvatarSelect.swift */,
+			);
+			path = "Set Up Views";
+			sourceTree = "<group>";
+		};
+		CD354E662C4C0A9600485198 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				CDAB2A202C47EB2B00F91D23 /* NetworkManager.swift */,
+				CDE4B8452C413B4D004C3282 /* BackgroundBlur.swift */,
+				CDAB2A1D2C47D8C000F91D23 /* secure_storage_util.swift */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
 		CD5D505C2C3F03C400C1A2B4 = {
 			isa = PBXGroup;
 			children = (
@@ -147,21 +167,17 @@
 				CDAB2A1F2C47E16B00F91D23 /* booklove.entitlements */,
 				CD6C6B602C44487C00175F98 /* Info.plist */,
 				CD5D50942C3F24EB00C1A2B4 /* Launch Screen.storyboard */,
-				CDE4B8452C413B4D004C3282 /* BackgroundBlur.swift */,
 				CD648BEF2C41A17600A3F7E6 /* Book.swift */,
+				CD354E662C4C0A9600485198 /* utils */,
 				CD5D50682C3F03C400C1A2B4 /* bookloveApp.swift */,
 				CD5D506A2C3F03C400C1A2B4 /* ContentView.swift */,
 				CDB501202C3F9162002DC85C /* Feed.swift */,
-				CD648BEB2C41710800A3F7E6 /* Genres.swift */,
 				CDB501282C3FAC9E002DC85C /* List.swift */,
-				CD0778102C4A466F00BCDF37 /* AvatarSelect.swift */,
+				CD354E652C4C0A6D00485198 /* Set Up Views */,
 				CD0778122C4A53CF00BCDF37 /* App Control */,
-				CDAB2A202C47EB2B00F91D23 /* NetworkManager.swift */,
 				CDB501242C3FAAC9002DC85C /* Quotes.swift */,
 				CD648BF12C43F40300A3F7E6 /* Search.swift */,
-				CDAB2A1D2C47D8C000F91D23 /* secure_storage_util.swift */,
 				CDE4B8472C413F52004C3282 /* Settings.swift */,
-				CD648BF32C440DCD00A3F7E6 /* Setup.swift */,
 				CD648BF92C4421E800A3F7E6 /* User.swift */,
 				CD5D50962C3F25B000C1A2B4 /* Welcome.swift */,
 				CD5D506C2C3F03C800C1A2B4 /* Assets.xcassets */,
