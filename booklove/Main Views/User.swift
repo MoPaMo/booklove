@@ -23,6 +23,7 @@ struct UserProfileView: View {
     @State private var user: User?
     @State private var genres: [String] = []
     @State private var books: [BookItem] = []
+    @State private var follow_loading = false;
     var userID: UUID
     var appuserID: UUID
     var isownaccount: Bool
@@ -80,13 +81,19 @@ struct UserProfileView: View {
 
                                 // Follow Button
                                 Button(action: {
-                                    followed.toggle()
+                                    
+                                    follow_request()
                                 }) {
+                                    if(!follow_loading){
                                     Image(systemName: followed ? "heart.fill" : "heart")
                                         .font(.title2)
-                                        .foregroundColor(.red)
+                                        .foregroundColor(.red)}
+                                    else{
+                                        ProgressView()
+                                    }
                                 }
                             }
+                            .disabled(follow_loading)
                             .padding()
                             .background(Color.white.opacity(0.5).blur(radius: 10))
                             .cornerRadius(10)
@@ -231,7 +238,7 @@ struct UserProfileView: View {
             "Authorization": "Bearer \(SecureStorage.get() ?? "")",
             "Content-Type": "application/json"
         ]
-        AF.request("https://api.booklove.top/user/self", method: .get, headers: headers).responseDecodable(of: UserProfileResponse.self) { response in
+        AF.request("https://api.booklove.top/user/\(userID.uuidString)", method: .get, headers: headers).responseDecodable(of: UserProfileResponse.self) { response in
             switch response.result {
             case .success(let data):
                 self.user = data.data.user
@@ -241,6 +248,24 @@ struct UserProfileView: View {
                 print(error)
             }
         }
+    }
+    func follow_request(){
+        if(userID.uuidString != SecureStorage.getID()){
+        follow_loading = true;
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+            "Content-Type": "application/json"
+        ]
+        AF.request("https://api.booklove.top/\(followed ? "unfollow" : "follow")/\(userID.uuidString)", method: .get, headers: headers).responseString{ response in
+            switch response.result {
+            case .success(let data):
+                followed.toggle()
+                follow_loading = false
+            case .failure(let error):
+                follow_loading = false
+                print(error)
+            }
+        }}
     }
 }
 
