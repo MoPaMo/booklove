@@ -84,10 +84,10 @@ struct Setup: View {
                         loading = true;
                         AF.request("https://api.booklove.top/set/name-book", method: .post, parameters:["name":name, "book":favoriteBook], encoder: JSONParameterEncoder.default, headers: headers).responseString { response in
                                 switch response.result {
-                                case .success(let responseData):
+                                case .success(let _responseData):
                                     loading = false
                                     appState.currentScreen = .avatar
-                                case .failure(let error):
+                                case .failure(let _error):
                                     loading = false
                                 }
                             
@@ -115,10 +115,10 @@ struct Setup: View {
                 }
             }
         }
-        .onChange(of: name) { _ in
+        .onChange(of: name) {
             updateContinueButtonVisibility()
         }
-        .onChange(of: favoriteBook) { _ in
+        .onChange(of: favoriteBook) {
             updateContinueButtonVisibility()
         }
     }
