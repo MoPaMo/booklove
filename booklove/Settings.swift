@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 import Alamofire
-import MobileCoreServices
+import QuickLook
 
 
 struct ShareSheet: UIViewControllerRepresentable {
@@ -115,7 +115,7 @@ struct SettingsView: View {
 func downloadData(completion: @escaping (URL?) -> Void) {
     let url = "https://api.booklove.top/download-my-data"
     let destination: DownloadRequest.Destination = { _, _ in
-        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("file.zip")
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("test.html")
         return (tempURL, [.removePreviousFile])
     }
     let headers: HTTPHeaders = [
@@ -123,49 +123,57 @@ func downloadData(completion: @escaping (URL?) -> Void) {
         "Content-Type": "application/json"
     ]
     AF.download(url, headers: headers, to: destination).response { response in
-        if response.error == nil, let tempURL = response.fileURL {
+        if let error = response.error {
+            print("Download error: \(error)")
+            completion(nil)
+        } else if let tempURL = response.fileURL {
+            print("Downloaded file URL: \(tempURL)")
             completion(tempURL)
         } else {
+            print("Unknown error")
             completion(nil)
         }
     }
 }
 
-struct DocumentPicker: UIViewControllerRepresentable {
-    var documentURL: URL
-    
-    func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
-        let picker = UIDocumentPickerViewController(forExporting: [documentURL])
-        picker.delegate = context.coordinator
-        return picker
+// Quick Look Preview Wrapper
+struct QuickLookPreview: UIViewControllerRepresentable {
+    let url: URL
+
+    func makeUIViewController(context: Context) -> QLPreviewController {
+        let controller = QLPreviewController()
+        controller.dataSource = context.coordinator
+        return controller
     }
-    
-    func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: Context) {}
-    
+
+    func updateUIViewController(_ uiViewController: QLPreviewController, context: Context) {}
+
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-    
-    class Coordinator: NSObject, UIDocumentPickerDelegate {
-        var parent: DocumentPicker
-        
-        init(_ parent: DocumentPicker) {
+
+    class Coordinator: NSObject, QLPreviewControllerDataSource {
+        let parent: QuickLookPreview
+
+        init(_ parent: QuickLookPreview) {
             self.parent = parent
         }
-        
-        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+
+        func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+            return 1
         }
-        
-        func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+
+        func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+            return parent.url as QLPreviewItem
         }
     }
 }
 
-
+// Account View
 struct AccountView: View {
-    @State private var showDocumentPicker = false
+    @State private var showQuickLook = false
     @State private var documentURL: URL?
-    
+
     var body: some View {
         ZStack {
             BackgroundBlurElement().edgesIgnoringSafeArea(.all)
@@ -184,17 +192,21 @@ struct AccountView: View {
                 Button(action: {
                     downloadData { url in
                         if let url = url {
-                            self.documentURL = url
-                            self.showDocumentPicker = true
+                            DispatchQueue.main.async {
+                                self.documentURL = url
+                                self.showQuickLook = true
+                            }
+                        } else {
+                            print("Failed to download data")
                         }
                     }
                 }) {
                     Text("Download My Data")
                         .font(.system(size: 32, weight: .regular, design: .serif))
                 }
-                .sheet(isPresented: $showDocumentPicker) {
+                .sheet(isPresented: $showQuickLook) {
                     if let url = documentURL {
-                        DocumentPicker(documentURL: url)
+                        QuickLookPreview(url: url)
                     }
                 }
                 Text("Delete Account")
