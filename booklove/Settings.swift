@@ -121,6 +121,9 @@ struct SettingsView: View {
 
 // Account View
 struct AccountView: View {
+    @State private var showDeleteConfirmation = false
+    @State private var showDeleteSuccessAlert = false
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         ZStack {
@@ -141,15 +144,58 @@ struct AccountView: View {
                     .font(.system(size: 32, weight: .regular, design: .serif))
                     .foregroundColor(.black)
                 
-                Text("Delete Account")
-                    .font(.system(size: 32, weight: .regular, design: .serif))
-                    .foregroundColor(.red)
+                Button(action: {
+                    showDeleteConfirmation = true
+                }) {
+                    Text("Delete Account")
+                        .font(.system(size: 32, weight: .regular, design: .serif))
+                        .foregroundColor(.red)
+                }
                 
                 Spacer()
             }
             .padding(.leading, 18)
             .padding([.top, .bottom, .trailing])
         }
+        .confirmationDialog("Are you sure you want to delete your account?", isPresented: $showDeleteConfirmation, titleVisibility: .visible) {
+            Button("Delete", role: .destructive) {
+                deleteAccount()
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This action cannot be undone.")
+        }
+        .alert("Account Deleted", isPresented: $showDeleteSuccessAlert) {
+            Button("OK") {
+                presentationMode.wrappedValue.dismiss()
+            }
+        } message: {
+            Text("Your account has been successfully deleted.")
+        }
+    }
+    
+    func deleteAccount() {
+        guard let token = SecureStorage.get() else {
+            print("No token found")
+            return
+        }
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(token)"
+        ]
+        
+        AF.request("https://api.booklove.top/account/delete", method: .delete, headers: headers)
+            .validate()
+            .response { response in
+                switch response.result {
+                case .success:
+                    print("Account deleted successfully")
+                    showDeleteSuccessAlert = true
+                case .failure(let error):
+                    print("Failed to delete account: \(error.localizedDescription)")
+                    // Here you might want to show an error alert to the user
+                }
+            }
     }
 }
 
