@@ -10,7 +10,7 @@ import SwiftUI
 struct GeneralView: View {
     @EnvironmentObject var tabViewModel: TabViewModel
     @State var urlSurprise = false
-    @State var actionType = ""
+    @State var actionType = 2
     @State var id:UUID = UUID()
     var body: some View {
         TabView (selection: $tabViewModel.selectedTab){
@@ -36,14 +36,15 @@ struct GeneralView: View {
                     Text("Profile")
                 }.tag(3)
         }.sheet(isPresented: $urlSurprise){
-            if(actionType=="user"){
+            if(actionType==1){
                 UserProfileView(userID: id)
             }
-            else if (actionType=="book"){
+            else if (actionType==2){
                 
                 Book(book: id)
                 
             }
+            else{Text("Invalid link")}
         }.onOpenURL { incomingURL in
             print("App was opened via URL: \(incomingURL)")
             
@@ -62,13 +63,23 @@ struct GeneralView: View {
                    print("Unknown URL, we can't handle this one!")
                    return
                }
-        self.actionType = action
+        switch action{
+        case "user":
+            actionType=1
+        case "book":
+            actionType=2
+        default:
+            print(action)
+        }
+        
+        print(":\(action):\(self.actionType)")
         guard let _id = components.queryItems?.first(where: { $0.name == "id" })?.value else {
                     print("Recipe name not found")
                     return
                 }
-        self.urlSurprise=true
+        
         self.id=UUID(uuidString: _id) ?? UUID()
+        self.urlSurprise=true
         print(id, actionType)
         
      }
