@@ -68,7 +68,7 @@ struct SettingsView: View {
                             .font(.system(size: 32, weight: .regular, design: .serif))
                             .foregroundStyle(.black)
                     }
-                    Link("Feedback", destination: URL(string: "mailto:feedback@example.com")!)
+                    Link("Feedback", destination: URL(string: "mailto:feedback@booklove.top")!)
                         .font(.system(size: 32, weight: .regular, design: .serif))
                         .foregroundColor(.black)
                     Button(action: {
@@ -125,7 +125,7 @@ struct AccountView: View {
                     .font(.system(size: 32, weight: .regular, design: .serif))
                 NavigationLink (destination: ProfilePickerSettingsView()){
                     Text("Set New Avatar")
-                    .font(.system(size: 32, weight: .regular, design: .serif))}
+                    .font(.system(size: 32, weight: .regular, design: .serif)).foregroundStyle(.black)}
                 Text("Download My Data")
                     .font(.system(size: 32, weight: .regular, design: .serif))
                 Text("Delete Account")
@@ -265,6 +265,7 @@ struct VendorView: View{
     }
 
 struct ProfilePickerSettingsView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @State private var selectedAvatar: String?
     @State var loading = false
@@ -348,6 +349,7 @@ struct ProfilePickerSettingsView: View {
                                 switch response.result {
                                 case .success(let responseData):
                                     loading=false
+                                    self.presentationMode.wrappedValue.dismiss()
                                 case .failure(let error):
                                     loading = false
                                 }
