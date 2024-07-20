@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import Alamofire
 
 struct ShareSheet: UIViewControllerRepresentable {
     
@@ -122,6 +123,9 @@ struct AccountView: View {
                 Spacer()
                 Text("Set New Name")
                     .font(.system(size: 32, weight: .regular, design: .serif))
+                NavigationLink (destination: ProfilePickerSettingsView()){
+                    Text("Set New Avatar")
+                    .font(.system(size: 32, weight: .regular, design: .serif))}
                 Text("Download My Data")
                     .font(.system(size: 32, weight: .regular, design: .serif))
                 Text("Delete Account")
@@ -259,6 +263,127 @@ struct VendorView: View{
             
         }
     }
+
+struct ProfilePickerSettingsView: View {
+    
+    @State private var selectedAvatar: String?
+    @State var loading = false
+    var avatars = avatarURLs
+    
+    init(){
+        avatars.remix()
+    }
+    var body: some View {
+        
+        ZStack {
+            BackgroundBlurElement().edgesIgnoringSafeArea(.all)
+            
+            VStack(spacing: 50) {
+                Text("Choose Your Avatar")
+                    .font(.system(size: 32, weight: .regular, design: .serif))
+                    .foregroundColor(.black)
+                ZStack{
+                    ScrollView{
+                        LazyVGrid(columns: [
+                            GridItem(.flexible()),
+                            GridItem(.flexible()),
+                            GridItem(.flexible())
+                        ], spacing: 20) {
+                            ForEach(avatars, id: \.self) { avatarUrl in
+                                Button(action: {
+                                    if(!loading){
+                                        selectedAvatar = avatarUrl}
+                                }) {
+                                    ZStack {
+                                        Rectangle()
+                                            .foregroundColor(.clear)
+                                            .frame(width: 100, height: 100)
+                                            .background(Color.white)
+                                            .cornerRadius(20)
+                                            .shadow(color: Color.black.opacity(0.2), radius: 6, y: 2)
+                                        
+                                        AsyncImage(url: URL(string: avatarUrl)) { image in
+                                            image
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 80, height: 80)
+                                        } placeholder: {
+                                            ProgressView()
+                                        }
+                                    }
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .stroke(selectedAvatar == avatarUrl ? Color.black : Color.clear, lineWidth: 3)
+                                    )
+                                }
+                            
+                        }
+                    }.padding(.horizontal).padding(.top)
+                    
+                }
+                
+            }.mask(
+                VStack(spacing: 0) {
+                    LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .top, endPoint: .bottom)
+                        .frame(height: 20)
+                    Rectangle().fill(Color.black)
+                    LinearGradient(gradient: Gradient(colors: [.black, .clear]), startPoint: .top, endPoint: .bottom)
+                        .frame(height: 20)
+                }
+            )
+                
+                
+                
+                Button(action: {
+                    
+                    if let selected = selectedAvatar {
+                        loading = true
+                        print("Confirmed avatar: \(selected)")
+                        
+                            let headers: HTTPHeaders = [
+                                "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+                                "Content-Type": "application/json"
+                            ]
+                        AF.request("https://api.booklove.top/set/image", method: .post, parameters:["url":selected], headers: headers).responseString { response in
+                                switch response.result {
+                                case .success(let responseData):
+                                    loading=false
+                                case .failure(let error):
+                                    loading = false
+                                }
+                            
+                        }
+                    }
+                }) {
+                    if(!loading){
+                    Text("Confirm Selection")
+                        .font(.system(size: 20, design: .serif))
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.black)
+                        .cornerRadius(10)}
+                    else{
+                        ProgressView().font(.system(size: 20, design: .serif))
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.black)
+                            .cornerRadius(10)
+                    }
+                }
+                .disabled(selectedAvatar == nil)
+                .padding(.bottom)
+            }
+            .padding(.leading, 18)
+            .padding([.top, .bottom, .trailing])
+        }
+    }
+}
+
+
+
+
+
+
 
 
 #Preview {

@@ -13,6 +13,7 @@ enum AppScreen {
     case genres
     case main
     case loading
+    case avatar
 }
 
 class AppState: ObservableObject {

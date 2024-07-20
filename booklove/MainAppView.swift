@@ -14,6 +14,8 @@ struct MainAppView: View {
         switch appState.currentScreen {
         case .welcome:
             Welcome(appState: appState)
+        case .avatar:
+            ProfilePickerView(appState:appState)
         case .setup:
             Setup(appState: appState)
         case .genres:

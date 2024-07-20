@@ -76,7 +76,7 @@ struct Setup: View {
                 
                 if showContinueButton {
                     Button(action: {
-                        appState.currentScreen = .genres
+                        appState.currentScreen = .avatar
                     }) {
                         Text("Continue")
                             .font(.system(size: 20, weight: .semibold, design:.serif))

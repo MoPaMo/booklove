@@ -1,49 +1,15 @@
 import SwiftUI
 import Alamofire
 struct ProfilePickerView: View {
+    @ObservedObject var appState: AppState
+    
     @State private var selectedAvatar: String?
     @State var loading = false
-    var avatars = [
-      "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/0avatar-1.png",
-      "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/1avatar-2.png",
-      "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/2avatar-3.png",
-      "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/3avatar-4.png",
-      "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/4avatar-5.png",
-      "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/5avatar-6.png",
-      "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/6avatar-7.png",
-      "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/7avatar-8.png",
-      "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/8avatar-9.png",
-      "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/9avatar-10.png",
-      "https://cloud-qm6njabq6-hack-club-bot.vercel.app/0avatar-11.png",
-      "https://cloud-qm6njabq6-hack-club-bot.vercel.app/1avatar-12.png",
-      "https://cloud-qm6njabq6-hack-club-bot.vercel.app/2avatar-13.png",
-      "https://cloud-qm6njabq6-hack-club-bot.vercel.app/3avatar-14.png",
-      "https://cloud-qm6njabq6-hack-club-bot.vercel.app/4avatar-15.png",
-      "https://cloud-qm6njabq6-hack-club-bot.vercel.app/5avatar-16.png",
-      "https://cloud-qm6njabq6-hack-club-bot.vercel.app/6avatar-17.png",
-      "https://cloud-qm6njabq6-hack-club-bot.vercel.app/7avatar-18.png",
-      "https://cloud-qm6njabq6-hack-club-bot.vercel.app/8avatar-19.png",
-      "https://cloud-qm6njabq6-hack-club-bot.vercel.app/9avatar-20.png",
-      "https://cloud-hvajgpmw4-hack-club-bot.vercel.app/0avatar-21.png",
-      "https://cloud-hvajgpmw4-hack-club-bot.vercel.app/1avatar-22.png",
-      "https://cloud-hvajgpmw4-hack-club-bot.vercel.app/2avatar-23.png",
-      "https://cloud-hvajgpmw4-hack-club-bot.vercel.app/3avatar-24.png",
-      "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/0avatar-25.png",
-      "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/1avatar-26.png",
-      "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/2avatar-27.png",
-      "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/3avatar-28.png",
-      "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/4avatar-29.png",
-      "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/5avatar-30.png",
-      "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/6avatar-31.png",
-      "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/7avatar-32.png",
-      "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/8avatar-33.png",
-      "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/9avatar-34.png",
-      "https://cloud-hvajgpmw4-hack-club-bot.vercel.app/4avatar-35.png",
-      "https://cloud-hvajgpmw4-hack-club-bot.vercel.app/5avatar-36.png"
-    ]
+    var avatars = avatarURLs
     
-    init(){
+    init(appState:AppState){
         avatars.remix()
+        self.appState=appState
     }
     var body: some View {
         
@@ -120,6 +86,7 @@ struct ProfilePickerView: View {
                                 switch response.result {
                                 case .success(let responseData):
                                     loading=false
+                                    appState.currentScreen = .genres
                                 case .failure(let error):
                                     loading = false
                                 }
@@ -164,5 +131,44 @@ extension Array {
 
 
 #Preview {
-    ProfilePickerView()
+    ProfilePickerView(appState:AppState())
 }
+
+let avatarURLs: [String] = [
+    "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/0avatar-1.png",
+    "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/1avatar-2.png",
+    "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/2avatar-3.png",
+    "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/3avatar-4.png",
+    "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/4avatar-5.png",
+    "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/5avatar-6.png",
+    "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/6avatar-7.png",
+    "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/7avatar-8.png",
+    "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/8avatar-9.png",
+    "https://cloud-3bai2vkkk-hack-club-bot.vercel.app/9avatar-10.png",
+    "https://cloud-qm6njabq6-hack-club-bot.vercel.app/0avatar-11.png",
+    "https://cloud-qm6njabq6-hack-club-bot.vercel.app/1avatar-12.png",
+    "https://cloud-qm6njabq6-hack-club-bot.vercel.app/2avatar-13.png",
+    "https://cloud-qm6njabq6-hack-club-bot.vercel.app/3avatar-14.png",
+    "https://cloud-qm6njabq6-hack-club-bot.vercel.app/4avatar-15.png",
+    "https://cloud-qm6njabq6-hack-club-bot.vercel.app/5avatar-16.png",
+    "https://cloud-qm6njabq6-hack-club-bot.vercel.app/6avatar-17.png",
+    "https://cloud-qm6njabq6-hack-club-bot.vercel.app/7avatar-18.png",
+    "https://cloud-qm6njabq6-hack-club-bot.vercel.app/8avatar-19.png",
+    "https://cloud-qm6njabq6-hack-club-bot.vercel.app/9avatar-20.png",
+    "https://cloud-hvajgpmw4-hack-club-bot.vercel.app/0avatar-21.png",
+    "https://cloud-hvajgpmw4-hack-club-bot.vercel.app/1avatar-22.png",
+    "https://cloud-hvajgpmw4-hack-club-bot.vercel.app/2avatar-23.png",
+    "https://cloud-hvajgpmw4-hack-club-bot.vercel.app/3avatar-24.png",
+    "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/0avatar-25.png",
+    "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/1avatar-26.png",
+    "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/2avatar-27.png",
+    "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/3avatar-28.png",
+    "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/4avatar-29.png",
+    "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/5avatar-30.png",
+    "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/6avatar-31.png",
+    "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/7avatar-32.png",
+    "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/8avatar-33.png",
+    "https://cloud-1f87v8q7h-hack-club-bot.vercel.app/9avatar-34.png",
+    "https://cloud-hvajgpmw4-hack-club-bot.vercel.app/4avatar-35.png",
+    "https://cloud-hvajgpmw4-hack-club-bot.vercel.app/5avatar-36.png"
+  ]
