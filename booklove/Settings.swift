@@ -8,6 +8,8 @@
 import SwiftUI
 import UIKit
 import Alamofire
+import MobileCoreServices
+
 
 struct ShareSheet: UIViewControllerRepresentable {
     
@@ -110,24 +112,91 @@ struct SettingsView: View {
         }
     }
 }
+func downloadData(completion: @escaping (URL?) -> Void) {
+    let url = "https://api.booklove.top/download-my-data"
+    let destination: DownloadRequest.Destination = { _, _ in
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("file.zip")
+        return (tempURL, [.removePreviousFile])
+    }
+    let headers: HTTPHeaders = [
+        "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+        "Content-Type": "application/json"
+    ]
+    AF.download(url, headers: headers, to: destination).response { response in
+        if response.error == nil, let tempURL = response.fileURL {
+            completion(tempURL)
+        } else {
+            completion(nil)
+        }
+    }
+}
+
+struct DocumentPicker: UIViewControllerRepresentable {
+    var documentURL: URL
+    
+    func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
+        let picker = UIDocumentPickerViewController(forExporting: [documentURL])
+        picker.delegate = context.coordinator
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: Context) {}
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, UIDocumentPickerDelegate {
+        var parent: DocumentPicker
+        
+        init(_ parent: DocumentPicker) {
+            self.parent = parent
+        }
+        
+        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        }
+        
+        func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        }
+    }
+}
+
 
 struct AccountView: View {
+    @State private var showDocumentPicker = false
+    @State private var documentURL: URL?
+    
     var body: some View {
         ZStack {
             BackgroundBlurElement().edgesIgnoringSafeArea(.all)
             VStack(spacing: 50) {
-               
                 Text("Account.")
                     .font(.system(size: 32, weight: .regular, design: .serif))
                     .foregroundColor(.black)
                 Spacer()
                 Text("Set New Name")
                     .font(.system(size: 32, weight: .regular, design: .serif))
-                NavigationLink (destination: ProfilePickerSettingsView()){
+                NavigationLink(destination: ProfilePickerSettingsView()) {
                     Text("Set New Avatar")
-                    .font(.system(size: 32, weight: .regular, design: .serif)).foregroundStyle(.black)}
-                Text("Download My Data")
-                    .font(.system(size: 32, weight: .regular, design: .serif))
+                        .font(.system(size: 32, weight: .regular, design: .serif))
+                        .foregroundStyle(.black)
+                }
+                Button(action: {
+                    downloadData { url in
+                        if let url = url {
+                            self.documentURL = url
+                            self.showDocumentPicker = true
+                        }
+                    }
+                }) {
+                    Text("Download My Data")
+                        .font(.system(size: 32, weight: .regular, design: .serif))
+                }
+                .sheet(isPresented: $showDocumentPicker) {
+                    if let url = documentURL {
+                        DocumentPicker(documentURL: url)
+                    }
+                }
                 Text("Delete Account")
                     .font(.system(size: 32, weight: .regular, design: .serif))
                     .foregroundColor(.red)
@@ -139,6 +208,7 @@ struct AccountView: View {
         }
     }
 }
+
 
 struct AcknowledgementsView: View {
     var body: some View {
