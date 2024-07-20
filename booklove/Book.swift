@@ -256,6 +256,8 @@ struct QuoteAdd: View {
     @State private var character = ""
     @State private var note = ""
     @State private var agreed = false;
+    @State private var usePage = false;
+    @State private var page = -1;
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -266,14 +268,20 @@ struct QuoteAdd: View {
                     HStack{
                         Text("~")
                         TextField("Character (leave empty if none)", text: $character)}
+                    HStack{
+                        Toggle("Page", isOn:$usePage)
+                        Spacer()
+                        TextField("Page Number", value: $page, format: .number).disabled(!usePage)
+
+                    }
                         VStack(alignment: .leading, spacing: 20) {
                                            Text("Terms of Submission")
                                 .font(.system(size: 25, design:.serif))
-                                           Text("By submitting this quote, you agree to the following:").font(.system(size: 20, design:.monospaced))
-                                           Text("1. The quote is accurately transcribed from the book.")
-                                           Text("2. You have the right to share this quote.")
-                                           Text("3. The quote does not contain offensive or inappropriate content.")
-                                           Text("4. You understand that submitting offensive texts may result in account suspension.")
+                                           Text("By submitting this quote, you agree to the following:").font(.system(size: 15, design:.monospaced))
+                                           Text("1. The quote is accurately transcribed from the book.").font(.system(size: 15, design:.monospaced))
+                                           Text("2. You have the right to share this quote.").font(.system(size: 15, design:.monospaced))
+                                           Text("3. The quote does not contain offensive or inappropriate content.").font(.system(size: 15, design:.monospaced))
+                                           Text("4. You understand that submitting offensive texts may result in account suspension.").font(.system(size: 15, design:.monospaced))
                                        }
                                        .padding()
                     
