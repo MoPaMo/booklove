@@ -16,6 +16,7 @@ struct DataResponse: Decodable {
     var genres: [String]
     var books: [BookItem]?
     var followed: Bool
+    var followers: [simpleUserData]
 }
 struct UserProfileView: View {
     @State private var followed = false
@@ -261,7 +262,7 @@ struct UserProfileView: View {
             ]
             AF.request("https://api.booklove.top/\(followed ? "unfollow" : "follow")/\(userID.uuidString)", method: .get, headers: headers).responseString{ response in
                 switch response.result {
-                case .success(let data):
+                case .success(let _data):
                     followed.toggle()
                     follow_loading = false
                 case .failure(let error):
@@ -272,6 +273,12 @@ struct UserProfileView: View {
             }
         }
     }
+}
+
+struct simpleUserData : Codable {
+    var id: UUID
+    var name: String
+    var profile_image_url: String
 }
 
 struct UserProfileHeaderView_Previews: PreviewProvider {

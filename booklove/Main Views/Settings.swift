@@ -414,10 +414,10 @@ struct ProfilePickerSettingsView: View {
                             ]
                         AF.request("https://api.booklove.top/set/image", method: .post, parameters:["url":selected], encoder: JSONParameterEncoder.default, headers: headers).responseString { response in
                                 switch response.result {
-                                case .success(_):
+                                case .success(let _data):
                                     loading=false
                                     self.presentationMode.wrappedValue.dismiss()
-                                case .failure(_):
+                                case .failure(let _error):
                                     loading = false
                                 }
                             

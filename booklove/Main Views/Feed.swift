@@ -323,7 +323,7 @@ struct recommendedUsers: View {
 
 
 struct BookEntry: Codable, Identifiable {
-    let id = UUID()
+    var id = UUID()
     let book: BookItem
     let desc: String
 }
