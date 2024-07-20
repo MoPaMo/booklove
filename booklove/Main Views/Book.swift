@@ -201,14 +201,15 @@ struct Book: View {
                 HStack {
                     Spacer()
                     Button(action: {
-                        let textToShare = "\(bookItem?.title ?? "Book") by \(bookItem?.author ?? "unknown") on booklove. booklove://book/?id=\(bookItem?.id.uuidString ?? "error")"
-                        let activityVC = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
-                                UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+                        let textToShare = "\(bookItem?.title ?? "Book") by \(bookItem?.author ?? "unknown") on booklove. "
+                        let activityVC = UIActivityViewController(activityItems: ["booklove://book/?id=\(bookItem?.id.uuidString ?? "error")", textToShare], applicationActivities: nil)
+                        UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
                     }) {
                         Image(systemName: "square.and.arrow.up.circle.fill")
                             .foregroundColor(.black)
-                            .font(.title)
-                            .padding()                    }
+                            .font(.system(size: 32))
+                            .padding()
+                    }
                 }
                 Spacer()
             }
