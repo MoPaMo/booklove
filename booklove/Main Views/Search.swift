@@ -41,6 +41,7 @@ struct SearchView: View {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle())
                             .padding()
+                        Text("If this takes longer then expected, we are probably adding new books to our index, just for you.")
                     } else {
                         VStack (alignment:.leading){
                             ForEach(searchResults, id: \.self.id) { result in

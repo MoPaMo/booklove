@@ -32,6 +32,7 @@ struct UserProfileView: View {
         self.appuserID = UUID(uuidString: SecureStorage.getID() ?? "") ?? UUID()
         self.userID = userID
         self.isownaccount = self.userID == self.appuserID
+        print(self.isownaccount)
     }
     var body: some View {
         NavigationView {
@@ -252,7 +253,7 @@ struct UserProfileView: View {
         }
     }
     func follow_request(){
-        if(userID.uuidString != SecureStorage.getID()){
+        if(isownaccount){
             follow_loading = true;
             let headers: HTTPHeaders = [
                 "Authorization": "Bearer \(SecureStorage.get() ?? "")",
