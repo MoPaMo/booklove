@@ -124,6 +124,7 @@ struct AccountView: View {
     @State private var showDeleteConfirmation = false
     @State private var showDeleteSuccessAlert = false
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var appState:AppState
 
     var body: some View {
         ZStack {
@@ -190,7 +191,13 @@ struct AccountView: View {
                 switch response.result {
                 case .success:
                     print("Account deleted successfully")
-                    showDeleteSuccessAlert = true
+                    showDeleteSuccessAlert = true;
+                    SecureStorage.logout()
+                    appState.isLoggedIn = false
+                    appState.userID = ""
+                    appState.token = ""
+                    appState.currentScreen = .welcome
+                    
                 case .failure(let error):
                     print("Failed to delete account: \(error.localizedDescription)")
                     // Here you might want to show an error alert to the user
