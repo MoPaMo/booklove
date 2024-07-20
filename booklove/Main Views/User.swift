@@ -196,19 +196,26 @@ struct UserProfileView: View {
                 VStack {
                     HStack {
                         Spacer()
-
-                        Image(systemName: isownaccount ? "gearshape.circle.fill" : "square.and.arrow.up.circle.fill")
+                        if (!isownaccount){
+                            Button(action: {
+                                let textToShare = "\(user?.name ?? "Reader") on booklove. "
+                                let activityVC = UIActivityViewController(activityItems: ["booklove://book/?id=\(user?.id.uuidString ?? "error")", textToShare], applicationActivities: nil)
+                                UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+                            }) {Image(systemName: "square.and.arrow.up.circle.fill")
+                                    .foregroundColor(.black)
+                                    .font(.system(size: 32))
+                                .padding()}
+                        }else{
+                        Image(systemName:  "gearshape.circle.fill")
                             .foregroundColor(.black)
                             .font(.system(size: 32))
-                            .padding()
+                            .padding()}
                     }
                     Spacer()
                 }
                 .onTapGesture {
                     if (isownaccount) {
                         isSheetPresented = true
-                    } else {
-                        isShareSheetPresented = true
                     }
                 }
             }
