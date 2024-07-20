@@ -262,14 +262,14 @@ struct QuoteAdd: View {
         NavigationView {
             Form {
                 
-                Section(header: Text("Add A new Quote")) {
-                                    TextEditor(text: $note)
-                                        .frame(height: 100)
-                    TextField("Character (leave empty if none)", text: $character)
+                Section(header: Text("Add A new Quote")) {                    PlaceholderTextEditor(text: $note, placeholder: "Enter your quote here. Please omit all quotation marks").frame(height: 100)
+                    HStack{
+                        Text("~")
+                        TextField("Character (leave empty if none)", text: $character)}
                         VStack(alignment: .leading, spacing: 20) {
                                            Text("Terms of Submission")
-                                               .font(.title)
-                                           Text("By submitting this quote, you agree to the following:")
+                                .font(.system(size: 25, design:.serif))
+                                           Text("By submitting this quote, you agree to the following:").font(.system(size: 20, design:.monospaced))
                                            Text("1. The quote is accurately transcribed from the book.")
                                            Text("2. You have the right to share this quote.")
                                            Text("3. The quote does not contain offensive or inappropriate content.")
@@ -287,14 +287,30 @@ struct QuoteAdd: View {
                     }.disabled(!(agreed) || note.isEmpty)
                 }
             }
-            .navigationTitle("Form")
+            .navigationTitle("New Quote")
             .navigationBarItems(trailing: Button("Cancel") {
                 dismiss()
             })
         }
     }
 }
-
+struct PlaceholderTextEditor: View {
+    @Binding var text: String
+    let placeholder: String
+    
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            if text.isEmpty {
+                Text(placeholder)
+                    .foregroundColor(Color(.placeholderText))
+                    .padding(.horizontal, 4)
+                    .padding(.vertical, 8)
+            }
+            TextEditor(text: $text)
+                .padding(.horizontal, 0)
+        }
+    }
+}
 
 
 #Preview {
