@@ -63,17 +63,19 @@ struct Book: View {
                             .padding()
                         Spacer()
                     } else if let bookItem = bookItem {
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 4) {
                             Text(bookItem.title)
                                 .font(.system(size: 40, weight: .bold, design: .serif))
                                 .foregroundColor(Color(red: 0.20, green: 0.68, blue: 0.90))
-                                .multilineTextAlignment(.leading)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.7)
+                            
                             Text("\(bookItem.author), \(bookItem.year)")
                                 .font(.system(size: 20, weight: .light, design: .monospaced))
                                 .foregroundColor(.black)
-                                .multilineTextAlignment(.leading)
                         }
-                        .padding(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 16)
                         .padding(.top, 50)
                         Rectangle()
                             .foregroundColor(.clear)

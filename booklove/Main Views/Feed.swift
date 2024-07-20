@@ -182,11 +182,12 @@ struct singleBookReview : View{
     }
     
 }
-struct bookloverecommendedBook : View{
+struct bookloverecommendedBook: View {
     @EnvironmentObject var tabViewModel: TabViewModel
-    var book: BookItem;
-    var desc: String;
-    var body: some View{
+    var book: BookItem
+    var desc: String
+    
+    var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
                 ZStack {
@@ -202,83 +203,78 @@ struct bookloverecommendedBook : View{
                     Image("Icon")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 60, height: 60).cornerRadius(23)
+                        .frame(width: 60, height: 60)
+                        .cornerRadius(23)
                 }
-
-               
-                    VStack(alignment: .leading) {
-                        Text("booklove")
-                            .font(.system(size: 24, weight: .bold, design: .serif))
-                            .foregroundColor(.mint)
-                        
-                        Text("recommends for you:")
-                            .font(.system(size: 16, weight: .light, design: .rounded))
-                            .foregroundColor(.black)
+                
+                VStack(alignment: .leading) {
+                    Text("booklove")
+                        .font(.system(size: 24, weight: .bold, design: .serif))
+                        .foregroundColor(.mint)
+                    
+                    Text("recommends for you:")
+                        .font(.system(size: 16, weight: .light, design: .rounded))
+                        .foregroundColor(.black)
+                }
+                .padding(.leading, 10)
+            }
+            
+            NavigationLink(destination: Book(book: book.id)) {
+                VStack(alignment: .leading) {
+                    Text(book.title)
+                        .font(.system(size: 24, weight: .heavy, design: .serif))
+                        .foregroundColor(.cyan)
+                        .padding(.bottom, -10)
+                    
+                    Text("\(book.author), \(book.year)")
+                        .font(.system(size: 18, weight: .light, design: .monospaced))
+                        .foregroundColor(.black)
+                        .kerning(-2)
+                    
+                    Text(desc)
+                        .font(.system(size: 16, weight: .light, design: .serif))
+                        .foregroundColor(.black)
+                        .lineLimit(3)
+                        .truncationMode(.tail)
+                        .padding(.top, 1)
+                    
+                    if desc.count > 200 {
+                        Text("more")
+                            .font(.system(size: 16, weight: .bold, design: .serif))
+                            .foregroundColor(.blue)
                     }
-                    .padding(.leading, 10.0)
-                
-                
-            }
-            
-            
-            
-            NavigationLink(destination: Book(book: book.id)){
-                VStack (alignment:.leading){
-                    VStack (alignment: .leading){
-                        Text(book.title)
-                            .font(.system(size: 24, weight: .heavy, design: .serif))
-                            .foregroundColor(.cyan).padding(.bottom, -10)
-                        
-                        Text("\(book.author), \(book.year)")
-                            .font(.system(size: 18, weight: .light, design: .monospaced))
-                        .foregroundColor(.black).kerning(-2)}.buttonStyle(PlainButtonStyle())
-                    
-                    
-                        
-                    HStack {
-                        Text(desc.prefix(200)+((desc.count > 200) ?"... " : ""))
-                            .font(.system(size: 16, weight: .light, design: .serif))
-                            .foregroundColor(.black)
-                            + Text(desc.count > 200 ? " more" : "")
-                                .font(.system(size: 16, weight: .bold, design: .serif))
-                                .foregroundColor(.blue)
-                    }.padding(.top, 1)
                 }
             }
+            .buttonStyle(PlainButtonStyle())
+            
+            Rectangle()
+                .foregroundColor(.clear)
+                .frame(height: 0.5)
+                .overlay(Rectangle().stroke(.black, lineWidth: 0.5))
+                .padding(.vertical, 2)
+            
+            HStack {
+                Image(systemName: "heart")
+                    .font(.system(size: 32))
+                    .foregroundColor(.black)
+                
+                Image(systemName: "bookmark")
+                    .font(.system(size: 32))
+                    .foregroundColor(.black)
+                
+                Image(systemName: "square.and.arrow.up")
+                    .font(.system(size: 32))
+                    .foregroundColor(.black)
+                
+                Spacer()
+                
+                Image(systemName: "flag")
+                    .font(.system(size: 32))
+                    .foregroundColor(.black)
+            }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 33)
-        
-        Rectangle()
-            .foregroundColor(.clear)
-            .frame(width: 300, height: 0.5)
-            .overlay(Rectangle()
-                .stroke(.black, lineWidth: 0.50)).padding(.vertical, 2.0)
-        
-        HStack {
-            Image(systemName: "heart")
-                .font(.system(size: 32)).foregroundColor(.black)
-            
-            Image(systemName: "bookmark").foregroundColor(.black)
-                .font(.system(size: 32))
-            
-            Image(systemName: "square.and.arrow.up")
-                .font(.system(size: 32)).foregroundColor(.black)
-            Spacer()
-            Spacer()
-            Spacer()
-            Spacer()
-            
-            Spacer()
-            Image(systemName: "flag")
-                .font(.system(size: 32))
-        }
-        
-        
-        .padding(.horizontal, 40)
-        
-        
-        Spacer()
-    
     }
 }
 
