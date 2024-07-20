@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
-
+import Alamofire
 struct Setup: View {
     @ObservedObject var appState: AppState
     @State private var name = ""
     @State private var favoriteBook = ""
     @State private var showContinueButton = false
-    
+    @State private var loading = false
     var body: some View {
         ZStack {
             BackgroundBlurElement()
@@ -76,15 +76,40 @@ struct Setup: View {
                 
                 if showContinueButton {
                     Button(action: {
-                        appState.currentScreen = .avatar
+                        if((name != "") && (favoriteBook != "")){
+                        let headers: HTTPHeaders = [
+                            "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+                            "Content-Type": "application/json"
+                        ]
+                        loading = true;
+                        AF.request("https://api.booklove.top/set/name-book", method: .post, parameters:["name":name, "book":favoriteBook], encoder: JSONParameterEncoder.default, headers: headers).responseString { response in
+                                switch response.result {
+                                case .success(let responseData):
+                                    loading = false
+                                    appState.currentScreen = .avatar
+                                case .failure(let error):
+                                    loading = false
+                                }
+                            
+                        }}
+                        
                     }) {
+                        if(!loading){
                         Text("Continue")
                             .font(.system(size: 20, weight: .semibold, design:.serif))
                             .foregroundColor(.white)
                             .padding()
                             .frame(maxWidth: .infinity)
                             .background(Color.black)
-                            .cornerRadius(10)
+                            .cornerRadius(10)}
+                        else{
+                            ProgressView().font(.system(size: 20, weight: .semibold, design:.serif))
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.black)
+                                .cornerRadius(10)
+                        }
                     }
                     .padding()
                 }

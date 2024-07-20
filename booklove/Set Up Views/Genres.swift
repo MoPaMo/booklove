@@ -71,7 +71,7 @@ struct Genres: View {
                         let params: [String: Any] = ["genres": Array(selectedGenres)]
                         let token = SecureStorage.get()!
                         print(token)
-                            NetworkManager.shared.fetch(urlString: "https://api.booklove.top/set-genres", method: .POST, params: params, token: token) { result in
+                            NetworkManager.shared.fetch(urlString: "https://api.booklove.top/set/genres", method: .POST, params: params, token: token) { result in
                                 switch result {
                                 case .success(let response):
                                     
