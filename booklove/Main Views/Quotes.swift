@@ -131,10 +131,10 @@ struct QuoteItem: View {
                 }.frame(width: geometry.size.width*0.75).padding()
                 // Interaction Buttons
                 VStack {
-                    Image(systemName: data.liked ? "heart.fill" : "heart").foregroundStyle(data.liked ? .red : .black).padding(.bottom, 10)
-                    Image(systemName: "bookmark").padding(.bottom, 10).onTapGesture {
+                    Image(systemName: data.liked ? "heart.fill" : "heart").foregroundStyle(data.liked ? .red : .black).padding(.bottom, 10).onTapGesture {
                         like_quote()
                     }
+                    Image(systemName: "bookmark").padding(.bottom, 10)
                     Image(systemName: "square.and.arrow.up")
                     Spacer()
                     Image(systemName: "flag")
