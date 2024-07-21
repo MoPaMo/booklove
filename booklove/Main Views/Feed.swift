@@ -54,6 +54,14 @@ struct Feed: View {
                         .transition(.opacity)*/
                     Spacer().padding(.vertical, 300)
                 }
+                if (boooks.isEmpty){
+                    VStack (alignment: .center){
+                        Spacer()
+                        ProgressView()
+                        Text("We are loading new books for you…").font(.system(size:20, design: .monospaced)).multilineTextAlignment(.center)
+                        Spacer()
+                    }
+                }
                 VStack {
                     HStack {
                         Spacer()
