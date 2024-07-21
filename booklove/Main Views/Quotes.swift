@@ -1,4 +1,5 @@
 import SwiftUI
+import Alamofire
 struct QuoteData : Codable {
     var Quote: String
     var character : String
@@ -171,15 +172,38 @@ struct QuoteItem: View {
      func like_quote (){
          print("liked")
          data.liked = !data.liked
+         booklove.like_quote(id: data.id, like:data.liked)
         
     }
     func like_book (){
         print("liked")
         data.bookSaved = !data.bookSaved
+        booklove.like_book(id: data.Book.id, like: data.bookSaved)
        
    }
 }
-
+func like_quote(id:UUID, like:Bool=true)  {
+    let url = (like ? "https://api.booklove.top/book/like/" :"https://api.booklove.top/quote/unlike/") + id.uuidString
+    let headers: HTTPHeaders = [
+        "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+        "Content-Type": "application/json"
+    ]
+    AF.request(url, method:.get, headers: headers).responseString {
+        response in
+        switch response.result {
+          case .success(let responseBody):
+              print("Response body: \(responseBody)")
+            if(responseBody=="success")
+            {
+                
+            }
+              // Do something with the response body string
+          case .failure(let error):
+              print("Error: \(error)")
+              // Handle the error
+          }
+    }
+}
 
 #Preview {
     Quotes()
