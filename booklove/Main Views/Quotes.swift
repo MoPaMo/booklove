@@ -177,8 +177,8 @@ struct QuoteItem: View {
                     }
                     .animation(.easeInOut(duration: 0.125), value: data.bookSaved)
                     Button(action: {
-                        let textToShare = "\(data.Quote) quted by \(data.user.name) on booklove. booklove: new books, new friends"
-                        let activityVC = UIActivityViewController(activityItems: ["booklove://book/?id=\(data.id.uuidString)", textToShare], applicationActivities: nil)
+                        let textToShare = "\(data.Quote) quoted by \(data.user.name) on booklove. booklove: new books, new friends"
+                        let activityVC = UIActivityViewController(activityItems: [textToShare, "booklove://book/?id=\(data.Book.id.uuidString)"], applicationActivities: nil)
                         UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
                     }){
                     Image(systemName: "square.and.arrow.up")}
