@@ -135,12 +135,15 @@ struct UserProfileView: View {
                             HStack {
                                 Text("Friends").font(.system(size: 20, weight: .light))
                                 Spacer()
-                                NavigationLink(destination: AllFollowersView(followers: self.followers)) {
-                                    Text("See all").font(.system(size: 20, weight: .light, design: .rounded)).foregroundColor(.blue)
+                                if(!self.followers.isEmpty)
+                                {
+                                    NavigationLink(destination: AllFollowersView(followers: self.followers)) {
+                                        Text("See all").font(.system(size: 20, weight: .light, design: .rounded)).foregroundColor(.blue)
+                                    }
                                 }
                             }
                             .padding(.horizontal)
-
+                            if(!self.followers.isEmpty){
                             ZStack {
                                 ForEach(Array(self.followers.prefix(5).enumerated()), id: \.element.id) { index, follower in
                                     NavigationLink(destination: UserProfileView(userID: follower.id)) {
@@ -172,7 +175,13 @@ struct UserProfileView: View {
                                 }
                             }
                             .padding(.trailing, (61 + 5 * 35) / 2)
-                            .padding(.leading, 0)
+                            .padding(.leading, 0)}
+                            else {
+                                Text("\(Image(systemName: "nosign")) Looks like this reader doesn't have any friends yet. You can befriend them to be the first!")
+                                    .font(.system(size: 16, weight: .regular, design: .monospaced))
+                                    .foregroundColor(.gray)
+                                    .padding(.top, 10).multilineTextAlignment(.center)
+                            }
                         }
 
                         VStack(alignment: .leading) {
