@@ -22,10 +22,10 @@ struct Quotes: View {
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                         .padding(.top, 20).padding(.bottom, 50)
-                    QuoteItem(data: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
-                    QuoteItem(data: QuoteData(Quote:"You shall not pass, like really really really not. I'd raTher not ssee you pass. some umlaute: äöüß€", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
-                    QuoteItem(data: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
-                    QuoteItem(data: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
+                    QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
+                    QuoteItem(quoteData: QuoteData(Quote:"You shall not pass, like really really really not. I'd raTher not ssee you pass. some umlaute: äöüß€", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
+                    QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: true, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
+                    QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
                     
                 }
             }
@@ -55,7 +55,10 @@ struct Quotes: View {
 }
 
 struct QuoteItem: View {
-    var data: QuoteData
+    @State var data: QuoteData
+    init (quoteData:QuoteData){
+        data = quoteData
+    }
     var body: some View {
         GeometryReader { geometry in
         // Main Content
@@ -128,8 +131,10 @@ struct QuoteItem: View {
                 }.frame(width: geometry.size.width*0.75).padding()
                 // Interaction Buttons
                 VStack {
-                    Image(systemName: "heart").padding(.bottom, 10)
-                    Image(systemName: "bookmark").padding(.bottom, 10)
+                    Image(systemName: data.liked ? "heart.fill" : "heart").foregroundStyle(data.liked ? .red : .black).padding(.bottom, 10)
+                    Image(systemName: "bookmark").padding(.bottom, 10).onTapGesture {
+                        like_quote()
+                    }
                     Image(systemName: "square.and.arrow.up")
                     Spacer()
                     Image(systemName: "flag")
@@ -149,6 +154,11 @@ struct QuoteItem: View {
         else {
             return 90/CGFloat(textlength)
         }
+    }
+     func like_quote (){
+         print("liked")
+         data.liked = !data.liked
+        
     }
 }
 
