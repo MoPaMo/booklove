@@ -15,56 +15,58 @@ struct QuoteResponse : Codable{
 struct Quotes: View {
     @State var rows : [QuoteData] = []
     var body: some View {
-        ZStack {
-            // Background Color
-            BackgroundBlurElement(option: 2)
-            ScrollView{
-                LazyVStack(spacing: 20) {
-                    
-                    // Header
-                    Text("booklove.")
-                        .font(.system(size: 64, weight: .bold, design: .serif))
-                        .foregroundColor(.black)
-                        .multilineTextAlignment(.center)
-                        .padding(.top, 20).padding(.bottom, 50).onTapGesture {
-                            rows=[]
-                            loadNewQuotes()
-                        }
-                    /*QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
-                    QuoteItem(quoteData: QuoteData(Quote:"You shall not pass, like really really really not. I'd raTher not ssee you pass. some umlaute: äöüß€", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
-                    QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: true, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
-                    QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))*/
-                    ForEach(rows, id: \.id){quote in
-                        QuoteItem(quoteData: quote)
-                    }
-                    if !rows.isEmpty {
-                                ProgressView()
-                                    .padding()
-                                    .onAppear {
-                                        loadNewQuotes()
-                                    }
-                            }
-                }.onAppear(perform:loadNewQuotes)
-            }
-            VStack{
-                HStack{
-                    Spacer()
-                    ZStack {
-                        Circle()
-                            .fill(
-                                LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(7), Color.white.opacity(7)]),
-                                               startPoint: .topLeading,
-                                               endPoint: .bottomTrailing)
-                            )
-                            .frame(width: 32, height: 32)
-                            .blur(radius: 10)
+        NavigationView{
+            ZStack {
+                // Background Color
+                BackgroundBlurElement(option: 2)
+                ScrollView{
+                    LazyVStack(spacing: 20) {
                         
-                        Image(systemName: "plus.circle.fill").font(.system(size: 32))
-                    }
-                    
-
-                }.padding()
-                Spacer()
+                        // Header
+                        Text("booklove.")
+                            .font(.system(size: 64, weight: .bold, design: .serif))
+                            .foregroundColor(.black)
+                            .multilineTextAlignment(.center)
+                            .padding(.top, 20).padding(.bottom, 50).onTapGesture {
+                                rows=[]
+                                loadNewQuotes()
+                            }
+                        /*QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
+                         QuoteItem(quoteData: QuoteData(Quote:"You shall not pass, like really really really not. I'd raTher not ssee you pass. some umlaute: äöüß€", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
+                         QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: true, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
+                         QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))*/
+                        ForEach(rows, id: \.id){quote in
+                            QuoteItem(quoteData: quote)
+                        }
+                        if !rows.isEmpty {
+                            ProgressView()
+                                .padding()
+                                .onAppear {
+                                    loadNewQuotes()
+                                }
+                        }
+                    }.onAppear(perform:loadNewQuotes)
+                }
+                VStack{
+                    HStack{
+                        Spacer()
+                        ZStack {
+                            Circle()
+                                .fill(
+                                    LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(7), Color.white.opacity(7)]),
+                                                   startPoint: .topLeading,
+                                                   endPoint: .bottomTrailing)
+                                )
+                                .frame(width: 32, height: 32)
+                                .blur(radius: 10)
+                            
+                            Image(systemName: "plus.circle.fill").font(.system(size: 32))
+                        }
+                        
+                        
+                    }.padding()
+                    Spacer()
+                }
             }
         }
     }
@@ -98,73 +100,79 @@ struct QuoteItem: View {
         // Main Content
         HStack() {
             
-                ZStack{ //card
-                    ZStack {
-                        // Shape with shadow
-                        RoundedRectangle(cornerRadius: 37)
-                            .fill(Color.white.opacity(0.1))
-                            
-                            .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
-                            .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 4)
-                        
-                        // Transparent card
-                        RoundedRectangle(cornerRadius: 37)
-                            .fill(Color.white.opacity(0.55)).blur(radius: /*@START_MENU_TOKEN@*/3.0/*@END_MENU_TOKEN@*/)
-                            
-                            .mask(RoundedRectangle(cornerRadius: 37))
-                    }
-                    VStack (alignment: .leading){
-                        // Quote
-                        Text("\(Image(systemName: "quote.opening")) \(data.Quote) \(Image(systemName: "quote.closing"))" )
-                            .font(.system(size: 40*text_scale(textlength: data.Quote.count), weight: .ultraLight, design: .serif)).lineSpacing(-1)
-                            .foregroundColor(.black)
-                            
-                        Spacer()
-                        Text((data.character != "") ? "~ "+data.character : "")
-                            .font(.system(size: 20, weight: .light, design: .rounded))
-                            .foregroundColor(.black)
-                        
-                        // Book Information
-                        Text(data.Book.title)
-                            .font(.system(size: 24, weight: .heavy, design: .serif))
-                        
-                            .foregroundColor(.red)
-                        
-                        Text("\(data.Book.author), \(data.Book.year)")
-                            .font(.system(size: 20, weight: .light, design: .monospaced))
-                            .foregroundColor(.black)
-                            .kerning(-2)
-                    }.padding()
-                    NavigationLink(destination: UserProfileView(userID: data.user.id))
-                    {
-                        VStack{
-                            HStack{
-                                Spacer()
-                                ZStack {
-                                    Circle()
-                                        .fill(
-                                            LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.white.opacity(0.3)]),
-                                                           startPoint: .topLeading,
-                                                           endPoint: .bottomTrailing)
-                                        )
-                                        .frame(width: 70, height: 70)
-                                        .blur(radius: 10)
-                                    AsyncImage(url: URL(string: data.user.profile_image_url)) { image in
-                                        image.resizable()
-                                    } placeholder: {
-                                        Image("memoji_placeholder").resizable()
-                                    }
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 60, height: 60)
-                                        .accessibilityLabel("\(data.user.name)'s profile picture")
-                                }.offset(x:30,y:-30)
+                    ZStack{ //card
+                        NavigationLink (destination:Book(book: data.Book.id))
+                        {
+                            ZStack {
+                                // Shape with shadow
+                                RoundedRectangle(cornerRadius: 37)
+                                    .fill(Color.white.opacity(0.1))
                                 
-                                    
+                                    .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
+                                    .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 4)
+                                
+                                // Transparent card
+                                RoundedRectangle(cornerRadius: 37)
+                                    .fill(Color.white.opacity(0.55)).blur(radius: /*@START_MENU_TOKEN@*/3.0/*@END_MENU_TOKEN@*/)
+                                
+                                    .mask(RoundedRectangle(cornerRadius: 37))
                             }
-                            Spacer()
                         }
-                    }
-                }.frame(width: geometry.size.width*0.75).padding()
+                        NavigationLink (destination:Book(book: data.Book.id))
+                        {VStack (alignment: .leading){
+                            // Quote
+                            Text("\(Image(systemName: "quote.opening")) \(data.Quote) \(Image(systemName: "quote.closing"))" )
+                                .font(.system(size: 40*text_scale(textlength: data.Quote.count), weight: .ultraLight, design: .serif)).lineSpacing(-1).multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                                .foregroundColor(.black)
+                            
+                            Spacer()
+                            Text((data.character != "") ? "~ "+data.character : "")
+                                .font(.system(size: 20, weight: .light, design: .rounded))
+                                .foregroundColor(.black)
+                            
+                            // Book Information
+                            Text(data.Book.title)
+                                .font(.system(size: 24, weight: .heavy, design: .serif))
+                            
+                                .foregroundColor(.red)
+                            
+                            Text("\(data.Book.author), \(data.Book.year)")
+                                .font(.system(size: 20, weight: .light, design: .monospaced))
+                                .foregroundColor(.black)
+                                .kerning(-2)
+                        }.padding()}
+                        
+                            VStack{
+                                HStack{
+                                    Spacer()
+                                    NavigationLink(destination: UserProfileView(userID: data.user.id))
+                                    {
+                                        ZStack {
+                                            Circle()
+                                                .fill(
+                                                    LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.white.opacity(0.3)]),
+                                                                   startPoint: .topLeading,
+                                                                   endPoint: .bottomTrailing)
+                                                )
+                                                .frame(width: 70, height: 70)
+                                                .blur(radius: 10)
+                                            AsyncImage(url: URL(string: data.user.profile_image_url)) { image in
+                                                image.resizable()
+                                            } placeholder: {
+                                                Image("memoji_placeholder").resizable()
+                                            }
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 60, height: 60)
+                                            .accessibilityLabel("\(data.user.name)'s profile picture")
+                                        }.offset(x:30,y:-30)
+                                    }
+                                        
+                                }
+                                Spacer()
+                            }
+                        }
+                    .frame(width: geometry.size.width*0.75).padding()
+                
                 // Interaction Buttons
                 VStack {
                     Image(systemName: data.liked ? "heart.fill" : "heart").foregroundStyle(data.liked ? .red : .black).padding(.bottom, 10).onTapGesture {
