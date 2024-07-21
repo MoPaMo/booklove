@@ -26,7 +26,10 @@ struct Quotes: View {
                         .font(.system(size: 64, weight: .bold, design: .serif))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
-                        .padding(.top, 20).padding(.bottom, 50)
+                        .padding(.top, 20).padding(.bottom, 50).onTapGesture {
+                            rows=[]
+                            loadNewQuotes()
+                        }
                     /*QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
                     QuoteItem(quoteData: QuoteData(Quote:"You shall not pass, like really really really not. I'd raTher not ssee you pass. some umlaute: äöüß€", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
                     QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: true, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
