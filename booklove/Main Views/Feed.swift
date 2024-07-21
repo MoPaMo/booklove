@@ -263,9 +263,6 @@ struct bookloverecommendedBook: View {
                     .font(.system(size: 32))
                     .foregroundColor(.black)
                 
-                Image(systemName: "square.and.arrow.up")
-                    .font(.system(size: 32))
-                    .foregroundColor(.black)
                 Button(action: {
                     let textToShare = "\(book.title) by \(book.author) on booklove. "
                     let activityVC = UIActivityViewController(activityItems: ["booklove://book/?id=\(book.id.uuidString)", textToShare], applicationActivities: nil)
