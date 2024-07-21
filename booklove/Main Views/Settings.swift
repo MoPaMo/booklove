@@ -134,8 +134,10 @@ struct AccountView: View {
                     .font(.system(size: 32, weight: .regular, design: .serif))
                     .foregroundColor(.black)
                 Spacer()
-                Text("Set New Name")
-                    .font(.system(size: 32, weight: .regular, design: .serif))
+                NavigationLink(destination: SettingsName()) {
+                    Text("Set New Name & Book")
+                        .font(.system(size: 32, weight: .regular, design: .serif)).foregroundStyle(.black)
+                }
                 NavigationLink(destination: ProfilePickerSettingsView()) {
                     Text("Set New Avatar")
                         .font(.system(size: 32, weight: .regular, design: .serif))
@@ -448,7 +450,127 @@ struct ProfilePickerSettingsView: View {
     }
 }
 
+struct SettingsName: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
+    @State private var name = ""
+    @State private var favoriteBook = ""
+    @State private var showContinueButton = false
+    @State private var loading = false
+    var body: some View {
+        ZStack {
+            BackgroundBlurElement()
+            VStack {
+                Text("booklove.")
+                    .font(.system(size: 64, weight: .bold, design: .serif))
+                    .foregroundColor(.black)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 20)
+                Text("Set a new name and a new favorite book")
+                    .font(.system(size: 32, weight: .light, design: .rounded))
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 10).padding(.bottom)
+                Spacer()
+                VStack(spacing: 20) {
+                    HStack {
+                        Text("Name")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .font(.system(size:22, design:.serif))
+                        Spacer()
+                    }
+                    HStack {
+                        Spacer()
+                        VStack(spacing: 0) {
+                            TextField("", text: $name)
+                                .padding(.vertical, 20)
+                                .multilineTextAlignment(.trailing)
+                            Rectangle()
+                                .frame(height: 1)
+                                .foregroundColor(.gray)
+                        }
+                        .frame(width: UIScreen.main.bounds.width * 0.5)
+                    }
+                }
+                .padding()
+                VStack(spacing: 20) {
+                    HStack {
+                        Text("Favourite book")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .font(.system(size:22, design:.serif))
+                        Spacer()
+                    }
+                    HStack {
+                        Spacer()
+                        VStack(spacing: 0) {
+                            TextField("", text: $favoriteBook)
+                                .padding(.vertical, 10)
+                                .multilineTextAlignment(.trailing)
+                                .font(.system(size: 20))
+                            Rectangle()
+                                .frame(height: 1)
+                                .foregroundColor(.gray)
+                        }
+                        .frame(width: UIScreen.main.bounds.width * 0.5)
+                    }
+                }
+                .padding()
+                Spacer()
+                
+                
+                
+                if showContinueButton {
+                    Button(action: {
+                        if((name != "") && (favoriteBook != "")){
+                        let headers: HTTPHeaders = [
+                            "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+                            "Content-Type": "application/json"
+                        ]
+                        loading = true;
+                        AF.request("https://api.booklove.top/set/name-book", method: .post, parameters:["name":name, "book":favoriteBook], encoder: JSONParameterEncoder.default, headers: headers).responseString { response in
+                                switch response.result {
+                                case .success(let _responseData):
+                                    loading = false
+                                    self.presentationMode.wrappedValue.dismiss()
+                                case .failure(let _error):
+                                    loading = false
+                                }
+                            
+                        }}
+                        
+                    }) {
+                        if(!loading){
+                        Text("Continue")
+                            .font(.system(size: 20, weight: .semibold, design:.serif))
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.black)
+                            .cornerRadius(10)}
+                        else{
+                            ProgressView().font(.system(size: 20, weight: .semibold, design:.serif))
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.black)
+                                .cornerRadius(10)
+                        }
+                    }
+                    .padding()
+                }
+            }
+        }
+        .onChange(of: name) {
+            updateContinueButtonVisibility()
+        }
+        .onChange(of: favoriteBook) {
+            updateContinueButtonVisibility()
+        }
+    }
+    
+    private func updateContinueButtonVisibility() {
+        showContinueButton = !name.isEmpty && !favoriteBook.isEmpty
+    }
+}
 
 
 
