@@ -9,8 +9,11 @@ struct QuoteData : Codable {
     var user: simpleUserData
     var bookSaved : Bool = false
 }
-
+struct QuoteResponse : Codable{
+    var rows : [QuoteData]
+}
 struct Quotes: View {
+    @State var rows : [QuoteData] = []
     var body: some View {
         ZStack {
             // Background Color
@@ -24,12 +27,15 @@ struct Quotes: View {
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                         .padding(.top, 20).padding(.bottom, 50)
-                    QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
+                    /*QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
                     QuoteItem(quoteData: QuoteData(Quote:"You shall not pass, like really really really not. I'd raTher not ssee you pass. some umlaute: äöüß€", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
                     QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: true, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
-                    QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
+                    QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))*/
+                    ForEach(rows, id: \.id){quote in
+                        QuoteItem(quoteData: quote)
+                    }
                     
-                }
+                }.onAppear(perform:loadNewQuotes)
             }
             VStack{
                 HStack{
@@ -51,6 +57,23 @@ struct Quotes: View {
                 }.padding()
                 Spacer()
             }
+        }
+    }
+    func loadNewQuotes(){
+        print("loading")
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+            "Content-Type": "application/json"
+        ]
+        AF.request("https://api.booklove.top/quote/get", method: .get, encoding: JSONEncoding.default, headers: headers).responseDecodable(of: QuoteResponse.self) { response in
+            switch response.result {
+            case .success(let responseData):
+                print(responseData)
+                self.rows = responseData.rows
+            case .failure(let error):
+                print(error)
+            }
+            
         }
     }
     
