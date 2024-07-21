@@ -178,7 +178,7 @@ struct QuoteItem: View {
                     Image(systemName: data.liked ? "heart.fill" : "heart").foregroundStyle(data.liked ? .red : .black).padding(.bottom, 10).onTapGesture {
                         like_quote()
                     }.animation(.easeInOut(duration: 0.125), value: data.liked)
-                    Image(systemName: data.bookSaved ? "bookmark.fill" : "bookmark").foregroundStyle(data.bookSaved ? .yellow : .black).padding(.bottom, 10) .onTapGesture {
+                    Image(systemName: data.bookSaved ? "bookmark.fill" : "bookmark").foregroundStyle(data.bookSaved ? .orange : .black).padding(.bottom, 10) .onTapGesture {
                         withAnimation(.spring()) {
                             like_book()
                         }

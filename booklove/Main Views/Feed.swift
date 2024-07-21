@@ -204,6 +204,7 @@ struct bookloverecommendedBook: View {
     @EnvironmentObject var tabViewModel: TabViewModel
     var book: BookItem
     var desc: String
+    @State var saved = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -272,13 +273,19 @@ struct bookloverecommendedBook: View {
                 .padding(.vertical, 2)
             
             HStack {
+                /*
                 Image(systemName: "heart")
                     .font(.system(size: 32))
                     .foregroundColor(.black)
+                 */
                 
-                Image(systemName: "bookmark")
+                Image(systemName: saved ? "bookmark.fill" : "bookmark")
                     .font(.system(size: 32))
-                    .foregroundColor(.black)
+                    .foregroundColor(saved ? .orange : .black).onTapGesture {
+                        self.saved = !saved
+                        booklove.like_book(id: book.id)
+                    }
+                    .animation(/*@START_MENU_TOKEN@*/.easeIn/*@END_MENU_TOKEN@*/(duration: 0.125), value: saved)
                 
                 Button(action: {
                     let textToShare = "\(book.title) by \(book.author) on booklove. "
