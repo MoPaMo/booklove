@@ -1,4 +1,12 @@
 import SwiftUI
+struct QuoteData : Codable {
+    var Quote: String
+    var character : String
+    var Book : BookItem
+    var id = UUID()
+    var liked: Bool
+    var user: simpleUserData
+}
 
 struct Quotes: View {
     var body: some View {
@@ -14,10 +22,10 @@ struct Quotes: View {
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                         .padding(.top, 20).padding(.bottom, 50)
-                    QuoteItem()
-                    QuoteItem()
-                    QuoteItem()
-                    QuoteItem()
+                    QuoteItem(data: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
+                    QuoteItem(data: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
+                    QuoteItem(data: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
+                    QuoteItem(data: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
                     
                 }
             }
@@ -47,6 +55,7 @@ struct Quotes: View {
 }
 
 struct QuoteItem: View {
+    var data: QuoteData
     var body: some View {
         GeometryReader { geometry in
         // Main Content
@@ -69,48 +78,52 @@ struct QuoteItem: View {
                     }
                     VStack (alignment: .leading){
                         // Quote
-                        Text("      You must allow me to tell you how ardently I love and admire you.")
+                        Text(data.Quote)
                             .font(.system(size: 40, weight: .ultraLight, design: .serif)).lineSpacing(-1)
                             .foregroundColor(.black)
                             
                         Spacer()
-                        Text("-Mr. Darcy")
+                        Text((data.character != "") ? "~ "+data.character : "")
                             .font(.system(size: 20, weight: .light, design: .rounded))
                             .foregroundColor(.black)
                         
                         // Book Information
-                        Text("Pride and Prejudice")
+                        Text(data.Book.title)
                             .font(.system(size: 24, weight: .heavy, design: .serif))
                         
                             .foregroundColor(.red)
                         
-                        Text("Jane Austen, 1813")
+                        Text("\(data.Book.author), \(data.Book.year)")
                             .font(.system(size: 20, weight: .light, design: .monospaced))
                             .foregroundColor(.black)
                             .kerning(-2)
                     }.padding()
-                    VStack{
-                        HStack{
+                    NavigationLink(destination: UserProfileView(userID: data.user.id))
+                    {
+                        VStack{
+                            HStack{
+                                Spacer()
+                                ZStack {
+                                    Circle()
+                                        .fill(
+                                            LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.white.opacity(0.3)]),
+                                                           startPoint: .topLeading,
+                                                           endPoint: .bottomTrailing)
+                                        )
+                                        .frame(width: 70, height: 70)
+                                        .blur(radius: 10)
+                                    
+                                    Image(data.user.profile_image_url)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 60, height: 60)
+                                        .accessibilityLabel("\(data.user.name)'s profile picture")
+                                }.offset(x:30,y:-30)
+                                
+                                    
+                            }
                             Spacer()
-                            ZStack {
-                                Circle()
-                                    .fill(
-                                        LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.white.opacity(0.3)]),
-                                                       startPoint: .topLeading,
-                                                       endPoint: .bottomTrailing)
-                                    )
-                                    .frame(width: 70, height: 70)
-                                    .blur(radius: 10)
-                                
-                                Image("memoji_placeholder")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 60, height: 60)
-                            }.offset(x:30,y:-30)
-                            
-                                
                         }
-                        Spacer()
                     }
                 }.frame(width: geometry.size.width*0.75).padding()
                 // Interaction Buttons
