@@ -23,7 +23,7 @@ struct Quotes: View {
                         .multilineTextAlignment(.center)
                         .padding(.top, 20).padding(.bottom, 50)
                     QuoteItem(data: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
-                    QuoteItem(data: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
+                    QuoteItem(data: QuoteData(Quote:"You shall not pass, like really really really not. I'd raTher not ssee you pass. some umlaute: äöüß€", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
                     QuoteItem(data: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
                     QuoteItem(data: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
                     
@@ -78,8 +78,8 @@ struct QuoteItem: View {
                     }
                     VStack (alignment: .leading){
                         // Quote
-                        Text(data.Quote)
-                            .font(.system(size: 40, weight: .ultraLight, design: .serif)).lineSpacing(-1)
+                        Text("\(Image(systemName: "quote.opening")) \(data.Quote) \(Image(systemName: "quote.closing"))" )
+                            .font(.system(size: 40*text_scale(textlength: data.Quote.count), weight: .ultraLight, design: .serif)).lineSpacing(-1)
                             .foregroundColor(.black)
                             
                         Spacer()
@@ -141,6 +141,14 @@ struct QuoteItem: View {
             
             Spacer()
         }.frame(height: 512)
+    }
+    func text_scale (textlength:Int) -> CGFloat{
+        if (textlength<90){
+            return 1
+        }
+        else {
+            return 90/CGFloat(textlength)
+        }
     }
 }
 
