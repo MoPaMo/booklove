@@ -193,7 +193,7 @@ struct Book: View {
                         .padding()
                     }
                 }.sheet(isPresented: $isShowingForm){
-                    QuoteAdd()
+                    QuoteAdd(book_id: bookItem?.id ?? UUID())
                 }
                 
             }
@@ -271,6 +271,7 @@ func like_book(id:UUID, like:Bool=true)  {
 
 
 struct QuoteAdd: View {
+    var book_id:UUID
     @State private var character = ""
     @State private var note = ""
     @State private var agreed = false;
@@ -309,7 +310,8 @@ struct QuoteAdd: View {
                 Section {
                     Button("Submit") {
                         print("Form submitted")
-                        dismiss()
+                        add()
+                        
                     }.disabled(!(agreed) || note.isEmpty)
                 }
             }
@@ -317,6 +319,22 @@ struct QuoteAdd: View {
             .navigationBarItems(trailing: Button("Cancel") {
                 dismiss()
             })
+        }
+    }
+    func add(){
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+            "Content-Type": "application/json"
+        ]
+        let params : [String:String] = ["book_id":book_id.uuidString, "content":note, "said_by":character, "page_number":String(page)]
+        AF.request("https://api.booklove.top/add/quotes/", method: .post, parameters:params, encoder: JSONParameterEncoder.default, headers: headers).responseString { response in
+            switch response.result {
+            case .success(let responseData):
+                print(responseData)
+                dismiss()
+            case .failure(let error):
+                print(error)
+            }
         }
     }
 }
