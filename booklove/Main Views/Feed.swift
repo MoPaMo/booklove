@@ -26,10 +26,19 @@ struct Feed: View {
                             .padding(.top, 20)
                         
                     }
-                    ForEach (boooks)
+                    LazyVStack{
+                        ForEach (boooks)
                         {boook in
                             bookloverecommendedBook(book: boook.book, desc: boook.desc).padding(.bottom)}
-                    Text("More content coming soon :)")
+                        
+                        if !boooks.isEmpty {
+                                    ProgressView()
+                                        .padding()
+                                        .onAppear {
+                                            fetchBooks()
+                                        }
+                                }
+                    }
                     /*singleBookReview(book:BookItem(title: "Pride and Prejudice", author: "Jane Austen", year: "1813")).padding(.bottom)
                     recommendedUsers().padding(.leading, 30).background(Color.white.opacity(0.9).blur(radius: 1))
                     
@@ -68,7 +77,7 @@ struct Feed: View {
                         .blur(radius: 10)
                         .frame(height: 0)
                 }
-            }.onAppear(perform: fetchBooks)
+            }.task(fetchBooks)
         }
     }
     func fetchBooks (){
@@ -80,7 +89,7 @@ struct Feed: View {
             switch response.result {
             case .success(let responseData):
                 print(responseData)
-                self.boooks = responseData.data
+                self.boooks.append(contentsOf: responseData.data)
             case .failure(let error):
                 print(error)
             }

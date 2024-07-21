@@ -33,7 +33,6 @@ struct UserProfileView: View {
         self.appuserID = UUID(uuidString: SecureStorage.getID() ?? "") ?? UUID()
         self.userID = userID
         self.isownaccount = self.userID == self.appuserID
-        print(self.isownaccount)
     }
     var body: some View {
         NavigationView {
@@ -47,7 +46,9 @@ struct UserProfileView: View {
                             .foregroundColor(.black)
                             .multilineTextAlignment(.center)
                             .padding(.top, 20)
-                            .padding(.bottom)
+                            .padding(.bottom).onTapGesture {
+                                fetchUserProfile()
+                            }
 
                         if let user = user {
                             HStack(spacing: 15) {
@@ -238,7 +239,7 @@ struct UserProfileView: View {
                 ])
             }
         }
-        .onAppear {
+        .task {
             fetchUserProfile()
         }
     }
