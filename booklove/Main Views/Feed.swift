@@ -163,6 +163,7 @@ struct singleBookReview : View{
             
             Image(systemName: "square.and.arrow.up")
                 .font(.system(size: 32)).foregroundColor(.black)
+            
             Spacer()
             Spacer()
             Spacer()
@@ -265,7 +266,14 @@ struct bookloverecommendedBook: View {
                 Image(systemName: "square.and.arrow.up")
                     .font(.system(size: 32))
                     .foregroundColor(.black)
-                
+                Button(action: {
+                    let textToShare = "\(book.title) by \(book.author) on booklove. "
+                    let activityVC = UIActivityViewController(activityItems: ["booklove://book/?id=\(book.id.uuidString)", textToShare], applicationActivities: nil)
+                    UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+                }){
+                    Image(systemName: "square.and.arrow.up")
+                        .font(.system(size: 32)).foregroundColor(.black)
+                }
                 Spacer()
                 
                 Image(systemName: "flag")
