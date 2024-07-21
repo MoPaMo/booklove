@@ -6,6 +6,7 @@ struct QuoteData : Codable {
     var id = UUID()
     var liked: Bool
     var user: simpleUserData
+    var bookSaved : Bool = false
 }
 
 struct Quotes: View {
@@ -115,9 +116,11 @@ struct QuoteItem: View {
                                         )
                                         .frame(width: 70, height: 70)
                                         .blur(radius: 10)
-                                    
-                                    Image(data.user.profile_image_url)
-                                        .resizable()
+                                    AsyncImage(url: URL(string: data.user.profile_image_url)) { image in
+                                        image.resizable()
+                                    } placeholder: {
+                                        Image("memoji_placeholder").resizable()
+                                    }
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 60, height: 60)
                                         .accessibilityLabel("\(data.user.name)'s profile picture")
@@ -134,7 +137,9 @@ struct QuoteItem: View {
                     Image(systemName: data.liked ? "heart.fill" : "heart").foregroundStyle(data.liked ? .red : .black).padding(.bottom, 10).onTapGesture {
                         like_quote()
                     }
-                    Image(systemName: "bookmark").padding(.bottom, 10)
+                    Image(systemName: data.bookSaved ? "bookmark.fill" : "bookmark").foregroundStyle(data.liked ? .red : .black).padding(.bottom, 10).onTapGesture {
+                        like_book()
+                    }
                     Image(systemName: "square.and.arrow.up")
                     Spacer()
                     Image(systemName: "flag")
@@ -160,6 +165,11 @@ struct QuoteItem: View {
          data.liked = !data.liked
         
     }
+    func like_book (){
+        print("liked")
+        data.liked = !data.liked
+       
+   }
 }
 
 
