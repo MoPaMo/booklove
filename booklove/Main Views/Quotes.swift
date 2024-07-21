@@ -136,11 +136,19 @@ struct QuoteItem: View {
                 VStack {
                     Image(systemName: data.liked ? "heart.fill" : "heart").foregroundStyle(data.liked ? .red : .black).padding(.bottom, 10).onTapGesture {
                         like_quote()
+                    }.animation(.easeInOut(duration: 0.125), value: data.liked)
+                    Image(systemName: data.bookSaved ? "bookmark.fill" : "bookmark").foregroundStyle(data.bookSaved ? .yellow : .black).padding(.bottom, 10) .onTapGesture {
+                        withAnimation(.spring()) {
+                            like_book()
+                        }
                     }
-                    Image(systemName: data.bookSaved ? "bookmark.fill" : "bookmark").foregroundStyle(data.liked ? .red : .black).padding(.bottom, 10).onTapGesture {
-                        like_book()
-                    }
-                    Image(systemName: "square.and.arrow.up")
+                    .animation(.easeInOut(duration: 0.125), value: data.bookSaved)
+                    Button(action: {
+                        let textToShare = "\(data.Quote) quted by \(data.user.name) on booklove. booklove: new books, new friends"
+                        let activityVC = UIActivityViewController(activityItems: ["booklove://book/?id=\(data.id.uuidString)", textToShare], applicationActivities: nil)
+                        UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+                    }){
+                    Image(systemName: "square.and.arrow.up")}
                     Spacer()
                     Image(systemName: "flag")
                 }.padding(.vertical, 30)
@@ -167,7 +175,7 @@ struct QuoteItem: View {
     }
     func like_book (){
         print("liked")
-        data.liked = !data.liked
+        data.bookSaved = !data.bookSaved
        
    }
 }
