@@ -19,7 +19,7 @@ struct Quotes: View {
             // Background Color
             BackgroundBlurElement(option: 2)
             ScrollView{
-                VStack(spacing: 20) {
+                LazyVStack(spacing: 20) {
                     
                     // Header
                     Text("booklove.")
@@ -34,7 +34,13 @@ struct Quotes: View {
                     ForEach(rows, id: \.id){quote in
                         QuoteItem(quoteData: quote)
                     }
-                    
+                    if !rows.isEmpty {
+                                ProgressView()
+                                    .padding()
+                                    .onAppear {
+                                        loadNewQuotes()
+                                    }
+                            }
                 }.onAppear(perform:loadNewQuotes)
             }
             VStack{
@@ -69,7 +75,7 @@ struct Quotes: View {
             switch response.result {
             case .success(let responseData):
                 print(responseData)
-                self.rows = responseData.rows
+                self.rows.append(contentsOf:responseData.rows)
             case .failure(let error):
                 print(error)
             }
