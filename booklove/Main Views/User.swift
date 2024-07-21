@@ -34,6 +34,7 @@ struct UserProfileView: View {
         self.userID = userID
         self.isownaccount = self.userID == self.appuserID
     }
+    @State var followers:[simpleUserData]=[]
     var body: some View {
         NavigationView {
             ZStack {
@@ -130,36 +131,48 @@ struct UserProfileView: View {
                         }
                         .padding(.leading)
 
-                        HStack {
-                            Text("Friends").font(.system(size: 20, weight: .light))
-                            Spacer()
-                            Text("See all").font(.system(size: 20, weight: .light, design: .rounded)).foregroundColor(.blue)
-                        }
-                        .padding(.horizontal)
+                        VStack {
+                            HStack {
+                                Text("Friends").font(.system(size: 20, weight: .light))
+                                Spacer()
+                                NavigationLink(destination: AllFollowersView(followers: self.followers)) {
+                                    Text("See all").font(.system(size: 20, weight: .light, design: .rounded)).foregroundColor(.blue)
+                                }
+                            }
+                            .padding(.horizontal)
 
-                        HStack {
-                            Spacer()
                             ZStack {
-                                ForEach(0 ..< 5) { item in
-                                    NavigationLink(destination: UserProfileView(userID: userID)) {
-                                        Image("memoji_placeholder")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 61, height: 61)
-                                            .background(Color(red: 0.8, green: 0.8, blue: 0.8))
-                                            .clipShape(Circle())
-                                            .offset(x: CGFloat(item * 35))
-                                            .shadow(
-                                                color: Color(red: 0, green: 0, blue: 0, opacity: 0.25),
-                                                radius: 4,
-                                                y: 4
-                                            )
+                                ForEach(Array(self.followers.prefix(5).enumerated()), id: \.element.id) { index, follower in
+                                    NavigationLink(destination: UserProfileView(userID: follower.id)) {
+                                        AsyncImage(url: URL(string: follower.profile_image_url)) { phase in
+                                            switch phase {
+                                            case .success(let image):
+                                                image
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fill)
+                                            case .failure(_), .empty:
+                                                Image("memoji_placeholder")
+                                                    .resizable()
+                                            @unknown default:
+                                                Image("memoji_placeholder")
+                                                    .resizable()
+                                            }
+                                        }
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 61, height: 61)
+                                        .background(Color(red: 0.8, green: 0.8, blue: 0.8))
+                                        .clipShape(Circle())
+                                        .offset(x: CGFloat(index * 35))
+                                        .shadow(
+                                            color: Color(red: 0, green: 0, blue: 0, opacity: 0.25),
+                                            radius: 4,
+                                            y: 4
+                                        )
                                     }
                                 }
                             }
                             .padding(.trailing, (61 + 5 * 35) / 2)
                             .padding(.leading, 0)
-                            Spacer()
                         }
 
                         VStack(alignment: .leading) {
@@ -239,6 +252,7 @@ struct UserProfileView: View {
                 ])
             }
         }
+        
         .task {
             fetchUserProfile()
         }
@@ -256,6 +270,7 @@ struct UserProfileView: View {
                 self.genres = data.data.genres
                 self.books = data.data.books ?? []
                 self.followed = data.data.followed
+                self.followers = data.data.followers ?? []
             case .failure(let error):
                 print(error)
             }
@@ -292,5 +307,58 @@ struct simpleUserData : Codable {
 struct UserProfileHeaderView_Previews: PreviewProvider {
     static var previews: some View {
         UserProfileView(userID: UUID(uuidString: SecureStorage.getID() ?? "") ?? UUID())
+    }
+}
+
+
+struct AllFollowersView: View {
+    let followers: [simpleUserData]
+    
+    var body: some View {
+        ZStack{
+            BackgroundBlurElement(option: 3)
+            ScrollView {
+                if followers.isEmpty {
+                    VStack {
+                        Spacer()
+                        Text("This user doesn't have any friends yet, be the first to become friends with them!")
+                            .font(.system(size: 20, design: .monospaced))
+                            .foregroundColor(.secondary).padding()
+                        Spacer()
+                    }
+                } else {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 20) {
+                        ForEach(followers, id: \.id) { follower in
+                            NavigationLink(destination: UserProfileView(userID: follower.id)) {
+                                VStack {
+                                    AsyncImage(url: URL(string: follower.profile_image_url)) { phase in
+                                        switch phase {
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                        case .failure(_), .empty:
+                                            Image("memoji_placeholder")
+                                                .resizable()
+                                        @unknown default:
+                                            Image("memoji_placeholder")
+                                                .resizable()
+                                        }
+                                    }
+                                    .frame(width: 80, height: 80)
+                                    .clipShape(Circle())
+                                    
+                                    Text(follower.name)
+                                        .font(.caption)
+                                        .lineLimit(1)
+                                }
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                    }
+                    .padding()
+                }
+            }
+        }
     }
 }
