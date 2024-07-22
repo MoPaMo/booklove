@@ -168,8 +168,7 @@ struct Book: View {
                                isShowingForm = true
 
                             }
-                        }
-                        HStack{
+                        
                             ZStack {
                                 Rectangle()
                                     .foregroundColor(.clear)
@@ -177,9 +176,9 @@ struct Book: View {
                                     .background(.white)
                                     .cornerRadius(21)
                                     .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2)
-                                Text("Report this book\( Image(systemName: self.hasflagged ? "flag.fill" : (self.flaggedloading ? "flag.badge.ellipsis" : "flag")))")
+                                Text("Report \( Image(systemName: self.hasflagged ? "flag.fill" : (self.flaggedloading ? "flag.badge.ellipsis" : "flag")))")
                                     .font(.system(size: 20))
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.red)
                             }.frame(height: 53).onTapGesture {
                                                         if(!(self.flaggedloading || self.hasflagged)){
                                                             self.flaggedloading = true
