@@ -39,7 +39,7 @@ struct Setup: View {
                         VStack(spacing: 0) {
                             TextField("", text: $name)
                                 .padding(.vertical, 20)
-                                .multilineTextAlignment(.trailing)
+                                .multilineTextAlignment(.trailing).contentShape(Rectangle().inset(by: -20))
                             Rectangle()
                                 .frame(height: 1)
                                 .foregroundColor(.gray)
@@ -59,9 +59,9 @@ struct Setup: View {
                         Spacer()
                         VStack(spacing: 0) {
                             TextField("", text: $favoriteBook)
-                                .padding(.vertical, 10)
+                                .padding(.vertical, 20)
                                 .multilineTextAlignment(.trailing)
-                                .font(.system(size: 20))
+                                .font(.system(size: 20)).contentShape(Rectangle().inset(by: -20))
                             Rectangle()
                                 .frame(height: 1)
                                 .foregroundColor(.gray)
