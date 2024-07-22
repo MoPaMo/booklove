@@ -106,7 +106,38 @@ struct Feed: View {
         }
     }
 }
+func flag_book(id:UUID){
+    
+    
+    let headers: HTTPHeaders = [
+        "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+        "Content-Type": "application/json"
+    ]
+    
+    let parameters: [String: Any] = [
+        "book_id": id.uuidString,
+        "reason": "bookreport"
+    ]
+    
+    AF.request("https://api.booklove.top/book-reports", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+        .validate()
+        .responseString{ response in
+            switch response.result {
+              case .success(let responseBody):
+                  print("Response body: \(responseBody)")
+                if(responseBody=="success")
+                {
+                    return true
+                }
+                  
+              case .failure(let error):
+                  print("Error: \(error)")
+                    return false
+                  
+              }
+        }
 
+}
 struct singleBookReview : View{
     @EnvironmentObject var tabViewModel: TabViewModel
     var book: BookItem;

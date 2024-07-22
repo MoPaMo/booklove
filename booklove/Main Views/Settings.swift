@@ -70,7 +70,7 @@ struct SettingsView: View {
                             .font(.system(size: 32, weight: .regular, design: .serif))
                             .foregroundStyle(.black)
                     }
-                    Link("Feedback", destination: URL(string: "mailto:feedback@booklove.top")!)
+                    Link("Feedback", destination: URL(string: "mailto:booklove@duck.com?subject=Feedback")!)
                         .font(.system(size: 32, weight: .regular, design: .serif))
                         .foregroundColor(.black)
                     Button(action: {
@@ -313,8 +313,7 @@ struct VendorView: View{
                     Text("We do not earn money from book sales.")
                         .font(.system(size:15, design:.serif))
                     Button(action: {
-                        let email = "vendor@booklove.top"
-                        if let url = URL(string: "mailto:\(email)") {
+                        if let url = URL(string: "mailto:booklove@duck.com?subject=Vendor%20Suggestion&body=Vendor%20Name%3A%0AVendor%20URL%3A%0AContext%3A") {
                             UIApplication.shared.open(url)
                         }
                     }) {
