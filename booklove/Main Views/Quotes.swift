@@ -95,6 +95,8 @@ struct QuoteItem: View {
     init (quoteData:QuoteData){
         data = quoteData
     }
+    @State var hasflagged = false
+    @State var flagloading = false
     var body: some View {
         GeometryReader { geometry in
         // Main Content
@@ -191,7 +193,10 @@ struct QuoteItem: View {
                     }){
                     Image(systemName: "square.and.arrow.up")}
                     Spacer()
-                    Image(systemName: "flag")
+                    Image(systemName: self.hasflagged ? "flag.fill" : (self.flagloading ? "flag.badge.ellipsis" : "flag")).onTapGesture {
+                        if(!(self.flagloading || self.hasflagged)){
+                        flag_quote()}
+                    }
                 }.padding(.vertical, 30)
                 .font(.system(size: 32))
                 .foregroundColor(.black)
@@ -209,6 +214,40 @@ struct QuoteItem: View {
             return 90/CGFloat(textlength)
         }
     }
+    func flag_quote(){
+        flagloading = true;
+        
+        
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(SecureStorage.get() ?? "")",
+            "Content-Type": "application/json"
+        ]
+        
+        let parameters: [String: Any] = [
+            "quoteId": self.data.id.uuidString,
+            "reason": "quotereport"
+        ]
+        
+        AF.request("https://api.booklove.top/flag-quote", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+            .validate()
+            .responseString{ response in
+                switch response.result {
+                  case .success(let responseBody):
+                      print("Response body: \(responseBody)")
+                    if(responseBody=="success")
+                    {
+                        flagloading = false
+                        hasflagged = true
+                    }
+                      
+                  case .failure(let error):
+                      print("Error: \(error)")
+                    flagloading = false
+                      
+                  }
+            }
+    
+    }
      func like_quote (){
          print("liked")
          data.liked = !data.liked
@@ -222,7 +261,13 @@ struct QuoteItem: View {
        
    }
 }
+struct FlagQuoteResponse: Codable {
+    let message: String
+    let reportId: String
+}
+
 func like_quote(id:UUID, like:Bool=true)  {
+    
     let url = (like ? "https://api.booklove.top/book/like/" :"https://api.booklove.top/quote/unlike/") + id.uuidString
     let headers: HTTPHeaders = [
         "Authorization": "Bearer \(SecureStorage.get() ?? "")",
