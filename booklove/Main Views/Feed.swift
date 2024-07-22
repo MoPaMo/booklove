@@ -234,6 +234,8 @@ struct bookloverecommendedBook: View {
     var book: BookItem
     var desc: String
     @State var saved = false
+    @State var flaggedloading = false
+    @State var hasflagged = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -329,6 +331,15 @@ struct bookloverecommendedBook: View {
                 Image(systemName: "flag")
                     .font(.system(size: 32))
                     .foregroundColor(.black)
+                Image(systemName: self.hasflagged ? "flag.fill" : (self.flaggedloading ? "flag.badge.ellipsis" : "flag"))
+                    .font(.system(size: 32))
+                    .foregroundColor(.black).onTapGesture {
+                        if(!(self.flaggedloading || self.hasflagged)){
+                            flag_book(id: self.book.id){_ in
+                                
+                            }
+                    }
+            }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
