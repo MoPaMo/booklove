@@ -1,6 +1,6 @@
 Terms of Service for BookLove
 
-Last Updated: [Current Date]
+Last Updated: 07/22/2024
 
 1. Acceptance of Terms
 
