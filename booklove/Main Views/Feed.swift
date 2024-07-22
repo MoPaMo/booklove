@@ -340,7 +340,7 @@ struct bookloverecommendedBook: View {
                                 if(success){
                                     self.hasflagged=true
                                 }else{
-                                    print(sucess)
+                                    print(success)
                                 }
                                 
                             }
