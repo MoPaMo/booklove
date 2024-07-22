@@ -135,6 +135,7 @@ struct QuoteItem: View {
                             // Book Information
                             Text(data.Book.title)
                                 .font(.system(size: 24, weight: .heavy, design: .serif))
+                                .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                             
                                 .foregroundColor(.red)
                             
@@ -261,10 +262,7 @@ struct QuoteItem: View {
        
    }
 }
-struct FlagQuoteResponse: Codable {
-    let message: String
-    let reportId: String
-}
+
 
 func like_quote(id:UUID, like:Bool=true)  {
     
