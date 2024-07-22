@@ -67,8 +67,9 @@ struct Feed: View {
                         Spacer()
                         Image(systemName: "magnifyingglass.circle.fill")
                             .foregroundColor(.black)
-                            .font(.title)
-                            .padding().onTapGesture {
+                            .font(.system(size: 32))
+                            .padding()
+                            .onTapGesture {
                                 isSheetPresented = true
                             }
                     }

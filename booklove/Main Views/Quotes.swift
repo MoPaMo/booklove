@@ -120,7 +120,7 @@ struct QuoteInfoView: View {
                 Text("6. Tap 'Submit' to add the quote.")
                 
                 Text("Tips:")
-                    .font(.system(size: 26, design:.serif))
+                    .font(.headline)
                     .padding(.top)
                 Text("• Keep quotes concise for better readability.")
                 Text("• Double-check the accuracy of the quote and attribution.")
