@@ -222,7 +222,7 @@ struct UserProfileView: View {
                         if (!isownaccount){
                             Button(action: {
                                 let textToShare = "\(user?.name ?? "Reader") on booklove. "
-                                let activityVC = UIActivityViewController(activityItems: ["booklove://book/?id=\(user?.id.uuidString ?? "error")", textToShare], applicationActivities: nil)
+                                let activityVC = UIActivityViewController(activityItems: ["booklove://user/?id=\(user?.id.uuidString ?? "error")", textToShare], applicationActivities: nil)
                                 UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
                             }) {Image(systemName: "square.and.arrow.up.circle.fill")
                                     .foregroundColor(.black)
@@ -305,7 +305,7 @@ struct UserProfileView: View {
             }
         } else{
             let textToShare = " Find me, \(user?.name ?? "Reader"), on booklove! "
-            let activityVC = UIActivityViewController(activityItems: ["booklove://book/?id=\(user?.id.uuidString ?? "error")", textToShare], applicationActivities: nil)
+            let activityVC = UIActivityViewController(activityItems: ["booklove://user/?id=\(user?.id.uuidString ?? "error")", textToShare], applicationActivities: nil)
             UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
         }
     }
