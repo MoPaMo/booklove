@@ -66,6 +66,14 @@ struct Quotes: View {
                     Spacer()
                 }
             }
+        }.safeAreaInset(edge: .top) {
+            ZStack {
+                Rectangle()
+                    .fill(.clear)
+                    .background(Color.white.opacity(1))
+                    .blur(radius: 10)
+                    .frame(height: 0)
+            }
         }
     }
     func loadNewQuotes(){
@@ -122,7 +130,7 @@ struct QuoteItem: View {
                         {VStack (alignment: .leading){
                             // Quote
                             Text("\(Image(systemName: "quote.opening")) \(data.Quote) \(Image(systemName: "quote.closing"))" )
-                                .font(.system(size: 40*text_scale(textlength: data.Quote.count), weight: .ultraLight, design: .serif)).lineSpacing(-1).multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                                .font(.system(size: CGFloat(max(40 * (70 / max(data.Quote.count, 70)), 20)), weight: .ultraLight, design: .serif)).lineSpacing(-1).multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                                 .foregroundColor(.black)
                             
                             Spacer()
@@ -210,7 +218,7 @@ struct QuoteItem: View {
             return 1
         }
         else {
-            return 90/CGFloat(textlength)
+            return 70/CGFloat(textlength)
         }
     }
     func flag_quote(){
