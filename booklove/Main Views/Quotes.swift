@@ -130,7 +130,7 @@ struct QuoteItem: View {
                         {VStack (alignment: .leading){
                             // Quote
                             Text("\(Image(systemName: "quote.opening")) \(data.Quote) \(Image(systemName: "quote.closing"))" )
-                                .font(.system(size: CGFloat(max(40 * (70 / max(data.Quote.count, 70)), 20)), weight: .ultraLight, design: .serif)).lineSpacing(-1).multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                                .font(.system(size: CGFloat(max(40 * (70 / max(data.Quote.count, 70)), 30)), weight: .ultraLight, design: .serif)).lineSpacing(-1).multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                                 .foregroundColor(.black)
                             
                             Spacer()
