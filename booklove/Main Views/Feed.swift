@@ -328,14 +328,20 @@ struct bookloverecommendedBook: View {
                 }
                 Spacer()
                 
-                Image(systemName: "flag")
-                    .font(.system(size: 32))
-                    .foregroundColor(.black)
+
                 Image(systemName: self.hasflagged ? "flag.fill" : (self.flaggedloading ? "flag.badge.ellipsis" : "flag"))
                     .font(.system(size: 32))
                     .foregroundColor(.black).onTapGesture {
+                        
                         if(!(self.flaggedloading || self.hasflagged)){
-                            flag_book(id: self.book.id){_ in
+                            self.flaggedloading = true
+                            flag_book(id: self.book.id){success in
+                                flaggedloading = false
+                                if(success){
+                                    self.hasflagged=true
+                                }else{
+                                    print(sucess)
+                                }
                                 
                             }
                     }
