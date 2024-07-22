@@ -337,7 +337,7 @@ struct AllFollowersView: View {
                         Text("This user doesn't have any friends yet, be the first to become friends with them!")
                             .font(.system(size: 20, design: .monospaced))
                             .foregroundColor(.secondary).padding()
-                        Spacer()
+                        Spacer().padding(.bottom, 30)
                     }
                 } else {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 20) {
