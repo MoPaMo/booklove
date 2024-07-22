@@ -106,9 +106,7 @@ struct Feed: View {
         }
     }
 }
-func flag_book(id:UUID){
-    
-    
+func flag_book(id: UUID, completion: @escaping (Bool) -> Void) {
     let headers: HTTPHeaders = [
         "Authorization": "Bearer \(SecureStorage.get() ?? "")",
         "Content-Type": "application/json"
@@ -121,22 +119,21 @@ func flag_book(id:UUID){
     
     AF.request("https://api.booklove.top/book-reports", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
         .validate()
-        .responseString{ response in
+        .responseString { response in
             switch response.result {
-              case .success(let responseBody):
-                  print("Response body: \(responseBody)")
-                if(responseBody=="success")
-                {
-                    return true
+            case .success(let responseBody):
+                print("Response body: \(responseBody)")
+                if responseBody == "success" {
+                    completion(true)
+                } else {
+                    completion(false)
                 }
-                  
-              case .failure(let error):
-                  print("Error: \(error)")
-                    return false
-                  
-              }
+                
+            case .failure(let error):
+                print("Error: \(error)")
+                completion(false)
+            }
         }
-
 }
 struct singleBookReview : View{
     @EnvironmentObject var tabViewModel: TabViewModel
