@@ -42,6 +42,8 @@ struct Book: View {
     @State private var errorMessage: String? // State variable for error messages
     @State var liked = false;
     var bookID: String
+    @State var flaggedloading = false
+    @State var hasflagged = false
     @State private var isShowingForm = false
 
     init(book: UUID) {
@@ -165,6 +167,32 @@ struct Book: View {
                             }.frame(height: 53).onTapGesture {
                                isShowingForm = true
 
+                            }
+                        }
+                        HStack{
+                            ZStack {
+                                Rectangle()
+                                    .foregroundColor(.clear)
+                                    .frame(width: 161, height: 53)
+                                    .background(.white)
+                                    .cornerRadius(21)
+                                    .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2)
+                                Text("Report this book\( Image(systemName: self.hasflagged ? "flag.fill" : (self.flaggedloading ? "flag.badge.ellipsis" : "flag")))")
+                                    .font(.system(size: 20))
+                                    .foregroundColor(.black)
+                            }.frame(height: 53).onTapGesture {
+                                                        if(!(self.flaggedloading || self.hasflagged)){
+                                                            self.flaggedloading = true
+                                                            flag_book(id:UUID(uuidString: self.bookID) ?? UUID() ){success in
+                                                                flaggedloading = false
+                                                                if(success){
+                                                                    self.hasflagged=true
+                                                                }else{
+                                                                    print(success)
+                                                                }
+                                                                
+                                                            }
+                                                    }
                             }
                         }
                     } else {
