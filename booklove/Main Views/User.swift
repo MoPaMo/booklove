@@ -286,7 +286,7 @@ struct UserProfileView: View {
         }
     }
     func follow_request(){
-        if(isownaccount){
+        if(!isownaccount){
             follow_loading = true;
             let headers: HTTPHeaders = [
                 "Authorization": "Bearer \(SecureStorage.get() ?? "")",
@@ -303,6 +303,10 @@ struct UserProfileView: View {
                 }
                 
             }
+        } else{
+            let textToShare = " Find me, \(user?.name ?? "Reader"), on booklove! "
+            let activityVC = UIActivityViewController(activityItems: ["booklove://book/?id=\(user?.id.uuidString ?? "error")", textToShare], applicationActivities: nil)
+            UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
         }
     }
 }
