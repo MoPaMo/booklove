@@ -13,13 +13,15 @@ struct QuoteResponse : Codable{
     var rows : [QuoteData]
 }
 struct Quotes: View {
-    @State var rows : [QuoteData] = []
+    @State var rows: [QuoteData] = []
+    @State private var showingInfoSheet = false
+    
     var body: some View {
-        NavigationView{
+        NavigationView {
             ZStack {
                 // Background Color
                 BackgroundBlurElement(option: 2)
-                ScrollView{
+                ScrollView {
                     LazyVStack(spacing: 20) {
                         
                         // Header
@@ -28,10 +30,10 @@ struct Quotes: View {
                             .foregroundColor(.black)
                             .multilineTextAlignment(.center)
                             .padding(.top, 20).padding(.bottom, 50).onTapGesture {
-                                rows=[]
+                                rows = []
                                 loadNewQuotes()
                             }
-                        ForEach(rows, id: \.id){quote in
+                        ForEach(rows, id: \.id) { quote in
                             QuoteItem(quoteData: quote)
                         }
                         if !rows.isEmpty {
@@ -41,32 +43,36 @@ struct Quotes: View {
                                     loadNewQuotes()
                                 }
                         }
-                    }.onAppear(perform:loadNewQuotes)
+                    }.onAppear(perform: loadNewQuotes)
                         .scrollTargetLayout()
-                }        .scrollTargetBehavior(.viewAligned)
+                }
+                .scrollTargetBehavior(.viewAligned)
 
-                VStack{
-                    HStack{
+                VStack {
+                    HStack {
                         Spacer()
                         ZStack {
                             Circle()
                                 .fill(
-                                    LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(7), Color.white.opacity(7)]),
+                                    LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.7), Color.white.opacity(0.7)]),
                                                    startPoint: .topLeading,
                                                    endPoint: .bottomTrailing)
                                 )
                                 .frame(width: 32, height: 32)
                                 .blur(radius: 10)
                             
-                            Image(systemName: "plus.circle.fill").font(.system(size: 32))
+                            Image(systemName: "questionmark.circle.fill")
+                                .font(.system(size: 32))
                         }
-                        
-                        
+                        .onTapGesture {
+                            showingInfoSheet = true
+                        }
                     }.padding()
                     Spacer()
                 }
             }
-        }.safeAreaInset(edge: .top) {
+        }
+        .safeAreaInset(edge: .top) {
             ZStack {
                 Rectangle()
                     .fill(.clear)
@@ -75,8 +81,12 @@ struct Quotes: View {
                     .frame(height: 0)
             }
         }
+        .sheet(isPresented: $showingInfoSheet) {
+            QuoteInfoView()
+        }
     }
-    func loadNewQuotes(){
+    
+    func loadNewQuotes() {
         print("loading")
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(SecureStorage.get() ?? "")",
@@ -86,14 +96,39 @@ struct Quotes: View {
             switch response.result {
             case .success(let responseData):
                 print(responseData)
-                self.rows.append(contentsOf:responseData.rows)
+                self.rows.append(contentsOf: responseData.rows)
             case .failure(let error):
                 print(error)
             }
-            
         }
     }
-    
+}
+
+struct QuoteInfoView: View {
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                Text("How to Add Quotes")
+                    .font(.system(size: 32, design:.serif))
+                    .fontWeight(.bold)
+                
+                Text("1. Find a meaningful quote from a book you're reading.")
+                Text("2. Find the book with the search or in your list")
+                Text("3. Tap on 'Add a Quote' at the bottom of the book page.")
+                Text("4. Enter the Text and accept the terms of submission (TL;DR: No Spam please)")
+                Text("5. Optional: Add the character and the page number")
+                Text("6. Tap 'Submit' to add the quote.")
+                
+                Text("Tips:")
+                    .font(.system(size: 26, design:.serif))
+                    .padding(.top)
+                Text("• Keep quotes concise for better readability.")
+                Text("• Double-check the accuracy of the quote and attribution.")
+                Text("• Don't include quotation marks around the quote, we'll do that for you")
+            }
+            .padding()
+        }
+    }
 }
 
 struct QuoteItem: View {
