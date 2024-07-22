@@ -31,10 +31,6 @@ struct Quotes: View {
                                 rows=[]
                                 loadNewQuotes()
                             }
-                        /*QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
-                         QuoteItem(quoteData: QuoteData(Quote:"You shall not pass, like really really really not. I'd raTher not ssee you pass. some umlaute: äöüß€", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
-                         QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: true, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))
-                         QuoteItem(quoteData: QuoteData(Quote:"You shall not pass", character: "Gandalf", Book: BookItem(title: "LOTR", author: "JRR Tolkiens"), liked: false, user: simpleUserData(id: UUID(), name: "Mo", profile_image_url: "_default")))*/
                         ForEach(rows, id: \.id){quote in
                             QuoteItem(quoteData: quote)
                         }
@@ -46,7 +42,9 @@ struct Quotes: View {
                                 }
                         }
                     }.onAppear(perform:loadNewQuotes)
-                }
+                        .scrollTargetLayout()
+                }        .scrollTargetBehavior(.viewAligned)
+
                 VStack{
                     HStack{
                         Spacer()
@@ -208,7 +206,7 @@ struct QuoteItem: View {
         }.frame(height: 512)
     }
     func text_scale (textlength:Int) -> CGFloat{
-        if (textlength<90){
+        if (textlength<70){
             return 1
         }
         else {
