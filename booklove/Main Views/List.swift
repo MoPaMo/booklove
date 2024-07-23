@@ -28,12 +28,13 @@ struct List: View {
     @State private var isSheetPresented = false
     @State var books: [BookItem] = []
     @State private var isLoading = true
-    @State private var sortOption: SortOption = .title
+    @State private var sortOption: SortOption = .recent
     
-    enum SortOption {
-        case title
-        case author
-        case year
+    enum SortOption: String {
+        case title = "Title"
+        case recent = "Recent"
+        case author = "Author"
+        case year = "Year"
     }
     
     var sortedBooks: [BookItem] {
@@ -48,6 +49,8 @@ struct List: View {
                 let year2 = Int($1.year) ?? Int.min
                 return year1 < year2
             }
+        default :
+            return books
         }
     }
     
@@ -65,12 +68,14 @@ struct List: View {
                             .foregroundColor(.orange)
                             .padding(.top, 100)
                         
-                        Picker("Sort by", selection: $sortOption) {
-                            Text("Title").tag(SortOption.title)
-                            Text("Author").tag(SortOption.author)
-                            Text("Year").tag(SortOption.year)
+                        Menu {
+                            Button("Recent") { sortOption = .recent }
+                            Button("Title") { sortOption = .title }
+                            Button("Author") { sortOption = .author }
+                            Button("Year") { sortOption = .year }
+                        } label: {
+                            Label("Sort by: \(sortOption.rawValue)", systemImage: "arrow.up.arrow.down")
                         }
-                        .pickerStyle(SegmentedPickerStyle())
                         .padding(.vertical)
                         
                         if isLoading {
