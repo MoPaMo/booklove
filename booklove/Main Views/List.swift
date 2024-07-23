@@ -42,7 +42,7 @@ struct List: View {
                             .font(.system(size: 64, weight: .bold, design: .serif))
                             .foregroundColor(.orange)
                             .padding(.top, 100)
-                        
+                        /*
                         Text("By Genre")
                             .font(.system(size: 24, weight: .regular, design: .serif))
                             .foregroundColor(.black)
@@ -60,7 +60,7 @@ struct List: View {
                                 }
                             }
                             .padding(.vertical, 10)
-                        }
+                        }*/
                         .padding(.bottom, 20)
                         
                         if isLoading {
