@@ -253,84 +253,157 @@ struct AcknowledgementsView: View {
     }
 }
 
-struct VendorView: View{
-    @State var selected: String
-    var vURL: String
-    let searchURLs: [String: String] = [
-        "Amazon": "https://www.amazon.com/s?k=",
-        "eBay": "https://www.ebay.com/sch/i.html?_nkw=",
-        "bookshop.org": "https://bookshop.org/search?keywords=",
-        "Thrift Books": "https://www.thriftbooks.com/browse/?b.search=",
-    ]
-    init(){
-        vURL = UserDefaults.standard.string(forKey: "vendorURL") ?? "https://www.amazon.com/s?k="
-        selected = UserDefaults.standard.string(forKey: "vendorName") ?? "Amazon"
-
+struct VendorView: View {
+    @State private var selected: String
+    @State private var customVendorName: String = ""
+    @State private var customVendorURL: String = ""
+    @State private var showingCustomVendorSheet: Bool = false
+    @State private var vendors: [String: String]
+    
+    init() {
+        let savedVendors = UserDefaults.standard.dictionary(forKey: "customVendors") as? [String: String] ?? [:]
+        let defaultVendors: [String: String] = [
+            "Amazon": "https://www.amazon.com/s?k=",
+            "eBay": "https://www.ebay.com/sch/i.html?_nkw=",
+            "bookshop.org": "https://bookshop.org/search?keywords=",
+            "Thrift Books": "https://www.thriftbooks.com/browse/?b.search=",
+            "Better World Books" : "https://www.betterworldbooks.com/search/results?q="
+        ]
+        self.vendors = defaultVendors.merging(savedVendors) { (_, new) in new }
+        self._selected = State(initialValue: UserDefaults.standard.string(forKey: "vendorName") ?? "Amazon")
     }
-    var body: some View{
-        
-        ZStack{
+    
+    var body: some View {
+        ZStack {
             BackgroundBlurElement().edgesIgnoringSafeArea(.all)
             VStack(spacing: 50) {
-                
                 Text("Vendor")
                     .font(.system(size: 32, weight: .regular, design: .serif))
                     .foregroundColor(.black)
                 
-                LazyVGrid(columns:[
-                    GridItem(.flexible()),
-                    GridItem(.flexible())
-                ], spacing: 10) {
-                    ForEach(["Amazon", "eBay", "bookshop.org", "Thrift Books"], id: \.self) { title in
-                        ZStack {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 34)
-                                    .fill(Color.white)
-                                    .frame(width: 161, height: 161)
-                                    .shadow(color: Color.black.opacity(0.2), radius: 6, y: 2)
-                                RoundedRectangle(cornerRadius: 34)
-                                    .stroke(Color.black, lineWidth: selected == title ? 2 : 0)
-                                    .frame(width: 161, height: 161)
-                            }
-                                
-                            Text(title)
-                                .font(.system(size: 24, design:.serif))
-                                .foregroundColor(.black)
-                        }.onTapGesture {
-                            UserDefaults.standard.set(title, forKey: "vendorName")
-                            print(UserDefaults.standard.string(forKey: "vendorName")as Any)
-                            UserDefaults.standard.set(searchURLs[title], forKey: "vendorURL")
-                            selected = title
-                            
+                ScrollView {
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
+                        ForEach(Array(vendors.keys.sorted()), id: \.self) { title in
+                            VendorButton(title: title, selected: $selected, vendors: $vendors)
                         }
+                        AddCustomVendorButton(showingCustomVendorSheet: $showingCustomVendorSheet)
                     }
+                    .padding()
                 }
-                .padding()
+                
                 Spacer()
-                VStack (spacing:10){
+                
+                VStack(spacing: 10) {
                     Image(systemName: "exclamationmark.triangle")
-                        .font(.system(size:15, design:.serif))
+                        .font(.system(size: 15, design: .serif))
                     Text("We do not earn money from book sales.")
-                        .font(.system(size:15, design:.serif))
-                    Button(action: {
+                        .font(.system(size: 15, design: .serif))
+                    Button("Suggest A Vendor") {
                         if let url = URL(string: "mailto:booklove@duck.com?subject=Vendor%20Suggestion&body=Vendor%20Name%3A%0AVendor%20URL%3A%0AContext%3A") {
                             UIApplication.shared.open(url)
                         }
-                    }) {
-                        Text("Suggest A Vendor")
-                            .font(.system(size:20, design:.serif))
-                            .underline().foregroundStyle(.black)
                     }
-                    
-                }.padding(.bottom)
-            }.padding(.leading, 18)
-                .padding([.top, .bottom, .trailing])
-                
-                
+                    .font(.system(size: 20, design: .serif))
+                    .underline()
+                    .foregroundStyle(.black)
+                }
+                .padding(.bottom)
             }
-            
+            .padding(.leading, 18)
+            .padding([.top, .bottom, .trailing])
+        }
+        .sheet(isPresented: $showingCustomVendorSheet) {
+            CustomVendorSheet(vendors: $vendors, selected: $selected, showingSheet: $showingCustomVendorSheet)
         }
     }
+}
+
+struct VendorButton: View {
+    let title: String
+    @Binding var selected: String
+    @Binding var vendors: [String: String]
+    
+    var body: some View {
+        ZStack {
+            ZStack {
+                RoundedRectangle(cornerRadius: 34)
+                    .fill(Color.white)
+                    .frame(width: 161, height: 161)
+                    .shadow(color: Color.black.opacity(0.2), radius: 6, y: 2)
+                RoundedRectangle(cornerRadius: 34)
+                    .stroke(Color.black, lineWidth: selected == title ? 2 : 0)
+                    .frame(width: 161, height: 161)
+            }
+            
+            Text(title)
+                .font(.system(size: 24, design: .serif))
+                .foregroundColor(.black)
+        }
+        .onTapGesture {
+            UserDefaults.standard.set(title, forKey: "vendorName")
+            UserDefaults.standard.set(vendors[title], forKey: "vendorURL")
+            selected = title
+        }
+    }
+}
+
+struct AddCustomVendorButton: View {
+    @Binding var showingCustomVendorSheet: Bool
+    
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 34)
+                .fill(Color.white)
+                .frame(width: 161, height: 161)
+                .shadow(color: Color.black.opacity(0.2), radius: 6, y: 2)
+            
+            VStack {
+                Image(systemName: "plus")
+                    .font(.system(size: 40))
+                Text("Add Custom")
+                    .font(.system(size: 20, design: .serif))
+            }
+            .foregroundColor(.black)
+        }
+        .onTapGesture {
+            showingCustomVendorSheet = true
+        }
+    }
+}
+
+struct CustomVendorSheet: View {
+    @Binding var vendors: [String: String]
+    @Binding var selected: String
+    @Binding var showingSheet: Bool
+    @State private var customVendorName: String = ""
+    @State private var customVendorURL: String = ""
+    
+    var body: some View {
+        NavigationView {
+            Form {
+                Section(header: Text("Add Custom Vendor")) {
+                    TextField("Vendor Name", text: $customVendorName)
+                    TextField("Search URL", text: $customVendorURL)
+                }
+                
+                Button("Add Vendor") {
+                    if !customVendorName.isEmpty && !customVendorURL.isEmpty {
+                        vendors[customVendorName] = customVendorURL
+                        selected = customVendorName
+                        UserDefaults.standard.set(customVendorName, forKey: "vendorName")
+                        UserDefaults.standard.set(customVendorURL, forKey: "vendorURL")
+                        UserDefaults.standard.set(vendors, forKey: "customVendors")
+                        showingSheet = false
+                    }
+                }
+            }
+            .navigationBarTitle("Custom Vendor", displayMode: .inline)
+            .navigationBarItems(trailing: Button("Cancel") {
+                showingSheet = false
+            })
+        }
+    }
+}
 
 struct ProfilePickerSettingsView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
