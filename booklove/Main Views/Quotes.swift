@@ -183,7 +183,7 @@ struct QuoteItem: View {
                             Text("\(data.Book.author), \(data.Book.year)")
                                 .font(.system(size: 20, weight: .light, design: .monospaced))
                                 .foregroundColor(.black)
-                                .kerning(-2)
+                                .kerning(-2).multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                         }.padding()}
                         
                             VStack{

@@ -197,16 +197,18 @@ struct UserProfileView: View {
                             } else {
                                 VStack(alignment: .leading, spacing: 10) {
                                     ForEach(books) { book in
-                                        VStack(alignment: .leading) {
-                                            Text(book.title)
-                                                .font(.system(size: 24, weight: .bold, design: .serif))
-                                                .foregroundColor(.cyan)
-
-                                            Text("\(book.author), \(book.year)")
-                                                .font(.system(size: 18, weight: .light, design: .serif))
-                                                .foregroundColor(.black)
+                                        NavigationLink (destination:Book(book:book.id)){
+                                            VStack(alignment: .leading) {
+                                                Text(book.title)
+                                                    .font(.system(size: 24, weight: .bold, design: .serif))
+                                                    .foregroundColor(.cyan)
+                                                
+                                                Text("\(book.author), \(book.year)")
+                                                    .font(.system(size: 18, weight: .light, design: .serif))
+                                                    .foregroundColor(.black)
+                                            }
+                                            .padding(.bottom, 10)
                                         }
-                                        .padding(.bottom, 10)
                                     }
                                 }
                             }
