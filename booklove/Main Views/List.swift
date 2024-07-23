@@ -28,6 +28,28 @@ struct List: View {
     @State private var isSheetPresented = false
     @State var books: [BookItem] = []
     @State private var isLoading = true
+    @State private var sortOption: SortOption = .title
+    
+    enum SortOption {
+        case title
+        case author
+        case year
+    }
+    
+    var sortedBooks: [BookItem] {
+        switch sortOption {
+        case .title:
+            return books.sorted { $0.title.lowercased() < $1.title.lowercased() }
+        case .author:
+            return books.sorted { $0.author.lowercased() < $1.author.lowercased() }
+        case .year:
+            return books.sorted {
+                let year1 = Int($0.year) ?? Int.min
+                let year2 = Int($1.year) ?? Int.min
+                return year1 < year2
+            }
+        }
+    }
     
     var body: some View {
         NavigationView {
@@ -42,48 +64,36 @@ struct List: View {
                             .font(.system(size: 64, weight: .bold, design: .serif))
                             .foregroundColor(.orange)
                             .padding(.top, 100)
-                        /*
-                        Text("By Genre")
-                            .font(.system(size: 24, weight: .regular, design: .serif))
-                            .foregroundColor(.black)
                         
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack {
-                                ForEach(["Adventure", "Horror", "Comedy", "History"], id: \.self) { genre in
-                                    Text(genre)
-                                        .font(.system(size: 18, weight: .bold, design: .serif))
-                                        .padding(.horizontal, 20)
-                                        .padding(.vertical, 10)
-                                        .background(Color.black)
-                                        .foregroundColor(.white)
-                                        .cornerRadius(20)
-                                }
-                            }
-                            .padding(.vertical, 10)
-                        }*/
-                        .padding(.bottom, 20)
+                        Picker("Sort by", selection: $sortOption) {
+                            Text("Title").tag(SortOption.title)
+                            Text("Author").tag(SortOption.author)
+                            Text("Year").tag(SortOption.year)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .padding(.vertical)
                         
                         if isLoading {
                             LoadingSkeleton()
                         }
-                        else if books.count<1 {
+                        else if books.count < 1 {
                             Text("\(Image(systemName: "bookmark.slash.fill")) Looks like you don't have any books in your list yet. Try a search (top right), look through your feed (bottom left), or scroll through some quotes to find new books!")
                                 .font(.system(size: 16, weight: .regular, design: .monospaced))
                                 .foregroundColor(.gray)
                                 .padding(.top, 10).multilineTextAlignment(.center)
                         } else {
                             VStack(alignment: .leading, spacing: 10) {
-                                ForEach(books) { book in
+                                ForEach(sortedBooks) { book in
                                     VStack(alignment: .leading) {
-                                        NavigationLink(destination:Book( book:book.id)) {
+                                        NavigationLink(destination: Book(book: book.id)) {
                                             VStack(alignment: .leading) {
                                                 Text(book.title)
                                                     .font(.system(size: 24, weight: .bold, design: .serif))
-                                                    .foregroundColor(.cyan).multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                                                    .foregroundColor(.cyan).multilineTextAlignment(.leading)
                                                 
                                                 Text("\(book.author), \(book.year)")
                                                     .font(.system(size: 18, weight: .light, design: .serif))
-                                                    .foregroundColor(.black).multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                                                    .foregroundColor(.black).multilineTextAlignment(.leading)
                                             }
                                         }
                                     }
@@ -120,6 +130,8 @@ struct List: View {
                         .blur(radius: 10)
                         .frame(height: 0)
                 }
+            }.onChange(of: sortOption) { _ in
+                
             }
             .onAppear(perform: fetchBooks)
         }
