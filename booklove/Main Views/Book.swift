@@ -119,33 +119,56 @@ struct Book: View {
                                     .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.20), radius: 6, y: 2)
                                     .scaleEffect(isButtonPressed ? 0.9 : 1.0) // Apply scale effect
                                     .animation(.spring(response: 0.2, dampingFraction: 0.5), value: isButtonPressed) // Animation when button is pressed
-                                Image(systemName: "cart")
-                                    .font(.system(size: 20))
-                                    .foregroundColor(.black)
-                            }
-                            .frame(height: 53)
-                            .onTapGesture {
-                                isButtonPressed = true // Trigger animation
-                                
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                    isButtonPressed = false // Reset animation
-                                }
+                                            Image(systemName: "cart")
+                .font(.system(size: 20))
+                .foregroundColor(.black)
+                .frame(height: 53)
+                .onTapGesture {
+                    isButtonPressed = true // Trigger animation
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        isButtonPressed = false // Reset animation
+                    }
 
-                                let userDefaults = UserDefaults.standard
-                                let vendorURL = userDefaults.string(forKey: "vendorURL")
-                                
-                                if let vendorURL = vendorURL, let url = URL(string: vendorURL + isbn) {
-                                    // Open the vendor URL
-                                    UIApplication.shared.open(url)
-                                } else {
-                                    // Fallback to Amazon search URL
-                                    let amazonSearchURL = "https://www.amazon.com/s?k=\(isbn)"
-                                    if let url = URL(string: amazonSearchURL) {
-                                        UIApplication.shared.open(url)
-                                    }
+                    let userDefaults = UserDefaults.standard
+                    let vendorURL = userDefaults.string(forKey: "vendorURL")
+                    
+                    if let vendorURL = vendorURL, let url = URL(string: vendorURL + isbn) {
+                        // Open the vendor URL
+                        UIApplication.shared.open(url)
+                    } else {
+                        // Fallback to Amazon search URL
+                        let amazonSearchURL = "https://www.amazon.com/s?k=\(isbn)"
+                        if let url = URL(string: amazonSearchURL) {
+                            UIApplication.shared.open(url)
+                        }
+                    }
+                }
+                .contextMenu {
+                    let savedVendors = UserDefaults.standard.dictionary(forKey: "customVendors") as? [String: String] ?? [:]
+                    let defaultVendors: [String: String] = [
+                        "Amazon": "https://www.amazon.com/s?k=",
+                        "eBay": "https://www.ebay.com/sch/i.html?_nkw=",
+                        "bookshop.org": "https://bookshop.org/search?keywords=",
+                        "Thrift Books": "https://www.thriftbooks.com/browse/?b.search=",
+                        "Better World Books" : "https://www.betterworldbooks.com/search/results?q="
+                    ]
+                    
+                    let vendors = savedVendors.isEmpty ? defaultVendors : savedVendors
+                    
+                    ForEach(vendors.keys.sorted(), id: \.self) { vendor in
+                        if let url = vendors[vendor] {
+                            Button(action: {
+                                if let vendorURL = URL(string: url + isbn) {
+                                    UIApplication.shared.open(vendorURL)
                                 }
+                            }) {
+                                Text(vendor)
                             }
                         }
+                    }
+                }
+        }
                         Rectangle()
                             .foregroundColor(.clear)
                             .frame(width: 287, height: 0.5)
